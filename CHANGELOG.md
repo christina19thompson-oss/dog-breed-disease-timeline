@@ -3,6 +3,27 @@
 All notable changes to this project. Format follows [Keep a Changelog](https://keepachangelog.com/),
 versioning follows [Semantic Versioning](https://semver.org/).
 
+## [0.3.0] — 2026-08-22
+
+Reverted the v0.2.0 editorial redesign. The page is a clinical tool again, not a
+designed site.
+
+### Removed
+- Full-bleed hero, oversized display typography, "Figure 1 / Figure 2" section
+  framing, and the Big Shoulders Display typeface.
+- Mortality spectrum and burden curve, which shipped as part of that treatment.
+
+### Restored
+- The v0.1.0 shell: breed rail, lifespan strip, onset timeline, filters, table
+  view, per-condition detail.
+
+### Kept
+- `tests/dom-checks.js` and the defensive fixes it surfaced are unaffected by the
+  revert and remain worth having.
+
+### Note
+The next round targets the visualisations themselves rather than page chrome.
+
 ## [0.2.0] — 2026-08-22
 
 Editorial redesign. Same data, rebuilt as a kinetic data-first page.
