@@ -1,0 +1,159 @@
+{
+"group": "Working",
+"breeds": [
+{"name":"Boxer","size":"large","life":{"mean":10.4,"mode":11,"modeEst":true,"p25":8.5,"p75":12.4,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Aortic and subaortic stenosis","sys":"cardio","on":[2,12],"sev":"serious","inh":"Polygenic, breed-specific","test":"Auscultation; Doppler echocardiogram after 12 mo","note":"Boxers have a high rate of physiological flow murmurs too, so a murmur here needs an echo rather than a wait-and-see."},
+ {"n":"Arrhythmogenic right ventricular cardiomyopathy","sys":"cardio","on":[36,120],"sev":"limiting","inh":"Autosomal dominant (striatin), incomplete penetrance","test":"24-hr Holter monitor; DNA test (STRN)","note":"Boxer cardiomyopathy. Syncope or sudden death in an apparently healthy adult. Holter, not echo, is the screening test."},
+ {"n":"Mast cell tumour","sys":"onc","on":[36,120],"sev":"serious","inh":"Breed predisposition","test":"FNA cytology; c-KIT","note":"Boxers are the classic breed. Often multiple, and often better differentiated than they look."},
+ {"n":"Brachycephalic obstructive airway syndrome","sys":"resp","on":[6,60],"sev":"moderate","inh":"Conformational","test":"Sedated oral and laryngeal exam; CT","note":"Milder than in Bulldogs and Pugs, but heat and exercise intolerance are still common."},
+ {"n":"Degenerative myelopathy","sys":"neuro","on":[96,144],"sev":"limiting","inh":"Autosomal recessive (SOD1)","test":"DNA test (SOD1); MRI to exclude compression","note":"Boxers are one of the highest-frequency SOD1 breeds."},
+ {"n":"Gliomas and other brain tumours","sys":"onc","on":[60,132],"sev":"limiting","inh":"Brachycephalic predisposition","test":"MRI","note":"New-onset seizures in a middle-aged Boxer should raise this immediately."},
+ {"n":"Histiocytic ulcerative colitis","sys":"gi","on":[6,24],"sev":"serious","inh":"Breed-specific, adherent-invasive E. coli","test":"Colonoscopy with biopsy; FISH for E. coli","note":"Young Boxer with bloody mucoid large-bowel diarrhoea. Responds to enrofloxacin, not to steroids, so the distinction matters."},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Corneal ulceration (indolent/SCCED)","sys":"eye","on":[60,132],"sev":"moderate","inh":"Breed-specific epithelial defect","test":"Fluorescein with a cotton-swab test for loose epithelium","note":"The Boxer ulcer. Non-healing superficial ulcer needing debridement and grid or diamond-burr keratotomy."},
+ {"n":"Lymphoma","sys":"onc","on":[60,120],"sev":"limiting","inh":"Breed predisposition","test":"Node FNA; flow cytometry","note":"Boxer lymphoma is disproportionately T-cell, which carries a poorer prognosis."},
+ {"n":"Aortic body tumour (chemodectoma)","sys":"onc","on":[84,144],"sev":"serious","inh":"Brachycephalic predisposition","test":"Thoracic radiographs; echo","note":"May present as pericardial effusion and tamponade."}
+]},
+{"name":"Rottweiler","size":"large","life":{"mean":10.4,"mode":11,"modeEst":true,"p25":8.4,"p75":12.3,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Osteochondrosis (shoulder, hock, stifle)","sys":"ortho","on":[4,10],"sev":"moderate","inh":"Polygenic","test":"Radiographs of the affected joint; CT","note":"Rottweilers get hock OCD more than almost any other breed, and it carries a guarded joint prognosis."},
+ {"n":"Elbow dysplasia","sys":"ortho","on":[4,12],"sev":"moderate","inh":"Polygenic","test":"OFA elbow radiographs; CT","note":"Very high breed prevalence, frequently bilateral."},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Subaortic stenosis","sys":"cardio","on":[2,12],"sev":"serious","inh":"Polygenic","test":"Echocardiogram","note":""},
+ {"n":"Cranial cruciate ligament rupture","sys":"ortho","on":[18,72],"sev":"moderate","inh":"Polygenic, conformational","test":"Cranial drawer; tibial plateau angle","note":"Often young for a cruciate rupture, and often bilateral."},
+ {"n":"Parvoviral enteritis susceptibility","sys":"gi","on":[1,8],"sev":"limiting","inh":"Breed-associated immune response","test":"Faecal antigen ELISA","note":"Rottweilers and Dobermans have a documented tendency to more severe parvovirus, including vaccine breakthrough. Finish the series later here."},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Osteosarcoma","sys":"onc","on":[60,132],"sev":"limiting","inh":"Breed predisposition, highly heritable","test":"Radiograph of the painful limb; thoracic CT","note":"One of the highest-risk breeds. Early neutering raises risk further in this breed specifically."},
+ {"n":"Lymphoma","sys":"onc","on":[60,132],"sev":"limiting","inh":"Breed predisposition","test":"Node FNA","note":""},
+ {"n":"Histiocytic sarcoma","sys":"onc","on":[60,132],"sev":"limiting","inh":"Breed predisposition","test":"Cytology / histopathology","note":""},
+ {"n":"Leukoencephalomyelopathy","sys":"neuro","on":[18,48],"sev":"limiting","inh":"Autosomal recessive","test":"MRI; histopathology","note":"Breed-specific. Progressive ataxia and tetraparesis in a young adult Rottweiler."}
+]},
+{"name":"Doberman Pinscher","size":"large","life":{"mean":10.4,"mode":11,"modeEst":true,"p25":8.5,"p75":12.2,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Dilated cardiomyopathy","sys":"cardio","on":[36,120],"sev":"limiting","inh":"Autosomal dominant (PDK4, TTN), incomplete penetrance","test":"Annual Holter plus echo from 3 yr; NT-proBNP","note":"The single most important disease in the breed. Long occult phase, then sudden death or fulminant CHF. Screening from age 3 genuinely changes outcomes."},
+ {"n":"von Willebrand disease type I","sys":"heme","on":[2,24],"sev":"moderate","inh":"Autosomal recessive with incomplete penetrance","test":"DNA test (VWF); buccal mucosal bleeding time","note":"Over half of Dobermans carry it. Test before any elective surgery."},
+ {"n":"Cervical spondylomyelopathy (wobbler)","sys":"neuro","on":[48,108],"sev":"serious","inh":"Conformational, heritable","test":"MRI of the caudal cervical spine","note":"Disc-associated form in the middle-aged Doberman: neck pain and a wide-based, wobbly pelvic-limb gait."},
+ {"n":"Colour dilution alopecia","sys":"skin","on":[6,36],"sev":"mild","inh":"Autosomal recessive (MLPH), in blue and fawn dogs","test":"Trichogram showing melanin clumping; biopsy","note":"Only affects dilute-coated dogs. Progressive truncal alopecia with follicular papules."},
+ {"n":"Chronic active hepatitis (copper-associated)","sys":"gi","on":[24,84],"sev":"limiting","inh":"Breed-specific, females overrepresented","test":"Liver biopsy with copper quantification","note":"Doberman hepatitis. Often silent until decompensation, so a persistently raised ALT in this breed deserves a biopsy."},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Narcolepsy-cataplexy","sys":"neuro","on":[1,6],"sev":"moderate","inh":"Autosomal recessive (HCRTR2)","test":"Food-elicited cataplexy test; DNA test","note":"Classic breed. Puppy collapses into flaccid sleep during excitement or eating, and is rousable."},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[24,132],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""},
+ {"n":"Osteosarcoma","sys":"onc","on":[60,132],"sev":"limiting","inh":"Breed predisposition","test":"Limb radiograph; staging","note":""}
+]},
+{"name":"Great Dane","size":"giant","life":{"mean":8.4,"mode":9,"modeEst":true,"p25":6.6,"p75":10.1,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[24,120],"sev":"limiting","inh":"Conformational (deepest chest of any breed)","test":"Right lateral abdominal radiograph","note":"Lifetime risk approaches 40% without gastropexy. Prophylactic gastropexy at neuter is standard of care in this breed."},
+ {"n":"Dilated cardiomyopathy","sys":"cardio","on":[36,96],"sev":"limiting","inh":"Autosomal recessive / X-linked forms described","test":"Echo; Holter for atrial fibrillation","note":"Frequently presents already in atrial fibrillation."},
+ {"n":"Hypertrophic osteodystrophy","sys":"ortho","on":[2,7],"sev":"serious","inh":"Breed predisposition","test":"Radiographs of distal radius and ulna","note":""},
+ {"n":"Panosteitis","sys":"ortho","on":[5,18],"sev":"mild","inh":"Breed predisposition","test":"Long-bone palpation pain; radiographic medullary opacity","note":"Shifting-leg lameness in a fast-growing adolescent. Self-limiting, but painful."},
+ {"n":"Cervical spondylomyelopathy (wobbler)","sys":"neuro","on":[6,36],"sev":"serious","inh":"Conformational, heritable","test":"MRI of the cervical spine","note":"Great Danes get the young-onset osseous form, unlike the middle-aged disc form in Dobermans."},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Osteosarcoma","sys":"onc","on":[48,108],"sev":"limiting","inh":"Height-associated, heritable","test":"Limb radiograph; staging","note":"Risk scales with height, and the Great Dane sits at the top of that curve."},
+ {"n":"Inherited myopathy (centronuclear)","sys":"neuro","on":[4,12],"sev":"serious","inh":"Autosomal recessive (BIN1)","test":"DNA test; muscle biopsy","note":""},
+ {"n":"Mitral and tricuspid dysplasia","sys":"cardio","on":[2,18],"sev":"serious","inh":"Congenital, heritable","test":"Echocardiogram","note":""},
+ {"n":"Aspiration pneumonia secondary to megaoesophagus","sys":"resp","on":[2,12],"sev":"serious","inh":"Congenital idiopathic megaoesophagus","test":"Thoracic radiographs; fluoroscopy","note":""}
+]},
+{"name":"Bernese Mountain Dog","size":"giant","life":{"mean":8.4,"mode":9,"modeEst":true,"p25":6.7,"p75":10.0,"src":["mcm2024","kc2014","bmd2016"]},"dz":[
+ {"n":"Histiocytic sarcoma","sys":"onc","on":[48,108],"sev":"limiting","inh":"Strongly heritable, breed-defining","test":"Cytology / histopathology; CT staging","note":"Around a quarter of Bernese die of this. Disseminated and localised periarticular forms; the reason the breed's mean lifespan is one of the shortest recorded."},
+ {"n":"Elbow dysplasia","sys":"ortho","on":[4,12],"sev":"moderate","inh":"Polygenic","test":"OFA elbow radiographs; CT","note":"Very high prevalence."},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Aseptic meningitis (steroid-responsive)","sys":"neuro","on":[6,24],"sev":"moderate","inh":"Breed predisposition","test":"CSF analysis with neutrophilic pleocytosis","note":"Young Bernese with fever and severe cervical pain. Highly steroid-responsive."},
+ {"n":"Degenerative myelopathy","sys":"neuro","on":[84,120],"sev":"limiting","inh":"Autosomal recessive (SOD1)","test":"DNA test; MRI to exclude compression","note":""},
+ {"n":"Portosystemic shunt","sys":"gi","on":[2,12],"sev":"serious","inh":"Congenital, heritable","test":"Bile acids; protein C; CT angiography","note":"Small, poorly growing puppy with post-prandial neurological signs."},
+ {"n":"Hypoadrenocorticism","sys":"endo","on":[24,72],"sev":"serious","inh":"Familial","test":"Basal cortisol; ACTH stimulation","note":""},
+ {"n":"Mast cell tumour","sys":"onc","on":[48,108],"sev":"serious","inh":"Breed predisposition","test":"FNA cytology","note":""},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[36,108],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""}
+]},
+{"name":"Siberian Husky","size":"medium","life":{"mean":12.1,"mode":13,"modeEst":true,"p25":10.3,"p75":14.0,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Juvenile cataract","sys":"eye","on":[6,24],"sev":"serious","inh":"Autosomal recessive","test":"CAER exam from 12 mo","note":"One of the earliest-onset hereditary cataracts. Can be complete and blinding before two years old."},
+ {"n":"Zinc-responsive dermatosis","sys":"skin","on":[3,36],"sev":"moderate","inh":"Breed-specific zinc malabsorption","test":"Skin biopsy; response to zinc supplementation","note":"Crusting around eyes, muzzle and footpads in a young northern-breed dog. Lifelong zinc supplementation required."},
+ {"n":"Corneal dystrophy","sys":"eye","on":[12,60],"sev":"mild","inh":"Autosomal recessive","test":"CAER exam","note":""},
+ {"n":"Progressive retinal atrophy (X-linked)","sys":"eye","on":[24,60],"sev":"serious","inh":"X-linked (RPGR)","test":"DNA test","note":"Males affected, females carriers. Unusual inheritance pattern for PRA."},
+ {"n":"Uveodermatologic syndrome","sys":"immune","on":[18,60],"sev":"serious","inh":"Breed predisposition","test":"Ophthalmic exam; skin biopsy","note":"Panuveitis with depigmentation of nose and lips. Sight-threatening and needs aggressive immunosuppression."},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Laryngeal paralysis (inherited)","sys":"resp","on":[2,12],"sev":"serious","inh":"Autosomal recessive","test":"Sedated laryngeal exam","note":"Unlike the geriatric acquired form in Labradors, the Husky form appears in young dogs."},
+ {"n":"Epilepsy","sys":"neuro","on":[12,36],"sev":"moderate","inh":"Familial","test":"Exclusion","note":""}
+]},
+{"name":"Alaskan Malamute","size":"large","life":{"mean":11.3,"mode":12,"modeEst":true,"p25":9.5,"p75":13.1,"src":["mcm2024"]},"dz":[
+ {"n":"Chondrodysplasia (dwarfism)","sys":"ortho","on":[1,6],"sev":"moderate","inh":"Autosomal recessive","test":"Radiographs; pedigree","note":"Breed-specific. Short bowed forelimbs with carpal valgus, apparent as soon as the puppy is up and moving."},
+ {"n":"Zinc-responsive dermatosis","sys":"skin","on":[3,36],"sev":"moderate","inh":"Breed-specific zinc malabsorption","test":"Skin biopsy; zinc trial","note":""},
+ {"n":"Inherited polyneuropathy","sys":"neuro","on":[6,24],"sev":"serious","inh":"Autosomal recessive","test":"DNA test where available; EMG; nerve biopsy","note":"Progressive weakness, laryngeal paralysis and megaoesophagus in a young Malamute."},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Cone degeneration (day blindness)","sys":"eye","on":[2,6],"sev":"moderate","inh":"Autosomal recessive (CNGB3)","test":"DNA test","note":""},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[36,132],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""}
+]},
+{"name":"Newfoundland","size":"giant","life":{"mean":9.3,"mode":10,"modeEst":true,"p25":7.4,"p75":11.0,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Subvalvular aortic stenosis","sys":"cardio","on":[2,12],"sev":"serious","inh":"Autosomal dominant, breed-specific","test":"Auscultation; Doppler echo after 12 mo","note":"Newfoundlands are one of the two or three breeds where SAS is genuinely common and heritable."},
+ {"n":"Cystinuria","sys":"uro","on":[12,72],"sev":"serious","inh":"Autosomal recessive (SLC3A1), type I-A","test":"DNA test; urine cystine crystals; nitroprusside test","note":"Newfoundlands get the severe early-onset form, and unlike most breeds females are affected as often as males."},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Elbow dysplasia","sys":"ortho","on":[4,12],"sev":"moderate","inh":"Polygenic","test":"OFA elbow radiographs","note":""},
+ {"n":"Dilated cardiomyopathy","sys":"cardio","on":[36,108],"sev":"limiting","inh":"Breed predisposition","test":"Echo; Holter","note":""},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[36,108],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""},
+ {"n":"Entropion and ectropion","sys":"eye","on":[4,24],"sev":"mild","inh":"Conformational","test":"Ophthalmic exam","note":""},
+ {"n":"Osteosarcoma","sys":"onc","on":[60,120],"sev":"limiting","inh":"Height-associated","test":"Limb radiograph; staging","note":""}
+]},
+{"name":"Saint Bernard","size":"giant","life":{"mean":9.3,"mode":10,"modeEst":true,"p25":7.3,"p75":11.0,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Hip and elbow dysplasia","sys":"ortho","on":[5,24],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP; elbow radiographs","note":"Among the highest OFA dysplastic rates of any breed."},
+ {"n":"Entropion, ectropion and diamond eye","sys":"eye","on":[3,18],"sev":"moderate","inh":"Conformational","test":"Ophthalmic exam","note":"Combined upper entropion with lower ectropion. Chronic keratitis if not surgically corrected."},
+ {"n":"Dilated cardiomyopathy","sys":"cardio","on":[36,96],"sev":"limiting","inh":"Breed predisposition","test":"Echo","note":""},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[24,108],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""},
+ {"n":"Osteosarcoma","sys":"onc","on":[48,108],"sev":"limiting","inh":"Height-associated","test":"Limb radiograph","note":""},
+ {"n":"Degenerative myelopathy","sys":"neuro","on":[72,120],"sev":"limiting","inh":"Autosomal recessive (SOD1)","test":"DNA test","note":""},
+ {"n":"Idiopathic epilepsy","sys":"neuro","on":[12,48],"sev":"moderate","inh":"Familial","test":"Exclusion","note":""}
+]},
+{"name":"Mastiff","size":"giant","life":{"mean":9.0,"mode":10,"modeEst":true,"p25":7.0,"p75":10.8,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Progressive retinal atrophy (dominant)","sys":"eye","on":[6,36],"sev":"serious","inh":"Autosomal dominant (RHO)","test":"DNA test","note":"Unusual dominant PRA, so a single affected parent transmits it. Onset far earlier than most PRAs."},
+ {"n":"Hip and elbow dysplasia","sys":"ortho","on":[5,24],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Cystinuria","sys":"uro","on":[12,72],"sev":"serious","inh":"Autosomal recessive","test":"DNA test; urine crystals","note":""},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[24,108],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""},
+ {"n":"Dilated cardiomyopathy","sys":"cardio","on":[36,96],"sev":"limiting","inh":"Breed predisposition","test":"Echo","note":""},
+ {"n":"Osteosarcoma","sys":"onc","on":[48,108],"sev":"limiting","inh":"Height-associated","test":"Limb radiograph","note":""},
+ {"n":"Cranial cruciate ligament rupture","sys":"ortho","on":[18,72],"sev":"moderate","inh":"Conformational","test":"Cranial drawer","note":""}
+]},
+{"name":"Cane Corso","size":"giant","life":{"mean":9.3,"mode":10,"modeEst":true,"p25":7.4,"p75":11.1,"src":["mcm2024"]},"dz":[
+ {"n":"Demodicosis (generalised, juvenile)","sys":"skin","on":[3,18],"sev":"moderate","inh":"Heritable immune defect","test":"Deep skin scrape; trichogram","note":"Molossoid breeds are strongly predisposed. Generalised juvenile demodicosis indicates an inherited immune defect, so affected dogs should not be bred."},
+ {"n":"Hip and elbow dysplasia","sys":"ortho","on":[5,24],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Entropion and cherry eye","sys":"eye","on":[3,18],"sev":"mild","inh":"Conformational","test":"Ophthalmic exam","note":""},
+ {"n":"Idiopathic epilepsy","sys":"neuro","on":[12,48],"sev":"moderate","inh":"Familial","test":"Exclusion","note":""},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[24,108],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""},
+ {"n":"Cranial cruciate ligament rupture","sys":"ortho","on":[18,72],"sev":"moderate","inh":"Conformational","test":"Cranial drawer","note":""}
+]},
+{"name":"Portuguese Water Dog","size":"medium","life":{"mean":12.3,"mode":13,"modeEst":true,"p25":10.5,"p75":14.2,"src":["mcm2024"]},"dz":[
+ {"n":"Juvenile dilated cardiomyopathy","sys":"cardio","on":[1,8],"sev":"limiting","inh":"Autosomal recessive","test":"Echo; DNA test where available","note":"Breed-specific and devastating. Sudden heart failure or death in a puppy between 6 weeks and 7 months, distinct from adult-onset DCM."},
+ {"n":"GM1 gangliosidosis","sys":"neuro","on":[4,8],"sev":"limiting","inh":"Autosomal recessive","test":"DNA test (GLB1)","note":"Progressive cerebellar signs from about 5 mo; fatal."},
+ {"n":"Storage disease and Addison's disease","sys":"endo","on":[24,72],"sev":"serious","inh":"Familial","test":"ACTH stimulation test","note":"PWDs are a classically overrepresented Addison's breed."},
+ {"n":"Progressive retinal atrophy (prcd)","sys":"eye","on":[36,84],"sev":"serious","inh":"Autosomal recessive","test":"DNA test (PRCD)","note":""},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Improper coat (furnishings)","sys":"skin","on":[2,12],"sev":"mild","inh":"Autosomal recessive (RSPO2)","test":"DNA test","note":"Cosmetic only; included because it is commonly tested in this breed."}
+]},
+{"name":"Akita","size":"large","life":{"mean":10.5,"mode":11,"modeEst":true,"p25":8.6,"p75":12.4,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Uveodermatologic (VKH-like) syndrome","sys":"immune","on":[12,60],"sev":"serious","inh":"Breed predisposition, DLA-associated","test":"Ophthalmic exam; skin biopsy","note":"The Akita disease. Bilateral granulomatous panuveitis with poliosis and vitiligo. Sight is often lost before owners notice the depigmentation."},
+ {"n":"Sebaceous adenitis","sys":"skin","on":[12,60],"sev":"moderate","inh":"Autosomal recessive","test":"Skin biopsy","note":"Akitas are one of the top three breeds affected."},
+ {"n":"Microcytosis (benign breed variant)","sys":"heme","on":[0,240],"sev":"mild","inh":"Breed-specific physiology","test":"CBC with MCV; no treatment needed","note":"Japanese breeds run a physiologically low MCV and high red cell potassium. Do not chase this as iron deficiency."},
+ {"n":"Immune-mediated polyarthritis","sys":"immune","on":[12,60],"sev":"serious","inh":"Breed predisposition","test":"Arthrocentesis of multiple joints","note":""},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Progressive retinal atrophy","sys":"eye","on":[36,84],"sev":"serious","inh":"Autosomal recessive","test":"CAER exam","note":""},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[36,132],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""}
+]},
+{"name":"Great Pyrenees","size":"giant","life":{"mean":10.3,"mode":11,"modeEst":true,"p25":8.3,"p75":12.1,"src":["mcm2024"]},"dz":[
+ {"n":"Chondrodysplasia","sys":"ortho","on":[1,8],"sev":"moderate","inh":"Autosomal recessive","test":"Radiographs","note":""},
+ {"n":"Hip and elbow dysplasia","sys":"ortho","on":[5,24],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Patellar luxation","sys":"ortho","on":[6,36],"sev":"mild","inh":"Polygenic","test":"Orthopaedic exam","note":"Unusual in a giant breed, but well documented here."},
+ {"n":"Neuronal degeneration","sys":"neuro","on":[2,12],"sev":"limiting","inh":"Autosomal recessive","test":"Histopathology","note":""},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[36,120],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""},
+ {"n":"Osteosarcoma","sys":"onc","on":[60,120],"sev":"limiting","inh":"Height-associated","test":"Limb radiograph","note":""}
+]},
+{"name":"Standard Schnauzer","size":"medium","life":{"mean":12.4,"mode":13,"modeEst":true,"p25":10.6,"p75":14.3,"src":["mcm2024"]},"dz":[
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Progressive retinal atrophy","sys":"eye","on":[36,84],"sev":"serious","inh":"Autosomal recessive","test":"CAER exam; DNA test","note":""},
+ {"n":"Follicular dermatitis (Schnauzer comedo syndrome)","sys":"skin","on":[12,72],"sev":"mild","inh":"Breed-specific follicular defect","test":"Clinical: comedones along the dorsal midline","note":""},
+ {"n":"Dilated cardiomyopathy","sys":"cardio","on":[48,108],"sev":"limiting","inh":"Breed predisposition","test":"Echo","note":""},
+ {"n":"Immune-mediated haemolytic anaemia","sys":"heme","on":[24,84],"sev":"limiting","inh":"Breed predisposition","test":"Coombs; spherocytes","note":""}
+]},
+{"name":"Giant Schnauzer","size":"large","life":{"mean":10.9,"mode":11,"modeEst":true,"p25":9.0,"p75":12.8,"src":["mcm2024"]},"dz":[
+ {"n":"Cobalamin malabsorption (Imerslund-Grasbeck)","sys":"gi","on":[2,12],"sev":"serious","inh":"Autosomal recessive (CUBN)","test":"DNA test; serum cobalamin; methylmalonic acid","note":"Breed-defining. Failure to thrive with non-regenerative anaemia and neutropenia in a puppy, fully correctable with parenteral cobalamin."},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":"Very high breed prevalence."},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Digital squamous cell carcinoma","sys":"onc","on":[60,132],"sev":"serious","inh":"Breed predisposition (dark-coated breeds)","test":"Radiograph of the digit; biopsy","note":"A swollen painful toe with nail loss in a black-coated large breed is SCC until proven otherwise."},
+ {"n":"Osteosarcoma","sys":"onc","on":[60,120],"sev":"limiting","inh":"Breed predisposition","test":"Limb radiograph","note":""},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[36,120],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""}
+]}
+]}

@@ -1,0 +1,104 @@
+{
+"group": "Hound",
+"breeds": [
+{"name":"Beagle","size":"small","life":{"mean":12.4,"mode":14,"modeEst":true,"p25":10.6,"p75":14.4,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Musladin-Lueke syndrome","sys":"ortho","on":[2,12],"sev":"moderate","inh":"Autosomal recessive (ADAMTSL2)","test":"DNA test","note":"Breed-specific. Tight thickened skin, flat skull, high-set ears and a stiff tip-toe gait. Sometimes called Chinese Beagle syndrome."},
+ {"n":"Steroid-responsive meningitis-arteritis","sys":"neuro","on":[6,24],"sev":"serious","inh":"Breed predisposition","test":"CSF neutrophilic pleocytosis; raised IgA","note":"Beagle pain syndrome. Young dog, high fever, rigid painful neck, reluctant to move. Dramatically steroid-responsive."},
+ {"n":"Intervertebral disc disease","sys":"neuro","on":[36,84],"sev":"serious","inh":"Chondrodystrophic (FGF4L2)","test":"Neuro exam; MRI or CT","note":""},
+ {"n":"Primary open-angle glaucoma","sys":"eye","on":[24,60],"sev":"serious","inh":"Autosomal recessive (ADAMTS10)","test":"DNA test; tonometry","note":"Slower and less painful than closed-angle glaucoma, so it is often advanced by the time it is noticed."},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Epilepsy","sys":"neuro","on":[6,36],"sev":"moderate","inh":"Familial","test":"Exclusion","note":""},
+ {"n":"Obesity","sys":"metab","on":[12,96],"sev":"moderate","inh":"Breed predisposition","test":"Body condition scoring","note":"Beagles are among the most food-motivated breeds and one of the most commonly obese."},
+ {"n":"Factor VII deficiency","sys":"heme","on":[2,60],"sev":"mild","inh":"Autosomal recessive (F7)","test":"DNA test; prolonged PT with normal aPTT","note":"Usually mild, but shows up as unexpected surgical bleeding."},
+ {"n":"Mast cell tumour","sys":"onc","on":[72,144],"sev":"serious","inh":"Breed predisposition","test":"FNA cytology","note":""}
+]},
+{"name":"Dachshund","size":"small","life":{"mean":13.5,"mode":15,"modeEst":true,"p25":11.7,"p75":15.4,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Intervertebral disc disease (Hansen type I)","sys":"neuro","on":[36,84],"sev":"serious","inh":"Chondrodystrophic (FGF4L2 retrogene)","test":"Neurological exam; MRI or CT","note":"The defining disease of the breed. Roughly a quarter of Dachshunds are affected in their lifetime. Peak incidence at 4-6 yr, and loss of deep pain sensation makes it a same-day surgical emergency."},
+ {"n":"Progressive retinal atrophy (cord1)","sys":"eye","on":[12,72],"sev":"serious","inh":"Autosomal recessive (RPGRIP1)","test":"DNA test; CAER exam","note":"Miniature Long-Haired Dachshunds specifically. Onset age varies widely even within a genotype."},
+ {"n":"Lafora disease","sys":"neuro","on":[60,108],"sev":"serious","inh":"Autosomal recessive (NHLRC1), repeat expansion","test":"DNA test","note":"Wire-haired Miniature Dachshunds. Myoclonic jerks triggered by light or sound in an older dog, progressing to dementia and ataxia."},
+ {"n":"Hyperadrenocorticism (Cushing's)","sys":"endo","on":[84,156],"sev":"serious","inh":"Breed predisposition","test":"Low-dose dexamethasone suppression; ACTH stimulation","note":""},
+ {"n":"Pattern baldness and colour dilution alopecia","sys":"skin","on":[6,36],"sev":"mild","inh":"Autosomal recessive (MLPH) in dilute dogs","test":"Trichogram; biopsy","note":""},
+ {"n":"Diabetes mellitus","sys":"endo","on":[84,144],"sev":"serious","inh":"Breed predisposition, immune-mediated","test":"Fasting glucose; fructosamine","note":"Dachshunds are one of the highest-risk breeds, and entire bitches are especially prone around dioestrus."},
+ {"n":"Mitral valve disease","sys":"cardio","on":[84,168],"sev":"serious","inh":"Polygenic","test":"Auscultation; echo","note":""},
+ {"n":"Cystine and calcium oxalate urolithiasis","sys":"uro","on":[36,108],"sev":"moderate","inh":"Breed predisposition","test":"Urinalysis; imaging; stone analysis","note":""},
+ {"n":"Obesity","sys":"metab","on":[12,96],"sev":"moderate","inh":"Breed predisposition","test":"Body condition scoring","note":"Directly compounds disc disease risk, which makes weight the single most useful thing an owner can control."}
+]},
+{"name":"Basset Hound","size":"medium","life":{"mean":10.8,"mode":12,"modeEst":true,"p25":8.9,"p75":12.7,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Otitis externa","sys":"skin","on":[6,72],"sev":"moderate","inh":"Conformational","test":"Otoscopy; cytology","note":"Long pendulous ears with a narrow humid canal. Chronic recurrent disease is close to universal without proactive management."},
+ {"n":"Intervertebral disc disease","sys":"neuro","on":[36,96],"sev":"serious","inh":"Chondrodystrophic","test":"Neuro exam; MRI","note":""},
+ {"n":"Glaucoma and primary lens luxation","sys":"eye","on":[36,84],"sev":"serious","inh":"Goniodysgenesis, inherited","test":"Tonometry; gonioscopy","note":"Bassets are a top glaucoma breed. Screening gonioscopy is worth doing before symptoms."},
+ {"n":"Ectropion and entropion","sys":"eye","on":[3,24],"sev":"mild","inh":"Conformational","test":"Ophthalmic exam","note":"Diamond eye with exposed conjunctiva; chronic conjunctivitis."},
+ {"n":"Thrombopathia","sys":"heme","on":[2,24],"sev":"moderate","inh":"Autosomal recessive (RASGRP1)","test":"DNA test; platelet function testing","note":"Normal platelet count but abnormal function, so bleeding is a surprise at surgery."},
+ {"n":"Elbow dysplasia and angular limb deformity","sys":"ortho","on":[4,18],"sev":"moderate","inh":"Chondrodystrophic conformation","test":"Radiographs; CT","note":""},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[36,132],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":"Unexpected for the size, but the deep chest puts Bassets at real risk."},
+ {"n":"Obesity","sys":"metab","on":[12,96],"sev":"moderate","inh":"Breed predisposition","test":"Body condition scoring","note":""}
+]},
+{"name":"Greyhound","size":"large","life":{"mean":11.6,"mode":12,"modeEst":true,"p25":9.8,"p75":13.4,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Breed-specific clinicopathological ranges","sys":"heme","on":[0,240],"sev":"mild","inh":"Breed physiology","test":"CBC and biochemistry interpreted against Greyhound reference intervals","note":"Higher PCV, higher creatinine, lower total protein, lower T4 and lower platelets than other breeds. Interpreting a Greyhound against standard ranges causes real diagnostic errors."},
+ {"n":"Anaesthetic sensitivity (thiobarbiturate, propofol)","sys":"metab","on":[6,240],"sev":"serious","inh":"Breed physiology: low body fat, reduced CYP2B11","test":"Recognised risk, not a test","note":"Prolonged recovery from lipid-soluble agents because of low fat mass and slow hepatic clearance. Avoid thiopentone; titrate propofol and provide active warming."},
+ {"n":"Postoperative bleeding (delayed fibrinolysis)","sys":"heme","on":[6,240],"sev":"serious","inh":"Breed-specific hyperfibrinolysis","test":"Clinical; responds to tranexamic acid or aminocaproic acid","note":"Bleeding starts 36-72 hr after surgery with normal clotting times. Prophylactic antifibrinolytic therapy is now routine for Greyhound amputations and spays."},
+ {"n":"Osteosarcoma","sys":"onc","on":[60,132],"sev":"limiting","inh":"Breed predisposition, highly heritable","test":"Limb radiograph; thoracic staging","note":"Greyhounds have among the highest osteosarcoma rates recorded in any breed."},
+ {"n":"Corns (digital)","sys":"skin","on":[24,120],"sev":"moderate","inh":"Breed-specific, thin digital pads","test":"Pad examination; hulling","note":"Sighthound-specific. A painful focal pad lesion causing lameness that is often mistaken for a joint problem."},
+ {"n":"Dental disease","sys":"dental","on":[12,96],"sev":"moderate","inh":"Breed predisposition","test":"Oral exam; dental radiographs","note":"Severe early periodontal disease is close to universal in retired racers."},
+ {"n":"Pannus","sys":"eye","on":[24,72],"sev":"moderate","inh":"Breed predisposition","test":"Ophthalmic exam","note":""},
+ {"n":"Malignant hyperthermia","sys":"metab","on":[6,240],"sev":"limiting","inh":"Autosomal dominant (RYR1)","test":"DNA test where available","note":"Rare but reported. Rising end-tidal CO2 and rigidity under volatile anaesthesia."}
+]},
+{"name":"Whippet","size":"medium","life":{"mean":12.8,"mode":14,"modeEst":true,"p25":11.0,"p75":14.7,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Sighthound clinicopathological ranges","sys":"heme","on":[0,240],"sev":"mild","inh":"Breed physiology","test":"Interpret CBC and biochemistry against sighthound intervals","note":"Same caveat as the Greyhound: high PCV, high creatinine, low T4."},
+ {"n":"Double-muscling (myostatin deletion)","sys":"metab","on":[0,12],"sev":"mild","inh":"Autosomal, semi-dominant (MSTN)","test":"DNA test","note":"Heterozygotes are faster racers; homozygous bully whippets are grossly over-muscled and prone to cramping."},
+ {"n":"Mitral valve disease","sys":"cardio","on":[84,168],"sev":"serious","inh":"Polygenic","test":"Auscultation; echo","note":""},
+ {"n":"Anaesthetic sensitivity","sys":"metab","on":[6,240],"sev":"moderate","inh":"Breed physiology, low body fat","test":"Recognised risk","note":"Titrate carefully and warm actively."},
+ {"n":"Corns (digital)","sys":"skin","on":[24,120],"sev":"moderate","inh":"Breed-specific","test":"Pad examination","note":""},
+ {"n":"Deafness (congenital)","sys":"neuro","on":[0,3],"sev":"moderate","inh":"Pigment-associated","test":"BAER test","note":""}
+]},
+{"name":"Rhodesian Ridgeback","size":"large","life":{"mean":11.4,"mode":12,"modeEst":true,"p25":9.6,"p75":13.2,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Dermoid sinus","sys":"skin","on":[0,6],"sev":"serious","inh":"Linked to the ridge allele (FGF gene duplication)","test":"Palpation along the dorsal midline; MRI to check for dural attachment","note":"Breed-defining, and directly linked to the ridge itself. A midline tract that can communicate with the spinal cord, so it must be excised."},
+ {"n":"Degenerative myelopathy","sys":"neuro","on":[84,144],"sev":"limiting","inh":"Autosomal recessive (SOD1)","test":"DNA test; MRI","note":""},
+ {"n":"Early-onset myoclonic epilepsy","sys":"neuro","on":[1,7],"sev":"serious","inh":"Autosomal recessive (DIRAS1)","test":"DNA test","note":"Breed-specific. Myoclonic twitches while drowsy in a young puppy, often progressing to generalised seizures."},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Hip and elbow dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[36,132],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""},
+ {"n":"Mast cell tumour","sys":"onc","on":[60,132],"sev":"serious","inh":"Breed predisposition","test":"FNA cytology","note":""}
+]},
+{"name":"Basenji","size":"small","life":{"mean":13.0,"mode":14,"modeEst":true,"p25":11.2,"p75":14.9,"src":["mcm2024"]},"dz":[
+ {"n":"Fanconi syndrome","sys":"uro","on":[36,84],"sev":"limiting","inh":"Autosomal recessive (FAN1)","test":"DNA test; urine glucose with normal blood glucose","note":"The Basenji disease. Glucosuria without hyperglycaemia is the giveaway, and the Gonto protocol of bicarbonate and supplements changes survival substantially."},
+ {"n":"Pyruvate kinase deficiency","sys":"heme","on":[6,36],"sev":"limiting","inh":"Autosomal recessive (PKLR)","test":"DNA test; persistent regenerative anaemia","note":"Chronic haemolysis with myelofibrosis and osteosclerosis, usually fatal by 4 yr."},
+ {"n":"Immunoproliferative enteropathy","sys":"gi","on":[12,60],"sev":"serious","inh":"Breed-specific","test":"Intestinal biopsy; hyperglobulinaemia","note":"Basenji-specific protein-losing enteropathy with striking hyperglobulinaemia; stress-triggered flares."},
+ {"n":"Progressive retinal atrophy","sys":"eye","on":[36,84],"sev":"serious","inh":"Autosomal recessive","test":"CAER exam; DNA test","note":""},
+ {"n":"Persistent pupillary membranes","sys":"eye","on":[1,6],"sev":"mild","inh":"Autosomal recessive","test":"CAER exam at 8 wk","note":"High breed prevalence; usually visually insignificant."},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""}
+]},
+{"name":"Bloodhound","size":"giant","life":{"mean":9.3,"mode":10,"modeEst":true,"p25":7.4,"p75":11.1,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[24,108],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":"Bloodhounds carry the highest reported GDV mortality of any breed. Prophylactic gastropexy is strongly indicated."},
+ {"n":"Ectropion and entropion","sys":"eye","on":[3,24],"sev":"moderate","inh":"Conformational (excessive facial skin)","test":"Ophthalmic exam","note":""},
+ {"n":"Otitis externa","sys":"skin","on":[6,72],"sev":"moderate","inh":"Conformational","test":"Otoscopy; cytology","note":""},
+ {"n":"Hip and elbow dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Skin fold pyoderma","sys":"skin","on":[6,60],"sev":"mild","inh":"Conformational","test":"Cytology of the fold","note":""},
+ {"n":"Cardiomyopathy","sys":"cardio","on":[48,108],"sev":"limiting","inh":"Breed predisposition","test":"Echo","note":""}
+]},
+{"name":"Irish Wolfhound","size":"giant","life":{"mean":7.4,"mode":8,"modeEst":true,"p25":5.7,"p75":9.0,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Dilated cardiomyopathy with atrial fibrillation","sys":"cardio","on":[36,96],"sev":"limiting","inh":"Autosomal, breed-specific","test":"Annual echo and ECG from 2 yr","note":"Lone atrial fibrillation often precedes overt DCM by years in this breed, which makes annual auscultation and ECG genuinely predictive."},
+ {"n":"Osteosarcoma","sys":"onc","on":[48,96],"sev":"limiting","inh":"Height-associated, highly heritable","test":"Limb radiograph; staging","note":"The tallest breeds carry the highest risk, and the Wolfhound sits at the extreme."},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[24,96],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":"Prophylactic gastropexy is close to routine in this breed."},
+ {"n":"Portosystemic shunt","sys":"gi","on":[2,12],"sev":"serious","inh":"Autosomal, heritable","test":"Bile acids; protein C; CT angiography","note":"Irish Wolfhounds have one of the highest congenital shunt rates of any breed; many breeders bile-acid screen whole litters."},
+ {"n":"Pneumonia and lobe torsion","sys":"resp","on":[12,96],"sev":"serious","inh":"Conformational, deep narrow chest","test":"Thoracic radiographs; CT","note":""},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Cervical spondylomyelopathy","sys":"neuro","on":[24,84],"sev":"serious","inh":"Conformational","test":"MRI","note":""}
+]},
+{"name":"Afghan Hound","size":"large","life":{"mean":11.9,"mode":13,"modeEst":true,"p25":10.1,"p75":13.8,"src":["mcm2024"]},"dz":[
+ {"n":"Afghan myelopathy","sys":"neuro","on":[3,12],"sev":"limiting","inh":"Autosomal recessive","test":"MRI; histopathology","note":"Breed-specific necrotising myelopathy. Ascending paralysis in a young Afghan, progressing to respiratory failure within weeks."},
+ {"n":"Anaesthetic sensitivity","sys":"metab","on":[6,240],"sev":"moderate","inh":"Sighthound physiology","test":"Recognised risk","note":""},
+ {"n":"Chylothorax","sys":"resp","on":[24,96],"sev":"serious","inh":"Breed predisposition","test":"Thoracocentesis with triglyceride comparison","note":"Afghans are one of the most overrepresented breeds for idiopathic chylothorax."},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Cataract","sys":"eye","on":[12,60],"sev":"serious","inh":"Autosomal recessive","test":"CAER exam","note":""},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"mild","inh":"Polygenic","test":"OFA / PennHIP","note":"Notably low prevalence compared with other large breeds."}
+]},
+{"name":"Norwegian Elkhound","size":"medium","life":{"mean":12.0,"mode":13,"modeEst":true,"p25":10.2,"p75":13.9,"src":["mcm2024"]},"dz":[
+ {"n":"Primary renal glucosuria","sys":"uro","on":[12,60],"sev":"moderate","inh":"Autosomal recessive","test":"Urine glucose with normal blood glucose","note":"Breed-specific tubular defect; distinguish from Fanconi and diabetes."},
+ {"n":"Progressive retinal atrophy (early rod-cone)","sys":"eye","on":[6,36],"sev":"serious","inh":"Autosomal recessive","test":"CAER exam; DNA test","note":""},
+ {"n":"Primary glaucoma","sys":"eye","on":[36,96],"sev":"serious","inh":"Goniodysgenesis","test":"Tonometry; gonioscopy","note":""},
+ {"n":"Fanconi syndrome","sys":"uro","on":[24,84],"sev":"serious","inh":"Breed predisposition","test":"Urinalysis; blood gas","note":""},
+ {"n":"Sebaceous cysts and keratoacanthoma","sys":"skin","on":[36,120],"sev":"mild","inh":"Breed predisposition","test":"Cytology; excision","note":""},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""}
+]}
+]}

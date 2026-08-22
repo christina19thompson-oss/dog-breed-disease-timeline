@@ -1,0 +1,128 @@
+{
+"group": "Sporting",
+"breeds": [
+{"name":"Labrador Retriever","size":"large","life":{"mean":12.0,"mode":13,"modeEst":true,"p25":10.3,"p75":14.1,"src":["mcm2024","kc2014","vc2018"]},"dz":[
+ {"n":"Elbow dysplasia (FCP/UAP/OCD)","sys":"ortho","on":[4,12],"sev":"moderate","inh":"Polygenic","test":"OFA elbow radiographs from 24 wk; CT most sensitive","note":"Forelimb lameness in a growing pup. Labs are the leading breed for medial coronoid disease."},
+ {"n":"Hip dysplasia","sys":"ortho","on":[5,24],"sev":"moderate","inh":"Polygenic","test":"OFA at 24 mo / PennHIP from 16 wk","note":"Biphasic: laxity pain at 5-12 mo, then osteoarthritis pain again in middle age."},
+ {"n":"Osteochondrosis of the shoulder","sys":"ortho","on":[4,9],"sev":"moderate","inh":"Polygenic","test":"Flexed shoulder radiographs","note":"Classic large-breed male puppy; often bilateral."},
+ {"n":"Centronuclear myopathy","sys":"neuro","on":[2,7],"sev":"serious","inh":"Autosomal recessive","test":"DNA test (PTPLA/HMGA2)","note":"Exercise intolerance and a stiff hopping gait from weaning, with generalised muscle atrophy."},
+ {"n":"Exercise-induced collapse","sys":"neuro","on":[7,36],"sev":"moderate","inh":"Autosomal recessive","test":"DNA test (DNM1)","note":"Rear-limb collapse after 5-20 min of intense excited exercise; normal between episodes."},
+ {"n":"Cranial cruciate ligament rupture","sys":"ortho","on":[24,96],"sev":"moderate","inh":"Polygenic, obesity-modified","test":"Cranial drawer / tibial compression","note":"Degenerative rather than traumatic here; about half rupture the other side within two years."},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,72],"sev":"mild","inh":"Autoimmune, familial","test":"Total T4, free T4, TSH, TgAA","note":"Middle-aged onset: weight gain, dermatopathy, lethargy."},
+ {"n":"Obesity predisposition (POMC deletion)","sys":"metab","on":[12,84],"sev":"moderate","inh":"Autosomal, additive effect","test":"DNA test (POMC)","note":"About a quarter of Labradors carry the 14-bp POMC deletion, driving food motivation and adiposity."},
+ {"n":"Atopic dermatitis","sys":"skin","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"Favrot criteria; allergen testing","note":"Onset almost always between 6 mo and 3 yr; pedal and ventral pruritus."},
+ {"n":"Progressive retinal atrophy (prcd)","sys":"eye","on":[36,84],"sev":"serious","inh":"Autosomal recessive","test":"DNA test (PRCD); annual CAER exam","note":"Night blindness first, progressing to complete vision loss."},
+ {"n":"Mast cell tumour","sys":"onc","on":[72,144],"sev":"serious","inh":"Breed predisposition","test":"FNA cytology; c-KIT assay","note":"Any new skin lump on a middle-aged Labrador is a mast cell tumour until aspirated."},
+ {"n":"Laryngeal paralysis (GOLPP)","sys":"resp","on":[96,168],"sev":"serious","inh":"Acquired polyneuropathy","test":"Sedated laryngeal exam with doxapram","note":"Geriatric. Stridor and heat intolerance come first; megaoesophagus and hind-limb weakness follow."},
+ {"n":"Lymphoma","sys":"onc","on":[72,144],"sev":"limiting","inh":"Breed predisposition","test":"Peripheral node FNA; flow cytometry","note":"Most commonly multicentric B-cell."}
+]},
+{"name":"Golden Retriever","size":"large","life":{"mean":12.0,"mode":13,"modeEst":true,"p25":10.0,"p75":13.8,"src":["mcm2024","kc2014","glt2015"]},"dz":[
+ {"n":"Subvalvular aortic stenosis","sys":"cardio","on":[2,12],"sev":"serious","inh":"Autosomal dominant, variable penetrance","test":"Auscultation, then echocardiogram after 12 mo","note":"Left basilar systolic murmur. Severe grades carry a real risk of sudden death in young adults."},
+ {"n":"Ichthyosis","sys":"skin","on":[2,12],"sev":"mild","inh":"Autosomal recessive","test":"DNA test (PNPLA1)","note":"Large adherent scale from puppyhood; cosmetic more than clinical and often improves with age."},
+ {"n":"Elbow dysplasia","sys":"ortho","on":[4,12],"sev":"moderate","inh":"Polygenic","test":"OFA elbow radiographs","note":"Second only to hip dysplasia as a cause of young-adult forelimb lameness in this breed."},
+ {"n":"Hip dysplasia","sys":"ortho","on":[5,24],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":"One of the most heavily screened breeds, yet OFA dysplastic rates remain near 19%."},
+ {"n":"Atopic dermatitis","sys":"skin","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"Clinical criteria plus allergen testing","note":"Frequently complicated by recurrent otitis and pyoderma."},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,72],"sev":"mild","inh":"Autoimmune, familial","test":"Full thyroid panel","note":"Among the highest-prevalence breeds for autoimmune thyroiditis."},
+ {"n":"Cranial cruciate ligament rupture","sys":"ortho","on":[24,84],"sev":"moderate","inh":"Polygenic","test":"Orthopaedic exam","note":"Often bilateral over time."},
+ {"n":"Pigmentary uveitis","sys":"eye","on":[72,132],"sev":"serious","inh":"Breed-specific, likely dominant","test":"Annual CAER exam from 6 yr","note":"Golden-specific. Radial pigment on the anterior lens capsule, progressing to glaucoma and blindness if missed."},
+ {"n":"Progressive retinal atrophy (GR-PRA1/2)","sys":"eye","on":[48,120],"sev":"serious","inh":"Autosomal recessive","test":"DNA tests GR_PRA1, GR_PRA2, prcd","note":"Later onset than PRA in most other breeds."},
+ {"n":"Mast cell tumour","sys":"onc","on":[60,132],"sev":"serious","inh":"Breed predisposition","test":"FNA cytology","note":"Common enough that every cutaneous mass warrants an aspirate."},
+ {"n":"Lymphoma","sys":"onc","on":[72,144],"sev":"limiting","inh":"Breed predisposition","test":"Node FNA; flow cytometry","note":"Goldens carry one of the highest lifetime lymphoma risks of any breed."},
+ {"n":"Haemangiosarcoma","sys":"onc","on":[84,156],"sev":"limiting","inh":"Breed predisposition","test":"Abdominal ultrasound; echo for a right atrial mass","note":"Splenic and right-atrial forms; a leading cause of death in the breed. Collapse with haemoabdomen is the classic ER presentation."},
+ {"n":"Histiocytic sarcoma","sys":"onc","on":[72,144],"sev":"limiting","inh":"Breed predisposition (CDKN2A locus)","test":"Cytology / histopathology","note":"Overrepresented alongside Bernese Mountain Dogs and Flat-Coats."}
+]},
+{"name":"German Shorthaired Pointer","size":"large","life":{"mean":12.2,"mode":13,"modeEst":true,"p25":10.5,"p75":14.2,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"von Willebrand disease type II","sys":"heme","on":[2,24],"sev":"serious","inh":"Autosomal recessive","test":"DNA test; vWF:Ag with multimer analysis","note":"Type II is qualitatively severe. Bleeding often first shows at tooth eruption or a routine neuter."},
+ {"n":"Cone degeneration (day blindness)","sys":"eye","on":[2,6],"sev":"moderate","inh":"Autosomal recessive","test":"DNA test (CNGB3)","note":"Puppy navigates in dim light but bumps into things in bright daylight."},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Lupoid dermatosis","sys":"skin","on":[6,36],"sev":"moderate","inh":"Autosomal recessive","test":"DNA test; skin biopsy","note":"Breed-specific scaling dermatosis of young dogs."},
+ {"n":"Subaortic stenosis","sys":"cardio","on":[2,12],"sev":"serious","inh":"Polygenic","test":"Echocardiogram","note":""},
+ {"n":"Idiopathic epilepsy","sys":"neuro","on":[12,60],"sev":"moderate","inh":"Suspected polygenic","test":"Diagnosis of exclusion; MRI and CSF","note":"First seizure typically between 1 and 5 yr."},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[36,144],"sev":"limiting","inh":"Conformational (deep chest)","test":"Right lateral abdominal radiograph","note":"Prophylactic gastropexy at neuter is defensible in this breed."},
+ {"n":"Mast cell tumour","sys":"onc","on":[60,132],"sev":"serious","inh":"Breed predisposition","test":"FNA cytology","note":""}
+]},
+{"name":"Cocker Spaniel (American)","size":"medium","life":{"mean":11.9,"mode":13,"modeEst":true,"p25":10.0,"p75":14.0,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Otitis externa","sys":"skin","on":[6,60],"sev":"moderate","inh":"Conformational plus atopic","test":"Otoscopy with cytology","note":"Pendulous ear, dense canal hair, abundant ceruminous glands. The breed's signature problem, and it ends in end-stage ear disease if managed reactively."},
+ {"n":"Primary seborrhoea","sys":"skin","on":[12,36],"sev":"moderate","inh":"Autosomal recessive","test":"Skin biopsy after excluding secondary causes","note":"Greasy, malodorous keratinisation defect beginning in young adulthood."},
+ {"n":"Hereditary cataract","sys":"eye","on":[12,60],"sev":"serious","inh":"Autosomal recessive","test":"Annual CAER exam","note":"One of the top breeds for juvenile-onset hereditary cataract."},
+ {"n":"Progressive retinal atrophy (prcd)","sys":"eye","on":[36,72],"sev":"serious","inh":"Autosomal recessive","test":"DNA test (PRCD)","note":""},
+ {"n":"Primary glaucoma","sys":"eye","on":[48,108],"sev":"serious","inh":"Goniodysgenesis, inherited","test":"Tonometry with gonioscopy of both eyes","note":"A true emergency. The second eye typically follows within about eight months if untreated."},
+ {"n":"Immune-mediated haemolytic anaemia","sys":"heme","on":[24,84],"sev":"limiting","inh":"Breed predisposition","test":"Saline agglutination, spherocytes, Coombs","note":"Cocker Spaniels are the most overrepresented breed for IMHA."},
+ {"n":"Myxomatous mitral valve disease","sys":"cardio","on":[72,156],"sev":"serious","inh":"Polygenic","test":"Auscultation; echo; NT-proBNP","note":"Left apical systolic murmur, slowly progressive over years."},
+ {"n":"Dilated cardiomyopathy","sys":"cardio","on":[48,108],"sev":"limiting","inh":"Breed-associated; a taurine-responsive form is described","test":"Echo; plasma and whole-blood taurine","note":"Worth measuring taurine in this breed specifically, because a subset genuinely responds."},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Intervertebral disc disease","sys":"neuro","on":[36,84],"sev":"serious","inh":"Chondrodystrophic (FGF4L2)","test":"Neurological exam; MRI or CT","note":""}
+]},
+{"name":"English Springer Spaniel","size":"medium","life":{"mean":11.9,"mode":13,"modeEst":true,"p25":10.1,"p75":13.8,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Phosphofructokinase deficiency","sys":"heme","on":[6,36],"sev":"serious","inh":"Autosomal recessive","test":"DNA test (PFKM)","note":"Episodic haemolytic crisis triggered by panting or excitement: pigmenturia, fever, weakness."},
+ {"n":"Fucosidosis","sys":"neuro","on":[18,48],"sev":"limiting","inh":"Autosomal recessive","test":"DNA test (FUCA1)","note":"Breed-specific lysosomal storage disease. Progressive ataxia and behaviour change in a young adult."},
+ {"n":"Retinal dysplasia","sys":"eye","on":[2,8],"sev":"moderate","inh":"Autosomal recessive","test":"CAER exam at 6-8 wk","note":"Detectable in the litter, so screen puppies rather than adults."},
+ {"n":"Otitis externa","sys":"skin","on":[6,60],"sev":"moderate","inh":"Conformational plus atopic","test":"Otoscopy with cytology","note":""},
+ {"n":"Progressive retinal atrophy (cord1)","sys":"eye","on":[36,84],"sev":"serious","inh":"Autosomal recessive","test":"DNA test (RPGRIP1)","note":""},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Immune-mediated haemolytic anaemia","sys":"heme","on":[24,84],"sev":"limiting","inh":"Breed predisposition","test":"Coombs; spherocytes","note":""},
+ {"n":"Idiopathic epilepsy","sys":"neuro","on":[12,48],"sev":"moderate","inh":"Familial","test":"Exclusion; MRI and CSF","note":""}
+]},
+{"name":"Vizsla","size":"large","life":{"mean":12.6,"mode":14,"modeEst":true,"p25":11.0,"p75":14.6,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Inflammatory polymyopathy","sys":"neuro","on":[12,60],"sev":"serious","inh":"DLA-associated, breed-specific","test":"Muscle biopsy; 2M antibody titre","note":"Vizsla-specific masticatory and generalised myositis: dysphagia, muscle atrophy, regurgitation."},
+ {"n":"Sebaceous adenitis","sys":"skin","on":[12,60],"sev":"moderate","inh":"Suspected autosomal recessive","test":"Skin biopsy","note":"Symmetrical alopecia with fine adherent scale over the trunk in a young adult."},
+ {"n":"Idiopathic epilepsy","sys":"neuro","on":[12,48],"sev":"moderate","inh":"Familial","test":"Exclusion; MRI and CSF","note":""},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Mast cell tumour","sys":"onc","on":[60,132],"sev":"serious","inh":"Breed predisposition","test":"FNA cytology","note":""},
+ {"n":"Haemangiosarcoma","sys":"onc","on":[84,144],"sev":"limiting","inh":"Breed predisposition","test":"Abdominal ultrasound; echo","note":""},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[36,144],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""}
+]},
+{"name":"Weimaraner","size":"large","life":{"mean":11.4,"mode":12,"modeEst":true,"p25":9.6,"p75":13.3,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Hypertrophic osteodystrophy","sys":"ortho","on":[2,7],"sev":"serious","inh":"Breed predisposition","test":"Radiographs showing a double physeal line in distal radius and ulna","note":"Febrile, painful, swollen metaphyses in a 3-4 mo puppy. Weimaraners get the severe systemic form."},
+ {"n":"Immunodeficiency and vaccine reaction syndrome","sys":"immune","on":[2,9],"sev":"serious","inh":"Breed-specific, familial","test":"Quantitative IgG and IgA","note":"Post-vaccinal fever with sterile inflammation. A modified vaccine protocol is reasonable in affected lines."},
+ {"n":"Spinal dysraphism","sys":"neuro","on":[1,4],"sev":"moderate","inh":"Suspected autosomal recessive","test":"Neurological exam; MRI","note":"Bunny-hopping gait from the moment the puppy first walks, and non-progressive thereafter."},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[24,144],"sev":"limiting","inh":"Conformational (deep narrow chest)","test":"Right lateral radiograph","note":"Among the highest-risk breeds; prophylactic gastropexy is well justified."},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Entropion and distichiasis","sys":"eye","on":[4,18],"sev":"mild","inh":"Conformational","test":"Ophthalmic exam","note":""},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Haemangiosarcoma","sys":"onc","on":[84,144],"sev":"limiting","inh":"Breed predisposition","test":"Abdominal ultrasound; echo","note":""}
+]},
+{"name":"Brittany","size":"medium","life":{"mean":12.6,"mode":14,"modeEst":true,"p25":11.0,"p75":14.5,"src":["mcm2024"]},"dz":[
+ {"n":"Spinal muscular atrophy","sys":"neuro","on":[1,12],"sev":"limiting","inh":"Autosomal dominant with variable expression","test":"EMG; pedigree analysis","note":"Breed-specific motor neuron disease. The accelerated form kills by 3-4 mo; the chronic form is compatible with years of life."},
+ {"n":"Complement C3 deficiency","sys":"immune","on":[2,36],"sev":"serious","inh":"Autosomal recessive","test":"Serum C3 assay","note":"Recurrent sepsis and membranoproliferative glomerulonephritis, classically described in this breed."},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Idiopathic epilepsy","sys":"neuro","on":[12,48],"sev":"moderate","inh":"Familial","test":"Exclusion","note":""},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Progressive retinal atrophy","sys":"eye","on":[36,84],"sev":"serious","inh":"Autosomal recessive","test":"CAER exam; DNA test where available","note":""}
+]},
+{"name":"Chesapeake Bay Retriever","size":"large","life":{"mean":11.5,"mode":12,"modeEst":true,"p25":9.8,"p75":13.4,"src":["mcm2024"]},"dz":[
+ {"n":"Type III von Willebrand disease","sys":"heme","on":[2,24],"sev":"serious","inh":"Autosomal recessive","test":"DNA test; vWF:Ag","note":"Type III is the null phenotype, so bleeding is severe."},
+ {"n":"Progressive retinal atrophy (prcd)","sys":"eye","on":[36,84],"sev":"serious","inh":"Autosomal recessive","test":"DNA test (PRCD)","note":""},
+ {"n":"Exercise-induced collapse","sys":"neuro","on":[7,36],"sev":"moderate","inh":"Autosomal recessive","test":"DNA test (DNM1)","note":""},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Elbow dysplasia","sys":"ortho","on":[4,12],"sev":"moderate","inh":"Polygenic","test":"OFA elbow radiographs","note":""},
+ {"n":"Degenerative myelopathy","sys":"neuro","on":[96,144],"sev":"limiting","inh":"Autosomal recessive (SOD1), incomplete penetrance","test":"DNA test (SOD1); MRI to exclude compressive disease","note":"Painless, progressive proprioceptive ataxia of the pelvic limbs in an older dog."},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[36,144],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""}
+]},
+{"name":"Irish Setter","size":"large","life":{"mean":11.7,"mode":13,"modeEst":true,"p25":9.9,"p75":13.6,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Canine leukocyte adhesion deficiency","sys":"immune","on":[0,6],"sev":"limiting","inh":"Autosomal recessive","test":"DNA test (ITGB2)","note":"Breed-defining. Recurrent severe infection with a striking neutrophilia from the first weeks of life; fatal without transplant."},
+ {"n":"Progressive retinal atrophy (rcd1)","sys":"eye","on":[3,12],"sev":"serious","inh":"Autosomal recessive","test":"DNA test (PDE6B)","note":"Very early onset. Night blindness by 3-4 mo and blind by a year. Historically the first canine PRA gene mapped."},
+ {"n":"Gluten-sensitive enteropathy","sys":"gi","on":[4,24],"sev":"moderate","inh":"Autosomal recessive, breed-specific","test":"Diet trial; intestinal biopsy","note":"Described specifically in Irish Setters and responsive to a gluten-free diet."},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[24,144],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":"One of the highest-risk breeds."},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Osteosarcoma","sys":"onc","on":[72,144],"sev":"limiting","inh":"Breed predisposition","test":"Radiograph of the painful long bone plus thoracic staging","note":""}
+]},
+{"name":"Flat-Coated Retriever","size":"large","life":{"mean":9.5,"mode":10,"modeEst":true,"p25":7.6,"p75":11.4,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Histiocytic sarcoma","sys":"onc","on":[60,120],"sev":"limiting","inh":"Breed predisposition, strongly heritable","test":"Cytology and histopathology; imaging","note":"The defining problem of the breed and the main reason its mean lifespan is so short. Localised periarticular and disseminated forms both occur."},
+ {"n":"Other soft tissue sarcoma","sys":"onc","on":[60,132],"sev":"limiting","inh":"Breed predisposition","test":"Histopathology","note":"Roughly half of all Flat-Coats die of cancer."},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Glaucoma with goniodysgenesis","sys":"eye","on":[36,96],"sev":"serious","inh":"Inherited","test":"Gonioscopy; tonometry","note":""},
+ {"n":"Patellar luxation","sys":"ortho","on":[6,36],"sev":"mild","inh":"Polygenic","test":"Orthopaedic exam","note":""},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[36,120],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""}
+]},
+{"name":"Nova Scotia Duck Tolling Retriever","size":"medium","life":{"mean":12.1,"mode":13,"modeEst":true,"p25":10.4,"p75":14.0,"src":["mcm2024"]},"dz":[
+ {"n":"Immune-mediated rheumatic disease","sys":"immune","on":[12,72],"sev":"serious","inh":"DLA-associated, breed-specific","test":"ANA; CSF analysis; arthrocentesis","note":"Toller-specific systemic immune disease: stiffness, shifting lameness, neck pain, fever."},
+ {"n":"Collie eye anomaly","sys":"eye","on":[1,3],"sev":"moderate","inh":"Autosomal recessive (NHEJ1)","test":"DNA test; CAER exam at 6-8 wk","note":"It does occur in Tollers, not only herding breeds. Examine before 12 wk, before the go-normal phenomenon masks it."},
+ {"n":"Degenerative encephalopathy","sys":"neuro","on":[6,36],"sev":"limiting","inh":"Autosomal recessive","test":"DNA test (SLC12A2)","note":"Breed-specific. Anxiety and compulsive behaviour progressing to ataxia."},
+ {"n":"Hypoadrenocorticism (Addison's)","sys":"endo","on":[24,72],"sev":"serious","inh":"Familial","test":"Basal cortisol, then ACTH stimulation","note":"Overrepresented breed. Waxing and waning GI signs in a young adult should prompt an electrolyte check."},
+ {"n":"Progressive retinal atrophy (prcd)","sys":"eye","on":[36,84],"sev":"serious","inh":"Autosomal recessive","test":"DNA test (PRCD)","note":""},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""}
+]}
+]}

@@ -1,0 +1,100 @@
+{
+"group": "Terrier",
+"breeds": [
+{"name":"West Highland White Terrier","size":"small","life":{"mean":12.7,"mode":14,"modeEst":true,"p25":10.9,"p75":14.6,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Atopic dermatitis","sys":"skin","on":[6,36],"sev":"moderate","inh":"Polygenic, strongly heritable","test":"Favrot criteria; allergen testing","note":"Westies are the archetypal atopic breed. Onset is nearly always between 6 mo and 3 yr, and it is lifelong."},
+ {"n":"Malassezia dermatitis (epidermal dysplasia)","sys":"skin","on":[6,48],"sev":"moderate","inh":"Breed-specific keratinisation defect","test":"Tape cytology","note":"The greasy, hyperpigmented, elephant-skin Westie. Usually secondary to atopy rather than primary."},
+ {"n":"Idiopathic pulmonary fibrosis","sys":"resp","on":[84,156],"sev":"limiting","inh":"Breed-specific","test":"CT; bronchoalveolar lavage to exclude other causes","note":"Westie lung disease. An older Westie with a chronic dry cough, exercise intolerance, and velcro crackles. Progressive and untreatable, so the diagnosis mainly guides expectations."},
+ {"n":"Copper-associated hepatopathy","sys":"gi","on":[24,96],"sev":"serious","inh":"Autosomal recessive","test":"Liver biopsy with copper quantification","note":"Investigate a persistently raised ALT in this breed rather than monitoring it."},
+ {"n":"Craniomandibular osteopathy","sys":"ortho","on":[3,8],"sev":"moderate","inh":"Autosomal recessive (SLC37A2)","test":"Skull radiographs","note":"Lion jaw. A 4-6 mo puppy with jaw pain, drooling and an inability to open the mouth. Self-limiting once growth stops."},
+ {"n":"Legg-Calve-Perthes disease","sys":"ortho","on":[4,12],"sev":"moderate","inh":"Autosomal recessive","test":"Hip radiographs","note":"Avascular necrosis of the femoral head causing progressive unilateral hindlimb lameness in a small-breed juvenile."},
+ {"n":"Patellar luxation","sys":"ortho","on":[6,36],"sev":"mild","inh":"Polygenic","test":"Orthopaedic exam","note":""},
+ {"n":"Cataract","sys":"eye","on":[12,72],"sev":"moderate","inh":"Autosomal recessive","test":"CAER exam","note":""}
+]},
+{"name":"Scottish Terrier","size":"small","life":{"mean":12.0,"mode":13,"modeEst":true,"p25":10.2,"p75":13.9,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Transitional cell carcinoma of the bladder","sys":"onc","on":[84,144],"sev":"limiting","inh":"Breed predisposition (about 18-20x baseline risk)","test":"Ultrasound; BRAF urine test; avoid blind cystocentesis of a mass","note":"The highest-risk breed by a wide margin. Recurrent lower urinary signs in an older Scottie are cancer until proven otherwise, not simple cystitis."},
+ {"n":"von Willebrand disease type III","sys":"heme","on":[2,24],"sev":"serious","inh":"Autosomal recessive","test":"DNA test; vWF:Ag","note":"Scotties get the null type, so bleeding is severe."},
+ {"n":"Scottie cramp","sys":"neuro","on":[2,18],"sev":"mild","inh":"Autosomal recessive","test":"Clinical; exercise or excitement provocation","note":"Breed-specific serotonergic disorder. Episodic hypertonicity and an arched back during excitement, with full recovery. Not painful and not epilepsy."},
+ {"n":"Craniomandibular osteopathy","sys":"ortho","on":[3,8],"sev":"moderate","inh":"Autosomal recessive","test":"Skull radiographs","note":""},
+ {"n":"Cushing's disease","sys":"endo","on":[84,144],"sev":"serious","inh":"Breed predisposition","test":"LDDS test; ACTH stimulation","note":"Note that Scotties also run physiologically high ALP without Cushing's, which complicates screening."},
+ {"n":"Lymphoma and mast cell tumour","sys":"onc","on":[72,144],"sev":"limiting","inh":"Breed predisposition","test":"FNA cytology","note":""},
+ {"n":"Atopic dermatitis","sys":"skin","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"Clinical","note":""}
+]},
+{"name":"Bull Terrier","size":"medium","life":{"mean":10.2,"mode":11,"modeEst":true,"p25":8.3,"p75":12.1,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Hereditary nephritis","sys":"uro","on":[12,60],"sev":"limiting","inh":"Autosomal dominant","test":"Urine protein:creatinine ratio; renal biopsy","note":"Breed-specific glomerulopathy. Proteinuria appears years before azotaemia, so annual UPC screening from a year old is the way to catch it."},
+ {"n":"Congenital deafness","sys":"neuro","on":[0,3],"sev":"moderate","inh":"Pigment-associated (white coat)","test":"BAER test at 6 wk","note":"White Bull Terriers have a high rate. Unilateral deafness is easily missed at home."},
+ {"n":"Lethal acrodermatitis","sys":"skin","on":[1,12],"sev":"limiting","inh":"Autosomal recessive (MKLN1)","test":"DNA test","note":"Breed-specific zinc metabolism defect. Poor growth, crusting footpads, and death usually before 2 yr."},
+ {"n":"Compulsive behaviour (tail chasing, trancing)","sys":"neuro","on":[6,36],"sev":"moderate","inh":"Heritable, breed-specific","test":"Behavioural assessment; exclude partial seizures","note":"Genuinely a medical problem in this breed rather than a quirk, and it can be self-injurious."},
+ {"n":"Mitral valve dysplasia and aortic stenosis","sys":"cardio","on":[2,24],"sev":"serious","inh":"Congenital, heritable","test":"Echocardiogram","note":""},
+ {"n":"Primary lens luxation","sys":"eye","on":[36,72],"sev":"serious","inh":"Autosomal recessive (ADAMTS17)","test":"DNA test; ophthalmic exam","note":""},
+ {"n":"Atopic and demodectic skin disease","sys":"skin","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"Skin scrape; cytology","note":""}
+]},
+{"name":"Staffordshire Bull Terrier","size":"medium","life":{"mean":12.0,"mode":13,"modeEst":true,"p25":10.2,"p75":13.9,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"L-2-hydroxyglutaric aciduria","sys":"neuro","on":[6,48],"sev":"serious","inh":"Autosomal recessive (L2HGDH)","test":"DNA test; urine organic acids; MRI","note":"Breed-specific metabolic encephalopathy. Episodic ataxia, tremor and dementia-like behaviour in a young Staffie, often mistaken for epilepsy."},
+ {"n":"Hereditary cataract","sys":"eye","on":[6,36],"sev":"serious","inh":"Autosomal recessive (HSF4)","test":"DNA test; CAER exam","note":"Juvenile onset and often blinding by 3 yr if untreated."},
+ {"n":"Persistent hyperplastic primary vitreous","sys":"eye","on":[1,6],"sev":"serious","inh":"Autosomal dominant, incomplete penetrance","test":"CAER exam at 8 wk","note":"Congenital, so it is present at the first puppy check."},
+ {"n":"Mast cell tumour","sys":"onc","on":[48,120],"sev":"serious","inh":"Breed predisposition","test":"FNA cytology","note":"Bull-type breeds are strongly overrepresented."},
+ {"n":"Atopic dermatitis and demodicosis","sys":"skin","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"Skin scrape; cytology","note":""},
+ {"n":"Brachycephalic airway signs","sys":"resp","on":[6,60],"sev":"mild","inh":"Conformational","test":"Sedated airway exam","note":"Mild relative to Bulldogs, but heat intolerance is common."},
+ {"n":"Cranial cruciate ligament rupture","sys":"ortho","on":[24,84],"sev":"moderate","inh":"Conformational","test":"Cranial drawer","note":""}
+]},
+{"name":"American Staffordshire Terrier","size":"medium","life":{"mean":11.6,"mode":12,"modeEst":true,"p25":9.8,"p75":13.5,"src":["mcm2024"]},"dz":[
+ {"n":"Neuronal ceroid lipofuscinosis","sys":"neuro","on":[36,72],"sev":"limiting","inh":"Autosomal recessive (ARSG)","test":"DNA test","note":"Breed-specific and unusually late in onset. Progressive cerebellar ataxia beginning at 3-5 yr."},
+ {"n":"Cerebellar ataxia","sys":"neuro","on":[36,72],"sev":"limiting","inh":"Autosomal recessive","test":"DNA test; MRI","note":""},
+ {"n":"Cranial cruciate ligament rupture","sys":"ortho","on":[24,84],"sev":"moderate","inh":"Conformational","test":"Cranial drawer","note":""},
+ {"n":"Atopic dermatitis and demodicosis","sys":"skin","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"Skin scrape; cytology","note":""},
+ {"n":"Mast cell tumour","sys":"onc","on":[48,120],"sev":"serious","inh":"Breed predisposition","test":"FNA cytology","note":""},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""}
+]},
+{"name":"Cairn Terrier","size":"small","life":{"mean":13.2,"mode":14,"modeEst":true,"p25":11.4,"p75":15.1,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Globoid cell leukodystrophy (Krabbe disease)","sys":"neuro","on":[2,8],"sev":"limiting","inh":"Autosomal recessive (GALC)","test":"DNA test","note":"Classic breed for this. Progressive ataxia and tremor from 2-4 mo; fatal."},
+ {"n":"Portosystemic shunt","sys":"gi","on":[2,18],"sev":"serious","inh":"Congenital, heritable","test":"Bile acids; CT angiography","note":"Small terriers get extrahepatic shunts. Poor growth and post-prandial neurological signs."},
+ {"n":"Craniomandibular osteopathy","sys":"ortho","on":[3,8],"sev":"moderate","inh":"Autosomal recessive","test":"Skull radiographs","note":""},
+ {"n":"Legg-Calve-Perthes disease","sys":"ortho","on":[4,12],"sev":"moderate","inh":"Autosomal recessive","test":"Hip radiographs","note":""},
+ {"n":"Atopic dermatitis","sys":"skin","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"Clinical","note":""},
+ {"n":"Ocular melanosis and glaucoma","sys":"eye","on":[48,120],"sev":"serious","inh":"Autosomal dominant, breed-specific","test":"Ophthalmic exam; tonometry","note":"Cairn-specific pigment proliferation leading to secondary glaucoma."},
+ {"n":"Patellar luxation","sys":"ortho","on":[6,36],"sev":"mild","inh":"Polygenic","test":"Orthopaedic exam","note":""}
+]},
+{"name":"Parson Russell Terrier","size":"small","life":{"mean":13.3,"mode":14,"modeEst":true,"p25":11.5,"p75":15.2,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Primary lens luxation","sys":"eye","on":[36,72],"sev":"serious","inh":"Autosomal recessive (ADAMTS17)","test":"DNA test; ophthalmic exam from 18 mo","note":"One of the highest-risk breeds. Anterior luxation is a same-day surgical emergency, and prophylactic monitoring genuinely saves eyes."},
+ {"n":"Late-onset ataxia and spinocerebellar ataxia","sys":"neuro","on":[6,24],"sev":"limiting","inh":"Autosomal recessive (CAPN1 / KCNJ10)","test":"DNA test","note":"Two distinct breed-specific forms; the myokymia form adds muscle rippling and seizures."},
+ {"n":"Congenital deafness","sys":"neuro","on":[0,3],"sev":"moderate","inh":"Pigment-associated","test":"BAER test","note":""},
+ {"n":"Patellar luxation","sys":"ortho","on":[6,36],"sev":"mild","inh":"Polygenic","test":"Orthopaedic exam","note":""},
+ {"n":"Legg-Calve-Perthes disease","sys":"ortho","on":[4,12],"sev":"moderate","inh":"Autosomal recessive","test":"Hip radiographs","note":""},
+ {"n":"Atopic dermatitis","sys":"skin","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"Clinical","note":""}
+]},
+{"name":"Airedale Terrier","size":"large","life":{"mean":11.2,"mode":12,"modeEst":true,"p25":9.4,"p75":13.1,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"von Willebrand disease","sys":"heme","on":[2,24],"sev":"moderate","inh":"Autosomal recessive","test":"vWF:Ag; DNA test","note":""},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[36,132],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""},
+ {"n":"Dilated cardiomyopathy","sys":"cardio","on":[48,108],"sev":"limiting","inh":"Breed predisposition","test":"Echo","note":""},
+ {"n":"Melanoma and other cutaneous neoplasia","sys":"onc","on":[72,144],"sev":"serious","inh":"Breed predisposition","test":"Cytology; excisional biopsy","note":""}
+]},
+{"name":"Soft Coated Wheaten Terrier","size":"medium","life":{"mean":11.9,"mode":13,"modeEst":true,"p25":10.1,"p75":13.8,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Protein-losing nephropathy","sys":"uro","on":[36,96],"sev":"limiting","inh":"Autosomal recessive, breed-specific","test":"Annual urine protein:creatinine ratio from 1 yr; albumin","note":"Breed-defining. Wheatens can lose protein through kidney, gut, or both. Annual UPC screening is the standard recommendation for this breed and nothing else substitutes for it."},
+ {"n":"Protein-losing enteropathy","sys":"gi","on":[24,84],"sev":"limiting","inh":"Breed-specific, food-responsive component","test":"Albumin and globulin; intestinal biopsy","note":"Often coexists with the nephropathy. Panhypoproteinaemia with ascites or oedema."},
+ {"n":"Addison's disease","sys":"endo","on":[24,72],"sev":"serious","inh":"Familial","test":"ACTH stimulation","note":""},
+ {"n":"Renal dysplasia","sys":"uro","on":[6,36],"sev":"limiting","inh":"Familial","test":"Renal biopsy; imaging","note":"Young Wheaten with poor growth and azotaemia."},
+ {"n":"Atopic dermatitis","sys":"skin","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"Clinical","note":""}
+]},
+{"name":"Miniature Schnauzer","size":"small","life":{"mean":12.8,"mode":14,"modeEst":true,"p25":11.0,"p75":14.7,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Primary hyperlipidaemia","sys":"metab","on":[24,96],"sev":"moderate","inh":"Breed-specific, heritable","test":"12-hr fasted triglycerides and cholesterol","note":"The root cause of much of the rest of this list. Fasted hypertriglyceridaemia predisposes to pancreatitis, gallbladder mucocele and ocular lipid deposits, and it responds to a low-fat diet."},
+ {"n":"Pancreatitis","sys":"gi","on":[36,132],"sev":"serious","inh":"Secondary to hyperlipidaemia","test":"Specific canine pancreatic lipase; ultrasound","note":"Miniature Schnauzers are the classic pancreatitis breed, and recurrence is common without dietary fat restriction."},
+ {"n":"Urolithiasis (struvite and calcium oxalate)","sys":"uro","on":[24,108],"sev":"moderate","inh":"Breed predisposition","test":"Urinalysis; imaging; stone analysis","note":""},
+ {"n":"Sick sinus syndrome","sys":"cardio","on":[72,144],"sev":"serious","inh":"Breed-specific","test":"ECG; Holter; atropine response test","note":"Syncope in an older female Miniature Schnauzer. Pacemaker is often the only effective treatment."},
+ {"n":"Progressive retinal atrophy (Type A and B)","sys":"eye","on":[12,60],"sev":"serious","inh":"Autosomal recessive (PPT1, HIVEP3)","test":"DNA test; CAER exam","note":""},
+ {"n":"Congenital cataract","sys":"eye","on":[1,12],"sev":"serious","inh":"Autosomal recessive","test":"CAER exam at 8 wk","note":""},
+ {"n":"Schnauzer comedo syndrome","sys":"skin","on":[12,72],"sev":"mild","inh":"Breed-specific follicular defect","test":"Clinical: comedones along the dorsal midline","note":""},
+ {"n":"Diabetes mellitus","sys":"endo","on":[72,144],"sev":"serious","inh":"Breed predisposition","test":"Fasting glucose; fructosamine","note":"Often follows repeated pancreatitis in this breed."},
+ {"n":"Portosystemic shunt","sys":"gi","on":[2,18],"sev":"serious","inh":"Congenital, heritable","test":"Bile acids; CT angiography","note":""},
+ {"n":"Myotonia congenita","sys":"neuro","on":[1,8],"sev":"serious","inh":"Autosomal recessive (CLCN1)","test":"DNA test; EMG showing dive-bomber discharges","note":"Stiff, bunny-hopping puppy with a hypertrophied muscular appearance and difficulty rising."}
+]},
+{"name":"Border Terrier","size":"small","life":{"mean":13.5,"mode":15,"modeEst":true,"p25":11.7,"p75":15.4,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Canine epileptoid cramping syndrome (Spike's disease)","sys":"neuro","on":[24,72],"sev":"moderate","inh":"Suspected gluten-responsive, breed-specific","test":"Anti-transglutaminase and antigliadin antibodies; gluten-free diet trial","note":"Border Terrier-specific. Episodes of cramping, dystonia and borborygmi with full consciousness. Many cases resolve entirely on a gluten-free diet, which is worth trying before anticonvulsants."},
+ {"n":"Progressive retinal atrophy","sys":"eye","on":[36,96],"sev":"serious","inh":"Autosomal recessive","test":"CAER exam","note":""},
+ {"n":"Spongiform leucoencephalomyelopathy","sys":"neuro","on":[1,6],"sev":"limiting","inh":"Autosomal recessive","test":"Histopathology","note":"Shaking puppy syndrome in this breed."},
+ {"n":"Patellar luxation","sys":"ortho","on":[6,36],"sev":"mild","inh":"Polygenic","test":"Orthopaedic exam","note":""},
+ {"n":"Mitral valve disease","sys":"cardio","on":[96,168],"sev":"serious","inh":"Polygenic","test":"Auscultation; echo","note":""}
+]}
+]}

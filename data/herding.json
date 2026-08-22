@@ -1,0 +1,100 @@
+{
+"group": "Herding",
+"breeds": [
+{"name":"German Shepherd Dog","size":"large","life":{"mean":10.2,"mode":11,"modeEst":true,"p25":8.3,"p75":12.1,"src":["mcm2024","kc2014","vc2017"]},"dz":[
+ {"n":"Hip dysplasia","sys":"ortho","on":[5,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP; BVA scoring","note":"The breed most associated with hip dysplasia historically, and still among the highest OFA rates."},
+ {"n":"Elbow dysplasia (ununited anconeal process)","sys":"ortho","on":[5,12],"sev":"moderate","inh":"Polygenic","test":"Flexed elbow radiograph after 20 wk","note":"UAP is the GSD-typical form, because the anconeal process has a separate centre of ossification in this breed."},
+ {"n":"Exocrine pancreatic insufficiency","sys":"gi","on":[12,48],"sev":"serious","inh":"Autosomal recessive, immune-mediated acinar atrophy","test":"Serum TLI","note":"Young adult GSD, ravenous, losing weight, passing large pale stools. The breed accounts for most canine EPI."},
+ {"n":"Degenerative myelopathy","sys":"neuro","on":[84,144],"sev":"limiting","inh":"Autosomal recessive (SOD1)","test":"DNA test; MRI to exclude lumbosacral compression","note":"The classic GSD end-of-life disease. Painless, progressive, and often mistaken for hip arthritis early on."},
+ {"n":"Perianal fistula (anal furunculosis)","sys":"gi","on":[36,84],"sev":"serious","inh":"DLA-associated, breed-specific","test":"Perianal exam under sedation","note":"Almost exclusively a GSD disease. Immunosuppression with ciclosporin, not surgery, is now first-line."},
+ {"n":"Pannus (chronic superficial keratitis)","sys":"eye","on":[24,60],"sev":"moderate","inh":"Breed-specific, UV-aggravated","test":"Ophthalmic exam","note":"Bilateral vascular corneal infiltrate from the lateral limbus. Worse at altitude and in sunlight, and needs lifelong topical treatment."},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[24,132],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""},
+ {"n":"Haemangiosarcoma","sys":"onc","on":[72,144],"sev":"limiting","inh":"Breed predisposition","test":"Abdominal ultrasound; echo","note":"GSDs and Goldens are the two dominant splenic haemangiosarcoma breeds."},
+ {"n":"Lumbosacral stenosis (cauda equina)","sys":"neuro","on":[60,120],"sev":"moderate","inh":"Conformational","test":"Lumbosacral pain on extension; MRI","note":""},
+ {"n":"Idiopathic megaoesophagus","sys":"gi","on":[2,8],"sev":"serious","inh":"Congenital, heritable","test":"Thoracic radiographs; fluoroscopy","note":"Regurgitation at weaning; aspiration pneumonia is the main threat."},
+ {"n":"Pituitary dwarfism","sys":"endo","on":[2,8],"sev":"serious","inh":"Autosomal recessive (LHX3)","test":"DNA test; IGF-1","note":"Breed-specific. Proportionate dwarf that retains its puppy coat and never grows a guard coat."}
+]},
+{"name":"Australian Shepherd","size":"medium","life":{"mean":12.6,"mode":14,"modeEst":true,"p25":10.8,"p75":14.5,"src":["mcm2024"]},"dz":[
+ {"n":"MDR1 drug sensitivity","sys":"metab","on":[0,240],"sev":"serious","inh":"Autosomal, semi-dominant (ABCB1-1delta)","test":"DNA test (ABCB1)","note":"Present from birth and lifelong. Ivermectin, loperamide, and several chemotherapeutics cross into the CNS. Test before prescribing, not after the reaction."},
+ {"n":"Collie eye anomaly","sys":"eye","on":[1,3],"sev":"moderate","inh":"Autosomal recessive (NHEJ1)","test":"DNA test; CAER exam at 6-8 wk","note":"Examine puppies before 12 wk, before retinal pigmentation masks mild choroidal hypoplasia."},
+ {"n":"Hereditary cataract","sys":"eye","on":[24,84],"sev":"serious","inh":"Autosomal dominant (HSF4), incomplete penetrance","test":"DNA test; annual CAER exam","note":""},
+ {"n":"Merle-associated deafness and ocular defects","sys":"eye","on":[0,3],"sev":"serious","inh":"Merle locus (PMEL), dose-dependent","test":"BAER hearing test; ophthalmic exam","note":"Double-merle (merle x merle) puppies. Microphthalmia, colobomas, and congenital deafness. Entirely preventable by not breeding merle to merle."},
+ {"n":"Idiopathic epilepsy","sys":"neuro","on":[12,48],"sev":"moderate","inh":"Familial","test":"Exclusion; MRI and CSF","note":""},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Progressive retinal atrophy (prcd)","sys":"eye","on":[36,84],"sev":"serious","inh":"Autosomal recessive","test":"DNA test (PRCD)","note":""},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Haemangiosarcoma","sys":"onc","on":[84,144],"sev":"limiting","inh":"Breed predisposition","test":"Abdominal ultrasound","note":""}
+]},
+{"name":"Border Collie","size":"medium","life":{"mean":13.1,"mode":14,"modeEst":true,"p25":11.3,"p75":15.0,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Neuronal ceroid lipofuscinosis","sys":"neuro","on":[15,28],"sev":"limiting","inh":"Autosomal recessive (CLN5)","test":"DNA test (CLN5)","note":"Breed-specific. A previously normal young adult develops abnormal behaviour, vision loss and ataxia, and dies within months."},
+ {"n":"Trapped neutrophil syndrome","sys":"immune","on":[1,12],"sev":"limiting","inh":"Autosomal recessive (VPS13B)","test":"DNA test; CBC showing neutropenia","note":"Poor-doing puppy with recurrent infection and persistent neutropenia."},
+ {"n":"Collie eye anomaly","sys":"eye","on":[1,3],"sev":"moderate","inh":"Autosomal recessive (NHEJ1)","test":"DNA test; CAER exam at 6-8 wk","note":""},
+ {"n":"MDR1 drug sensitivity","sys":"metab","on":[0,240],"sev":"serious","inh":"Autosomal, semi-dominant","test":"DNA test (ABCB1)","note":"Lower frequency than in Collies but still present."},
+ {"n":"Idiopathic epilepsy","sys":"neuro","on":[12,60],"sev":"moderate","inh":"Polygenic, familial","test":"Exclusion; MRI and CSF","note":"One of the higher-prevalence breeds, and Border Collie epilepsy tends to be drug-resistant."},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Progressive retinal atrophy","sys":"eye","on":[36,96],"sev":"serious","inh":"Autosomal recessive","test":"CAER exam; DNA test","note":""},
+ {"n":"Border Collie collapse","sys":"neuro","on":[12,60],"sev":"moderate","inh":"Suspected heritable","test":"Exclusion of cardiac and metabolic causes; exercise testing","note":"Disorientation and ataxia after 5-15 min of intense work. Genetically distinct from Labrador EIC."},
+ {"n":"Deafness (congenital)","sys":"neuro","on":[0,3],"sev":"moderate","inh":"Pigment-associated","test":"BAER test at 6 wk","note":""}
+]},
+{"name":"Shetland Sheepdog","size":"small","life":{"mean":12.5,"mode":14,"modeEst":true,"p25":10.7,"p75":14.5,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Collie eye anomaly","sys":"eye","on":[1,3],"sev":"moderate","inh":"Autosomal recessive (NHEJ1)","test":"DNA test; CAER exam at 6-8 wk","note":""},
+ {"n":"MDR1 drug sensitivity","sys":"metab","on":[0,240],"sev":"serious","inh":"Autosomal, semi-dominant","test":"DNA test (ABCB1)","note":""},
+ {"n":"Dermatomyositis","sys":"skin","on":[2,12],"sev":"moderate","inh":"Autosomal dominant, variable penetrance","test":"Skin biopsy; EMG","note":"Crusting on face, ear tips and bony prominences of a young puppy, sometimes with masticatory muscle atrophy."},
+ {"n":"von Willebrand disease type III","sys":"heme","on":[2,24],"sev":"serious","inh":"Autosomal recessive","test":"DNA test; vWF:Ag","note":""},
+ {"n":"Patent ductus arteriosus","sys":"cardio","on":[1,6],"sev":"serious","inh":"Polygenic, heritable","test":"Continuous machinery murmur; echo","note":"Shelties are a top-three PDA breed. Curable if caught at the puppy vaccination visit."},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Gallbladder mucocele","sys":"gi","on":[84,156],"sev":"serious","inh":"Breed predisposition (ABCB4 insertion)","test":"Abdominal ultrasound showing a kiwi-fruit pattern","note":"Shelties are the classic breed. Often incidental on ultrasound before it ruptures, so look for it."},
+ {"n":"Idiopathic epilepsy","sys":"neuro","on":[12,48],"sev":"moderate","inh":"Familial","test":"Exclusion","note":""}
+]},
+{"name":"Rough Collie","size":"large","life":{"mean":12.2,"mode":13,"modeEst":true,"p25":10.4,"p75":14.1,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"MDR1 drug sensitivity","sys":"metab","on":[0,240],"sev":"serious","inh":"Autosomal, semi-dominant (ABCB1-1delta)","test":"DNA test (ABCB1)","note":"Around three quarters of Collies carry at least one copy. This is the breed the mutation was discovered in."},
+ {"n":"Collie eye anomaly","sys":"eye","on":[1,3],"sev":"moderate","inh":"Autosomal recessive (NHEJ1)","test":"DNA test; CAER exam at 6-8 wk","note":"Extremely high carrier frequency. Nearly all Collies are at least carriers."},
+ {"n":"Dermatomyositis","sys":"skin","on":[2,12],"sev":"moderate","inh":"Autosomal dominant, variable penetrance","test":"Skin biopsy","note":""},
+ {"n":"Grey collie syndrome (cyclic neutropenia)","sys":"heme","on":[0,6],"sev":"limiting","inh":"Autosomal recessive (AP3B1)","test":"DNA test; serial CBCs at 12-day intervals","note":"Silver-grey puppy with fever and infection every 12 days. Most die young."},
+ {"n":"Progressive retinal atrophy (rcd2)","sys":"eye","on":[6,24],"sev":"serious","inh":"Autosomal recessive","test":"DNA test","note":"Early onset compared with most PRAs."},
+ {"n":"Nodular dermatofibrosis","sys":"skin","on":[60,120],"sev":"limiting","inh":"Autosomal dominant (FLCN)","test":"Skin biopsy; abdominal ultrasound of kidneys","note":"Skin nodules in a middle-aged Collie signal renal cystadenocarcinoma. The skin lesion is the visible marker of internal cancer."},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Bloat and gastric dilatation-volvulus","sys":"gi","on":[36,132],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""}
+]},
+{"name":"Pembroke Welsh Corgi","size":"small","life":{"mean":12.2,"mode":13,"modeEst":true,"p25":10.4,"p75":14.1,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Intervertebral disc disease (Hansen type I)","sys":"neuro","on":[36,84],"sev":"serious","inh":"Chondrodystrophic (FGF4L2 retrogene)","test":"Neurological exam; MRI or CT","note":"Acute thoracolumbar disc extrusion in a middle-aged Corgi. Time from loss of deep pain to surgery is what determines outcome."},
+ {"n":"Degenerative myelopathy","sys":"neuro","on":[84,144],"sev":"limiting","inh":"Autosomal recessive (SOD1)","test":"DNA test; MRI to exclude disc disease","note":"Corgis have one of the highest SOD1 allele frequencies of any breed. Distinguishing this from chronic disc disease is the key clinical question in an older Corgi."},
+ {"n":"von Willebrand disease type I","sys":"heme","on":[2,24],"sev":"moderate","inh":"Autosomal recessive, incomplete penetrance","test":"DNA test; vWF:Ag","note":""},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic, complicated by chondrodystrophy","test":"OFA / PennHIP","note":""},
+ {"n":"Progressive retinal atrophy (rcd3)","sys":"eye","on":[12,48],"sev":"serious","inh":"Autosomal recessive (PDE6A)","test":"DNA test","note":""},
+ {"n":"Obesity and secondary orthopaedic disease","sys":"metab","on":[24,120],"sev":"moderate","inh":"Breed predisposition","test":"Body condition scoring","note":"Weight is the single biggest modifiable factor for disc disease risk in this breed."},
+ {"n":"Cystinuria (male)","sys":"uro","on":[24,84],"sev":"serious","inh":"Androgen-dependent, autosomal","test":"Urine cystine crystals; DNA test","note":""}
+]},
+{"name":"Old English Sheepdog","size":"large","life":{"mean":11.0,"mode":12,"modeEst":true,"p25":9.1,"p75":12.9,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Congenital deafness","sys":"neuro","on":[0,3],"sev":"moderate","inh":"Pigment-associated","test":"BAER test at 6 wk","note":""},
+ {"n":"Primary ciliary dyskinesia","sys":"resp","on":[1,12],"sev":"serious","inh":"Autosomal recessive","test":"Ciliary biopsy; nasal scintigraphy","note":"Puppy with chronic nasal discharge and recurrent pneumonia, sometimes with situs inversus."},
+ {"n":"Immune-mediated haemolytic anaemia","sys":"heme","on":[24,84],"sev":"limiting","inh":"Breed predisposition","test":"Coombs; spherocytes","note":"OES are among the top IMHA breeds."},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Cerebellar abiotrophy","sys":"neuro","on":[1,12],"sev":"limiting","inh":"Autosomal recessive","test":"MRI; histopathology","note":""},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""},
+ {"n":"Gastric dilatation-volvulus","sys":"gi","on":[36,132],"sev":"limiting","inh":"Conformational","test":"Right lateral radiograph","note":""}
+]},
+{"name":"Belgian Malinois","size":"large","life":{"mean":12.0,"mode":13,"modeEst":true,"p25":10.2,"p75":13.9,"src":["mcm2024"]},"dz":[
+ {"n":"Progressive retinal atrophy","sys":"eye","on":[36,84],"sev":"serious","inh":"Autosomal recessive","test":"CAER exam; DNA test","note":""},
+ {"n":"Hip and elbow dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Idiopathic epilepsy","sys":"neuro","on":[12,48],"sev":"moderate","inh":"Familial","test":"Exclusion","note":""},
+ {"n":"Pannus","sys":"eye","on":[24,60],"sev":"moderate","inh":"Breed predisposition, UV-aggravated","test":"Ophthalmic exam","note":""},
+ {"n":"Anaesthetic and exercise-related hyperthermia","sys":"metab","on":[12,96],"sev":"serious","inh":"Suspected heritable","test":"Core temperature monitoring during work","note":"Working-line Malinois are prone to exertional hyperthermia. Relevant to any procedure or working deployment in heat."},
+ {"n":"Cataract","sys":"eye","on":[24,84],"sev":"moderate","inh":"Autosomal recessive","test":"CAER exam","note":""}
+]},
+{"name":"Australian Cattle Dog","size":"medium","life":{"mean":12.6,"mode":14,"modeEst":true,"p25":10.8,"p75":14.6,"src":["mcm2024"]},"dz":[
+ {"n":"Congenital deafness","sys":"neuro","on":[0,3],"sev":"moderate","inh":"Pigment-associated (extreme piebald)","test":"BAER test at 6 wk","note":"High prevalence in this breed because of the roan/piebald coat pattern. Unilateral deafness is easily missed without BAER."},
+ {"n":"Progressive retinal atrophy (prcd)","sys":"eye","on":[36,84],"sev":"serious","inh":"Autosomal recessive","test":"DNA test (PRCD)","note":""},
+ {"n":"Primary lens luxation","sys":"eye","on":[36,72],"sev":"serious","inh":"Autosomal recessive (ADAMTS17)","test":"DNA test; ophthalmic exam","note":"An acute painful red eye in a 3-6 yr old. Anterior luxation is a surgical emergency."},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Neuronal ceroid lipofuscinosis","sys":"neuro","on":[12,24],"sev":"limiting","inh":"Autosomal recessive (CLN5)","test":"DNA test","note":""},
+ {"n":"Elbow dysplasia","sys":"ortho","on":[4,12],"sev":"moderate","inh":"Polygenic","test":"OFA elbow radiographs","note":""}
+]},
+{"name":"Bearded Collie","size":"medium","life":{"mean":12.8,"mode":14,"modeEst":true,"p25":11.0,"p75":14.7,"src":["mcm2024","kc2014"]},"dz":[
+ {"n":"Hypoadrenocorticism (Addison's)","sys":"endo","on":[12,60],"sev":"serious","inh":"Familial, heritable","test":"Basal cortisol; ACTH stimulation","note":"Beardies have one of the highest breed prevalences of Addison's. Any young adult with vague GI signs deserves electrolytes."},
+ {"n":"Pemphigus foliaceus","sys":"skin","on":[36,84],"sev":"serious","inh":"Breed predisposition","test":"Skin biopsy; acantholytic cells on cytology","note":""},
+ {"n":"Hip dysplasia","sys":"ortho","on":[6,36],"sev":"moderate","inh":"Polygenic","test":"OFA / PennHIP","note":""},
+ {"n":"Progressive retinal atrophy","sys":"eye","on":[36,96],"sev":"serious","inh":"Autosomal recessive","test":"CAER exam","note":""},
+ {"n":"Hypothyroidism","sys":"endo","on":[24,84],"sev":"mild","inh":"Autoimmune","test":"Thyroid panel","note":""}
+]}
+]}
