@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Build the Canine Onset Atlas page from data/*.json.
 
-Emits two files:
-  dist/index.html    standalone page (doctype + head + body) for local use
+Emits:
+  dist/index.html    standalone page (doctype + head + body)
   dist/artifact.html content-only fragment for publishing as a Claude Artifact
 """
 import json, glob, os, math
@@ -14,34 +14,20 @@ DIST = os.path.join(ROOT, "dist")
 GROUP_ORDER = ["Sporting", "Hound", "Working", "Terrier", "Toy", "Non-Sporting", "Herding"]
 
 SYSTEMS = {
-    "ortho":  "Orthopaedic",
-    "cardio": "Cardiac",
-    "resp":   "Respiratory",
-    "neuro":  "Neurologic",
-    "eye":    "Ophthalmic",
-    "skin":   "Dermatologic",
-    "endo":   "Endocrine",
-    "onc":    "Neoplastic",
-    "gi":     "GI / hepatic",
-    "uro":    "Urogenital",
-    "heme":   "Haematologic",
-    "immune": "Immune",
-    "metab":  "Metabolic",
-    "dental": "Dental",
-    "repro":  "Reproductive",
+    "ortho": "Orthopaedic", "cardio": "Cardiac", "resp": "Respiratory",
+    "neuro": "Neurologic", "eye": "Ophthalmic", "skin": "Dermatologic",
+    "endo": "Endocrine", "onc": "Neoplastic", "gi": "GI / hepatic",
+    "uro": "Urogenital", "heme": "Haematologic", "immune": "Immune",
+    "metab": "Metabolic", "dental": "Dental", "repro": "Reproductive",
 }
 
-SEV_LABEL = {
-    "mild": "Mild",
-    "moderate": "Moderate",
-    "serious": "Serious",
-    "limiting": "Life-limiting",
-}
+SEV_LABEL = {"mild": "Mild", "moderate": "Moderate",
+             "serious": "Serious", "limiting": "Life-limiting"}
 
 # Growth-plate closure by size class, in years - sets the end of the puppy band.
 GROWTH_END = {"toy": 0.75, "small": 1.0, "medium": 1.25, "large": 1.5, "giant": 2.0}
 
-LIFELONG_MONTHS = 200  # onset windows reaching this far are "lifelong / from birth"
+LIFELONG_MONTHS = 200
 
 
 def load():
@@ -54,8 +40,6 @@ def load():
     for g in groups:
         for b in g["breeds"]:
             b["group"] = g["group"]
-            # axis maximum: cover the IQR, the mean with headroom, and every
-            # non-lifelong onset window, rounded up to a whole year
             ends = [d["on"][1] / 12 for d in b["dz"] if d["on"][1] < LIFELONG_MONTHS]
             axis = max(b["life"]["p75"] + 1.5, b["life"]["mean"] * 1.3, max(ends) + 0.5)
             b["axisMax"] = max(12, math.ceil(axis))
@@ -69,243 +53,322 @@ def load():
 def stats(breeds):
     n_dz = sum(len(b["dz"]) for b in breeds)
     mean_all = sum(b["life"]["mean"] for b in breeds) / len(breeds)
-    return len(breeds), n_dz, round(mean_all, 1)
+    lo = min(breeds, key=lambda b: b["life"]["mean"])
+    hi = max(breeds, key=lambda b: b["life"]["mean"])
+    return len(breeds), n_dz, round(mean_all, 1), lo, hi
 
 
 CSS = r"""
 :root{
   color-scheme: light;
-  --bg:#f6f8f9; --surface:#ffffff; --surface-2:#eaeef2; --surface-3:#f1f4f7;
-  --line:#dbe2e9; --line-strong:#c3cdd7;
-  --ink:#0f161c; --ink-2:#46525e; --ink-3:#6e7c89;
-  --accent:#1c5cab; --accent-2:#2a78d6; --accent-soft:#e4edfa;
-  --band-puppy:rgba(28,92,171,.055);
+  --bg:#f7f8f9; --surface:#ffffff; --surface-2:#edeff1; --surface-3:#f2f4f5;
+  --line:#e0e3e6; --line-2:#c8ced3;
+  --ink:#0a0d10; --ink-2:#4a555f; --ink-3:#8a959e; --ink-4:#b4bcc3;
+  --sel:#1b4f8c; --sel-soft:#e6edf6;
+  --band-puppy:rgba(10,13,16,.045);
   --band-adult:transparent;
-  --band-senior:rgba(120,86,20,.055);
-  --band-geri:rgba(160,60,50,.075);
-  --shadow:0 1px 2px rgba(15,22,28,.06),0 8px 24px -16px rgba(15,22,28,.28);
+  --band-senior:rgba(10,13,16,.032);
+  --band-geri:rgba(208,59,59,.075);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     color-scheme: dark;
-    --bg:#0d1216; --surface:#141a20; --surface-2:#1b232a; --surface-3:#182027;
-    --line:#27313a; --line-strong:#38454f;
-    --ink:#edf2f6; --ink-2:#a6b3be; --ink-3:#77858f;
-    --accent:#5598e7; --accent-2:#3987e5; --accent-soft:#152941;
-    --band-puppy:rgba(85,152,231,.075);
+    --bg:#0a0d10; --surface:#111619; --surface-2:#1a2025; --surface-3:#161c20;
+    --line:#232b31; --line-2:#39434b;
+    --ink:#f0f3f5; --ink-2:#a3aeb7; --ink-3:#737e87; --ink-4:#4d565e;
+    --sel:#6ba5ec; --sel-soft:#14263c;
+    --band-puppy:rgba(255,255,255,.05);
     --band-adult:transparent;
-    --band-senior:rgba(250,178,25,.06);
-    --band-geri:rgba(208,59,59,.085);
-    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.8);
+    --band-senior:rgba(255,255,255,.032);
+    --band-geri:rgba(208,59,59,.10);
   }
 }
 :root[data-theme="dark"]{
   color-scheme: dark;
-  --bg:#0d1216; --surface:#141a20; --surface-2:#1b232a; --surface-3:#182027;
-  --line:#27313a; --line-strong:#38454f;
-  --ink:#edf2f6; --ink-2:#a6b3be; --ink-3:#77858f;
-  --accent:#5598e7; --accent-2:#3987e5; --accent-soft:#152941;
-  --band-puppy:rgba(85,152,231,.075);
+  --bg:#0a0d10; --surface:#111619; --surface-2:#1a2025; --surface-3:#161c20;
+  --line:#232b31; --line-2:#39434b;
+  --ink:#f0f3f5; --ink-2:#a3aeb7; --ink-3:#737e87; --ink-4:#4d565e;
+  --sel:#6ba5ec; --sel-soft:#14263c;
+  --band-puppy:rgba(255,255,255,.05);
   --band-adult:transparent;
-  --band-senior:rgba(250,178,25,.06);
-  --band-geri:rgba(208,59,59,.085);
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.8);
+  --band-senior:rgba(255,255,255,.032);
+  --band-geri:rgba(208,59,59,.10);
 }
-/* severity = reserved status palette, fixed in both themes, always paired with a text label */
+/* severity: reserved status palette, fixed in both themes, always paired with a label */
 :root{ --sev-mild:#0ca30c; --sev-moderate:#fab219; --sev-serious:#ec835a; --sev-limiting:#d03b3b; }
 
 *{box-sizing:border-box}
 body{
   margin:0; background:var(--bg); color:var(--ink);
   font-family:"Source Sans 3","Segoe UI",system-ui,sans-serif;
-  font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased;
+  font-size:15.5px; line-height:1.55; -webkit-font-smoothing:antialiased;
 }
-h1,h2,h3{font-family:Archivo,"Segoe UI",system-ui,sans-serif;text-wrap:balance}
+.disp{font-family:"Big Shoulders Display","Archivo Narrow",Impact,sans-serif;font-weight:800;line-height:.88;letter-spacing:.005em}
 .mono,.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
-a{color:var(--accent)}
-:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px;border-radius:3px}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+:focus-visible{outline:2px solid var(--sel);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(18px,4vw,44px)}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.22em;color:var(--ink-3);font-weight:600}
 
-/* ---------- header ---------- */
-.top{border-bottom:1px solid var(--line);background:var(--surface);padding:20px clamp(16px,3vw,32px) 18px}
-.top-in{max-width:1400px;margin:0 auto;display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end;justify-content:space-between}
-.brand h1{margin:0;font-size:clamp(21px,2.4vw,27px);font-weight:700;letter-spacing:-.02em;font-stretch:110%}
-.brand p{margin:5px 0 0;color:var(--ink-2);font-size:14px;max-width:64ch}
-.counts{display:flex;gap:22px;flex-wrap:wrap}
-.counts div{text-align:right}
-.counts b{display:block;font-family:"IBM Plex Mono",monospace;font-size:19px;font-weight:500;letter-spacing:-.02em}
-.counts span{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-3)}
+/* ============ HERO ============ */
+.hero{padding:clamp(48px,9vw,110px) 0 clamp(30px,4vw,52px);border-bottom:1px solid var(--line)}
+.hero h1{
+  font-family:"Big Shoulders Display","Archivo Narrow",Impact,sans-serif;
+  font-weight:800; font-size:clamp(58px,13.5vw,178px); line-height:.84;
+  margin:16px 0 0; letter-spacing:-.005em; text-transform:uppercase; text-wrap:balance;
+}
+.hero .lede{margin:26px 0 0;max-width:56ch;font-size:clamp(16px,1.5vw,19px);color:var(--ink-2)}
+.hero .lede b{color:var(--ink);font-weight:600}
+.figs{display:flex;flex-wrap:wrap;gap:clamp(26px,5vw,64px);margin-top:clamp(34px,5vw,58px)}
+.fig b{
+  display:block;font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:800;
+  font-size:clamp(42px,6vw,74px);line-height:.85;font-variant-numeric:tabular-nums;
+}
+.fig span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--ink-3);margin-top:8px;font-weight:600}
 
-/* ---------- shell ---------- */
-.shell{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:264px minmax(0,1fr);align-items:start}
-@media (max-width:900px){.shell{grid-template-columns:1fr}}
+/* ============ SPECTRUM ============ */
+.spectrum{padding:clamp(44px,6vw,84px) 0 clamp(40px,5vw,70px);border-bottom:1px solid var(--line)}
+.sec-head{display:flex;flex-wrap:wrap;gap:14px 40px;align-items:flex-end;justify-content:space-between;margin-bottom:clamp(24px,3vw,38px)}
+.sec-head h2{
+  font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:800;
+  font-size:clamp(30px,4.4vw,58px);line-height:.9;margin:8px 0 0;text-transform:uppercase;
+}
+.sec-head p{margin:8px 0 0;max-width:50ch;font-size:14px;color:var(--ink-2)}
 
-.rail{border-right:1px solid var(--line);background:var(--surface);position:sticky;top:0;max-height:100vh;display:flex;flex-direction:column}
-@media (max-width:900px){.rail{position:static;max-height:none;border-right:none;border-bottom:1px solid var(--line)}}
-.rail-search{padding:14px 14px 10px;border-bottom:1px solid var(--line)}
-.rail-search input{width:100%;padding:8px 10px;font:inherit;font-size:14px;background:var(--surface-3);color:var(--ink);border:1px solid var(--line-strong);border-radius:6px}
-.rail-search input::placeholder{color:var(--ink-3)}
-.rail-list{overflow-y:auto;padding:6px 8px 20px;flex:1}
-.rail-group{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);padding:14px 8px 5px;font-weight:600}
-.rail-b{display:flex;justify-content:space-between;align-items:baseline;gap:8px;width:100%;text-align:left;padding:6px 9px;border:0;border-radius:6px;background:transparent;color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
-.rail-b:hover{background:var(--surface-2)}
-.rail-b[aria-current="true"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
-.rail-b em{font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}
-.rail-b[aria-current="true"] em{color:var(--accent)}
+.spec{position:relative}
+.spec-axis{position:relative;height:20px;margin-bottom:10px}
+.spec-axis::after{content:"";position:absolute;left:0;bottom:0;width:72%;border-bottom:1px solid var(--line)}
+.spec-axis span{position:absolute;bottom:4px;transform:translateX(-50%);font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.spec-rows{display:flex;flex-direction:column;gap:3px}
+.srow{position:relative;height:9px;border:0;padding:0;background:transparent;cursor:pointer;display:block;width:100%}
+.sbar{
+  position:absolute;left:0;top:2px;height:6px;border-radius:0 2.5px 2.5px 0;background:var(--ink-4);
+  width:var(--w); transform-origin:left center;
+}
+.srow:hover .sbar{background:var(--ink-2)}
+.srow[data-cur="1"] .sbar{background:var(--sel);height:9px;top:0;border-radius:0 3.5px 3.5px 0}
+.slab{
+  position:absolute;top:-3px;font-size:11px;white-space:nowrap;color:var(--ink-2);
+  padding-left:9px;font-weight:600;pointer-events:none;
+}
+.slab em{font-style:normal;font-family:"IBM Plex Mono",monospace;color:var(--ink-3);font-weight:400;margin-left:7px}
+.srow[data-cur="1"] .slab{color:var(--sel)}
+.spec-foot{margin-top:16px;font-size:12.5px;color:var(--ink-3);max-width:64ch}
 
-/* ---------- panel ---------- */
-.panel{padding:clamp(18px,2.6vw,30px) clamp(16px,3vw,32px) 60px;min-width:0}
-.bhead{display:flex;flex-wrap:wrap;gap:18px 30px;align-items:flex-end;justify-content:space-between;margin-bottom:22px}
-.bhead h2{margin:0;font-size:clamp(24px,3.1vw,34px);font-weight:700;letter-spacing:-.025em;font-stretch:110%}
-.bmeta{margin:4px 0 0;color:var(--ink-2);font-size:13.5px}
-.tiles{display:flex;gap:10px;flex-wrap:wrap}
-.tile{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 14px;min-width:104px}
-.tile span{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-3);margin-bottom:2px}
-.tile b{font-family:"IBM Plex Mono",monospace;font-size:20px;font-weight:500;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.tile i{font-style:normal;font-size:12px;color:var(--ink-3);margin-left:3px}
+/* ============ BREED BAR ============ */
+.breedbar{
+  position:sticky;top:0;z-index:20;background:var(--bg);
+  border-bottom:1px solid var(--line);padding:11px 0;
+}
+.breedbar .wrap{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
+.breedbar .now{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:800;font-size:23px;text-transform:uppercase;line-height:1;letter-spacing:.01em}
+.breedbar input{
+  flex:1 1 210px;min-width:170px;max-width:330px;padding:7px 11px;font:inherit;font-size:14px;
+  background:var(--surface);color:var(--ink);border:1px solid var(--line-2);border-radius:5px;
+}
+.breedbar input::placeholder{color:var(--ink-3)}
+.breedbar select{
+  padding:7px 10px;font:inherit;font-size:14px;background:var(--surface);color:var(--ink);
+  border:1px solid var(--line-2);border-radius:5px;max-width:230px;
+}
 
-/* ---------- lifespan strip ---------- */
-.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px;box-shadow:var(--shadow)}
-.card > h3{margin:0 0 3px;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);font-weight:600}
-.card > p.hint{margin:0 0 18px;font-size:12.5px;color:var(--ink-3);max-width:82ch}
-.strip{position:relative;height:80px;margin:0 6px}
-.strip-track{position:absolute;left:0;right:0;top:36px;height:10px;border-radius:5px;background:var(--surface-2)}
-.strip-iqr{position:absolute;top:31px;height:20px;border-radius:5px;background:var(--accent-soft);border:1px solid var(--accent)}
-.strip-mark{position:absolute;top:20px;height:42px;width:2px;background:var(--accent);border-radius:1px}
-.strip-mark.mode{background:transparent;border-left:2px dashed var(--accent);width:0}
-.strip-mark.ref{background:var(--line-strong);top:27px;height:28px}
-.strip-lab{position:absolute;top:0;font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:500}
-.strip-lab.low{top:auto;bottom:0;color:var(--ink-2);font-weight:400}
-.strip-ends{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3)}
+/* ============ BREED ============ */
+.breed{padding:clamp(38px,5vw,66px) 0 clamp(50px,7vw,90px)}
+.bname{
+  font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:800;
+  font-size:clamp(44px,8.5vw,116px);line-height:.86;margin:10px 0 0;text-transform:uppercase;text-wrap:balance;
+}
+.bsub{margin:14px 0 0;color:var(--ink-2);font-size:15px}
 
-/* ---------- controls ---------- */
-.controls{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;margin-bottom:14px}
-.scrub{display:flex;align-items:center;gap:11px;flex:1 1 300px;min-width:250px}
-.scrub label{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-3);font-weight:600;white-space:nowrap}
-.scrub input[type=range]{flex:1;min-width:110px;accent-color:var(--accent)}
-.scrub output{font-family:"IBM Plex Mono",monospace;font-size:13.5px;min-width:66px;color:var(--ink);font-variant-numeric:tabular-nums}
-.btn{font:inherit;font-size:12.5px;padding:5px 11px;border-radius:6px;cursor:pointer;background:var(--surface);border:1px solid var(--line-strong);color:var(--ink-2)}
-.btn:hover{border-color:var(--accent);color:var(--accent)}
-.btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
-.chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
-.chip{font:inherit;font-size:11.5px;padding:3.5px 9px;border-radius:20px;cursor:pointer;background:var(--surface);border:1px solid var(--line);color:var(--ink-3)}
-.chip:hover{border-color:var(--line-strong);color:var(--ink-2)}
-.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+.bignums{display:flex;flex-wrap:wrap;gap:clamp(24px,4.5vw,58px);margin:clamp(30px,4vw,48px) 0 0;align-items:flex-end}
+.bignum b{
+  display:block;font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:800;
+  font-size:clamp(56px,9vw,124px);line-height:.82;font-variant-numeric:tabular-nums;
+}
+.bignum b i{font-style:normal;font-size:.32em;color:var(--ink-3);margin-left:.12em;letter-spacing:.02em}
+.bignum span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--ink-3);margin-top:10px;font-weight:600}
+.bignum.q b{font-size:clamp(34px,5vw,64px)}
 
-/* ---------- legend ---------- */
-.legend{display:flex;flex-wrap:wrap;gap:5px 18px;align-items:center;font-size:12px;color:var(--ink-2);margin-bottom:6px}
-.legend .k{display:inline-flex;align-items:center;gap:6px}
-.swatch{width:22px;height:9px;border-radius:3px;flex:none}
+/* ============ BURDEN CURVE ============ */
+.burden{margin:clamp(38px,5vw,62px) 0 0}
+.burden h3,.tlhead h3{
+  font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:800;
+  font-size:clamp(21px,2.6vw,32px);text-transform:uppercase;margin:0;line-height:1;
+}
+.burden p.hint,.tlhead p.hint{margin:9px 0 0;font-size:13px;color:var(--ink-3);max-width:66ch}
+.bwrap{position:relative;margin-top:22px}
+.bwrap svg{display:block;width:100%;height:clamp(120px,16vw,190px);overflow:visible}
+.bkey{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:12px;font-size:12px;color:var(--ink-2)}
+.bkey i{display:inline-block;width:20px;height:9px;border-radius:2px;margin-right:7px;vertical-align:-1px}
+
+/* ============ CONTROLS ============ */
+.tlhead{margin:clamp(44px,6vw,74px) 0 0}
+.controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;margin:24px 0 14px}
+.scrub{display:flex;align-items:center;gap:12px;flex:1 1 320px;min-width:260px}
+.scrub label{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--ink-3);font-weight:600;white-space:nowrap}
+.scrub input[type=range]{flex:1;min-width:110px;accent-color:var(--sel)}
+.scrub output{font-family:"IBM Plex Mono",monospace;font-size:14px;min-width:70px;color:var(--ink);font-variant-numeric:tabular-nums;font-weight:500}
+.btn{font:inherit;font-size:12.5px;padding:6px 13px;border-radius:5px;cursor:pointer;background:var(--surface);border:1px solid var(--line-2);color:var(--ink-2)}
+.btn:hover{border-color:var(--ink-3);color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px}
+.chip{font:inherit;font-size:11.5px;padding:4px 10px;border-radius:20px;cursor:pointer;background:transparent;border:1px solid var(--line-2);color:var(--ink-2)}
+.chip:hover{border-color:var(--ink-3);color:var(--ink)}
+/* every system is on by default, so "on" is the quiet state and "off" is the marked one */
+.chip[aria-pressed="false"]{color:var(--ink-4);border-color:var(--line);text-decoration:line-through}
+.legend{display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;font-size:12px;color:var(--ink-2);margin-bottom:10px}
+.legend .k{display:inline-flex;align-items:center;gap:7px}
+.swatch{width:22px;height:9px;border-radius:2px;flex:none}
 .legend .bands{margin-left:auto;color:var(--ink-3);font-size:11.5px}
 
-/* ---------- timeline ---------- */
-.tl{border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+/* ============ TIMELINE ============ */
+.tl{border-top:2px solid var(--ink);background:transparent}
 .tl-scroll{overflow-x:auto}
-.tl-in{min-width:660px}
-.grid{display:grid;grid-template-columns:minmax(210px,270px) minmax(0,1fr)}
-.axis{border-bottom:1px solid var(--line);background:var(--surface-3)}
-.axis.lab{padding:8px 14px;font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-3);font-weight:600;align-self:end}
-.axis.track{position:relative;height:38px}
-.tick{position:absolute;bottom:5px;transform:translateX(-50%);font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);white-space:nowrap;font-variant-numeric:tabular-nums}
-.bandlab{position:absolute;top:5px;font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);white-space:nowrap;overflow:hidden}
+.tl-in{min-width:640px}
+.grid{display:grid;grid-template-columns:minmax(200px,264px) minmax(0,1fr)}
+.axis{border-bottom:1px solid var(--line)}
+.axis.lab{padding:9px 0;font-size:10.5px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-3);font-weight:600;align-self:end}
+.axis.track{position:relative;height:40px}
+.tick{position:absolute;bottom:5px;transform:translateX(-50%);font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.bandlab{position:absolute;top:6px;font-size:9.5px;text-transform:uppercase;letter-spacing:.13em;color:var(--ink-4);white-space:nowrap;overflow:hidden;font-weight:600}
 
 .row{display:contents}
-.rname{padding:7px 14px;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.32;display:flex;flex-direction:column;gap:1px;justify-content:center}
-.rname .sys{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3)}
-.rtrack{position:relative;border-bottom:1px solid var(--line);height:100%;min-height:40px}
-.rtrack::after{content:"";position:absolute;top:0;bottom:0;left:var(--age,0%);width:1px;background:var(--accent);opacity:.5;pointer-events:none}
-.bar{position:absolute;top:50%;transform:translateY(-50%);height:14px;border-radius:4px;border:0;padding:0;cursor:pointer;min-width:9px}
-.bar:hover{filter:brightness(1.08);box-shadow:0 0 0 2px var(--surface),0 0 0 3px var(--ink-3)}
+.rname{padding:8px 16px 8px 0;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.3;display:flex;flex-direction:column;gap:2px;justify-content:center}
+.rname .sys{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-3);font-weight:600}
+.rtrack{position:relative;border-bottom:1px solid var(--line);min-height:42px}
+.rtrack::after{content:"";position:absolute;top:0;bottom:0;left:var(--age,0%);width:1px;background:var(--sel);opacity:.55;pointer-events:none}
+.bar{
+  position:absolute;top:50%;height:15px;border-radius:2px;border:0;padding:0;cursor:pointer;min-width:9px;
+  transform:translateY(-50%) scaleX(1);transform-origin:left center;
+}
+.anim .bar{transition:transform .5s cubic-bezier(.22,.9,.3,1);transition-delay:calc(var(--i) * 24ms)}
+.anim .bar.pre{transform:translateY(-50%) scaleX(0)}
+.bar:hover{filter:brightness(1.1)}
+.bar:hover::after{content:"";position:absolute;inset:-3px;border:1.5px solid var(--ink);border-radius:4px}
 .bar.mild{background:var(--sev-mild)} .bar.moderate{background:var(--sev-moderate)}
 .bar.serious{background:var(--sev-serious)} .bar.limiting{background:var(--sev-limiting)}
-.off .rname,.off .rtrack .bar{opacity:.22}
+.off .rname{opacity:.28} .off .rtrack .bar{opacity:.2}
 
-/* detail */
-.det{grid-column:1/-1;border-bottom:1px solid var(--line);background:var(--surface-3);padding:14px 18px}
-.det h4{margin:0 0 8px;font-size:15px;font-weight:600;font-family:Archivo,sans-serif}
-.det dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:5px 14px;margin:0;font-size:13.5px}
-.det dt{color:var(--ink-3);font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding-top:3px;white-space:nowrap}
-.det dd{margin:0;max-width:80ch}
-.pill{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:600;color:#12171c}
+.det{grid-column:1/-1;border-bottom:1px solid var(--line);background:var(--surface-3);padding:16px 18px}
+.det h4{margin:0 0 10px;font-size:16px;font-weight:600;font-family:"Source Sans 3",sans-serif}
+.det dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;margin:0;font-size:13.5px}
+.det dt{color:var(--ink-3);font-size:10px;text-transform:uppercase;letter-spacing:.13em;padding-top:4px;white-space:nowrap;font-weight:600}
+.det dd{margin:0;max-width:78ch}
+.pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600;color:#0a0d10}
 .pill.mild{background:var(--sev-mild);color:#fff} .pill.moderate{background:var(--sev-moderate)}
 .pill.serious{background:var(--sev-serious)} .pill.limiting{background:var(--sev-limiting);color:#fff}
 
-/* table view */
 table{width:100%;border-collapse:collapse;font-size:13.5px}
-th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
-th{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-3);background:var(--surface-3);position:sticky;top:0}
+th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:var(--ink-3);font-weight:600}
 td.num{font-family:"IBM Plex Mono",monospace;white-space:nowrap;font-variant-numeric:tabular-nums}
+.empty{padding:40px 0;text-align:center;color:var(--ink-3);font-size:14px}
 
-.empty{padding:34px 18px;text-align:center;color:var(--ink-3);font-size:14px}
-footer{max-width:1400px;margin:0 auto;padding:26px clamp(16px,3vw,32px) 46px;border-top:1px solid var(--line);color:var(--ink-3);font-size:12.5px}
-footer p{margin:0 0 8px;max-width:82ch}
+footer{border-top:1px solid var(--line);padding:38px 0 60px;color:var(--ink-3);font-size:12.5px;margin-top:40px}
+footer p{margin:0 0 10px;max-width:82ch}
 footer b{color:var(--ink-2);font-weight:600}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  .bar{transform:translateY(-50%) scaleX(1)!important}
+  .sbar{transform:none!important}
+}
 """
 
 
 BODY = r"""
-<header class="top"><div class="top-in">
-  <div class="brand">
-    <h1>Canine Onset Atlas</h1>
-    <p>Breed-associated disease plotted against the age it usually shows up, with longevity
-       statistics for each breed. Drag the age marker to see what is in play for the dog in
-       front of you.</p>
-  </div>
-  <div class="counts">
-    <div><b class="num">__NB__</b><span>Breeds</span></div>
-    <div><b class="num">__ND__</b><span>Conditions</span></div>
-    <div><b class="num">__MA__ y</b><span>Mean, all breeds</span></div>
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">Canine Onset Atlas &middot; __VER__</div>
+  <h1>The time<br>they get</h1>
+  <p class="lede">Every breed carries its own diseases, and each one arrives on a schedule.
+     This is <b>__ND__ breed&ndash;disease pairs across __NB__ breeds</b>, plotted against the age
+     the signs actually show up &mdash; and against how long that breed lives to begin with.</p>
+  <div class="figs">
+    <div class="fig"><b class="num">__NB__</b><span>Breeds</span></div>
+    <div class="fig"><b class="num">__ND__</b><span>Conditions mapped</span></div>
+    <div class="fig"><b class="num">__LO__&ndash;__HI__</b><span>Years, shortest to longest lived</span></div>
   </div>
 </div></header>
 
-<div class="shell">
-  <aside class="rail">
-    <div class="rail-search">
-      <input id="q" type="search" placeholder="Search breeds and conditions" aria-label="Search breeds and conditions">
+<section class="spectrum"><div class="wrap">
+  <div class="sec-head">
+    <div>
+      <div class="eyebrow">Figure 1</div>
+      <h2>Not every breed<br>gets the same life</h2>
     </div>
-    <div class="rail-list" id="rail"></div>
-  </aside>
+    <p>Mean lifespan, every breed in the set, shortest at the top. The
+       __LONAME__ and the __HINAME__ are separated by __GAP__ years &mdash; roughly double.
+       Pick any line to open that breed.</p>
+  </div>
+  <div class="spec">
+    <div class="spec-axis" id="specaxis"></div>
+    <div class="spec-rows" id="specrows"></div>
+  </div>
+  <p class="spec-foot">The short-lived end is dominated by giant breeds, where size itself
+     drives osteosarcoma and cardiomyopathy, and by the extreme brachycephalics. One
+     exception stands out: the Flat-Coated Retriever is a mid-sized dog pulled down to
+     __FCR__ years by a single disease, histiocytic sarcoma.</p>
+</div></section>
 
-  <main class="panel">
-    <div class="bhead">
-      <div>
-        <h2 id="bname"></h2>
-        <p class="bmeta" id="bmeta"></p>
-      </div>
-      <div class="tiles" id="tiles"></div>
+<div class="breedbar"><div class="wrap">
+  <span class="now" id="nowname">Labrador Retriever</span>
+  <input id="q" type="search" placeholder="Search breeds and conditions" aria-label="Search breeds and conditions">
+  <select id="pick" aria-label="Choose a breed"></select>
+</div></div>
+
+<section class="breed"><div class="wrap">
+  <div class="eyebrow">Figure 2 &middot; <span id="bgroup"></span></div>
+  <h1 class="bname" id="bname"></h1>
+  <p class="bsub" id="bsub"></p>
+
+  <div class="bignums">
+    <div class="bignum"><b class="num" id="nmean">0<i>y</i></b><span>Mean lifespan</span></div>
+    <div class="bignum"><b class="num" id="nmode">0<i>y est.</i></b><span>Most common age at death</span></div>
+    <div class="bignum q"><b class="num" id="nrange"></b><span>Half of dogs die in this window</span></div>
+    <div class="bignum q"><b class="num" id="ncount"></b><span>Conditions tracked</span></div>
+  </div>
+
+  <div class="burden">
+    <h3>Where the burden falls</h3>
+    <p class="hint">How many of this breed&rsquo;s conditions are in their onset window at each
+       age. Canine disease arrives in two waves: congenital and developmental problems in the
+       first two years, then a second rise as cancer and degenerative disease take over.</p>
+    <div class="bwrap" id="bwrap" aria-hidden="true"></div>
+    <div class="bkey">
+      <span><i style="background:var(--ink-4)"></i>All conditions in onset window</span>
+      <span><i style="background:var(--sev-limiting)"></i>Serious and life-limiting only</span>
     </div>
+  </div>
 
-    <section class="card">
-      <h3>Lifespan</h3>
-      <p class="hint" id="lifehint"></p>
-      <div class="strip" id="strip"></div>
-    </section>
+  <div class="tlhead">
+    <h3>Every condition, by age of onset</h3>
+    <p class="hint">Each bar spans the window in which signs typically first appear. Drag the age
+       marker to your patient&rsquo;s age and everything outside its window dims.</p>
+  </div>
 
-    <div class="controls">
-      <div class="scrub">
-        <label for="age">Age marker</label>
-        <input id="age" type="range" min="0" max="192" step="1" value="0">
-        <output id="ageout" for="age">birth</output>
-      </div>
-      <button class="btn" id="onlyactive" aria-pressed="false">Only what is live at this age</button>
-      <button class="btn" id="viewtoggle" aria-pressed="false">Table view</button>
+  <div class="controls">
+    <div class="scrub">
+      <label for="age">Age marker</label>
+      <input id="age" type="range" min="0" max="192" step="1" value="0">
+      <output id="ageout" for="age">birth</output>
     </div>
+    <button class="btn" id="onlyactive" aria-pressed="false">Only what is live at this age</button>
+    <button class="btn" id="viewtoggle" aria-pressed="false">Table view</button>
+  </div>
 
-    <div class="chips" id="syschips"></div>
+  <div class="chips" id="syschips"></div>
 
-    <div class="legend">
-      <span class="k"><i class="swatch" style="background:var(--sev-mild)"></i>Mild</span>
-      <span class="k"><i class="swatch" style="background:var(--sev-moderate)"></i>Moderate</span>
-      <span class="k"><i class="swatch" style="background:var(--sev-serious)"></i>Serious</span>
-      <span class="k"><i class="swatch" style="background:var(--sev-limiting)"></i>Life-limiting</span>
-      <span class="bands">Shaded bands: puppy &middot; adult &middot; senior &middot; past mean lifespan</span>
-    </div>
+  <div class="legend">
+    <span class="k"><i class="swatch" style="background:var(--sev-mild)"></i>Mild</span>
+    <span class="k"><i class="swatch" style="background:var(--sev-moderate)"></i>Moderate</span>
+    <span class="k"><i class="swatch" style="background:var(--sev-serious)"></i>Serious</span>
+    <span class="k"><i class="swatch" style="background:var(--sev-limiting)"></i>Life-limiting</span>
+    <span class="bands">Shaded bands: puppy &middot; adult &middot; senior &middot; past mean lifespan</span>
+  </div>
 
-    <div class="tl"><div class="tl-scroll"><div class="tl-in" id="tlin"></div></div></div>
-  </main>
-</div>
+  <div class="tl"><div class="tl-scroll"><div class="tl-in" id="tlin"></div></div></div>
+</div></section>
 
-<footer>
+<footer><div class="wrap">
   <p><b>Read the bars as onset, not risk.</b> A bar marks the interval in which clinical signs
      typically first appear in an affected dog of that breed. It says nothing about how likely
      this dog is to be affected, and a condition absent from a breed&rsquo;s list is not
@@ -314,19 +377,19 @@ BODY = r"""
      2024 (<i>Scientific Reports</i>, 584,734 dogs) reconciled with Kennel Club survey data.
      <b>Modal lifespan is estimated, not published</b> &mdash; age-at-death distributions are
      left-skewed, so the most common age at death sits above the mean. It is labelled
-     <i>est.</i> everywhere it appears and should be quoted as an estimate.</p>
+     <i>est.</i> everywhere it appears.</p>
   <p>Onset windows are clinical consensus ranges drawn from Gough, Thomas &amp; O&rsquo;Neill,
      <i>Breed Predispositions to Disease in Dogs and Cats</i> (3rd&nbsp;ed.), the OFA/CHIC
      screening schedules, OMIA, the ACVO Blue Book, and breed-specific primary literature.
-     Full source list and derivation notes in <code>SOURCES.md</code>. Version __VER__.</p>
-</footer>
+     Full source list and derivation notes in <code>SOURCES.md</code>. __VER__.</p>
+</div></footer>
 """
 
 
 JS = r"""
 const D = __DATA__, SYS = __SYS__, SEVL = __SEVL__;
-const REF_MEAN = __MA__;
 const $ = s => document.querySelector(s);
+const REDUCED = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
 let cur = D.find(b => b.name === "Labrador Retriever") || D[0];
 let ageM = 0, onlyActive = false, tableView = false, sysOff = new Set(), query = "";
@@ -338,54 +401,103 @@ const fmtAge = m => m === 0 ? "birth"
 const esc = s => (s || "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const pct = (y, max) => Math.max(0, Math.min(100, y / max * 100));
 
-/* ---------- rail ---------- */
-function buildRail(){
-  const q = query.toLowerCase();
-  const groups = {};
-  for (const b of D){
-    if (q && !(b.name.toLowerCase().includes(q) || b.dz.some(d => d.n.toLowerCase().includes(q)))) continue;
-    (groups[b.group] = groups[b.group] || []).push(b);
-  }
-  const order = ["Sporting","Hound","Working","Terrier","Toy","Non-Sporting","Herding"];
+/* ================= SPECTRUM ================= */
+const SPEC = D.slice().sort((a, b) => a.life.mean - b.life.mean);
+const SLO = Math.floor(SPEC[0].life.mean) - 1;
+const SHI = Math.ceil(SPEC[SPEC.length - 1].life.mean) + 1;
+const SPEC_W = 72;  // bars use the left 72%, labels live in the rest
+const sx = v => (v - SLO) / (SHI - SLO) * SPEC_W;
+
+function buildSpectrum(){
+  let ax = "";
+  for (let y = SLO + 1; y < SHI; y++) ax += '<span style="left:' + sx(y) + '%">' + y + 'y</span>';
+  $("#specaxis").innerHTML = ax;
+
+  // selective direct labels: three shortest, three longest, and the current breed
+  const shown = new Set([0, 1, 2, SPEC.length - 3, SPEC.length - 2, SPEC.length - 1]);
   let h = "";
-  for (const g of order){
-    if (!groups[g]) continue;
-    h += '<div class="rail-group">' + g + '</div>';
-    for (const b of groups[g])
-      h += '<button class="rail-b" data-b="' + esc(b.name) + '" aria-current="' + (b === cur) + '">'
-         + '<span>' + esc(b.name) + '</span><em>' + b.life.mean.toFixed(1) + 'y</em></button>';
+  SPEC.forEach((b, i) => {
+    const isCur = b === cur;
+    const x = sx(b.life.mean);
+    const lab = (shown.has(i) || isCur)
+      ? '<span class="slab" style="left:' + x + '%">' + esc(b.name)
+        + '<em>' + b.life.mean.toFixed(1) + 'y</em></span>' : "";
+    h += '<button class="srow" data-b="' + esc(b.name) + '" data-cur="' + (isCur ? 1 : 0) + '"'
+       + ' title="' + esc(b.name) + ' — mean ' + b.life.mean.toFixed(1) + ' years">'
+       + '<span class="sbar" style="--w:' + sx(b.life.mean) + '%"></span>' + lab + '</button>';
+  });
+  $("#specrows").innerHTML = h;
+  if (!REDUCED){
+    const bars = $("#specrows").querySelectorAll(".sbar");
+    bars.forEach((el, i) => {
+      el.style.transition = "transform .55s cubic-bezier(.22,.9,.3,1) " + (i * 9) + "ms";
+      el.style.transform = "scaleX(0)";
+    });
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      bars.forEach(el => { el.style.transform = ""; });
+    }));
+    // never leave the chart hidden if a frame is dropped or the tab is backgrounded
+    setTimeout(() => bars.forEach(el => { el.style.transform = ""; }), 1600);
   }
-  $("#rail").innerHTML = h || '<div class="empty">No breed or condition matches that search.</div>';
+}
+function markSpectrum(){
+  $("#specrows").querySelectorAll(".dyn").forEach(el => el.remove());
+  $("#specrows").querySelectorAll(".srow").forEach(el => {
+    const isCur = el.dataset.b === cur.name;
+    el.dataset.cur = isCur ? "1" : "0";
+    if (isCur && !el.querySelector(".slab")){
+      const s = document.createElement("span");
+      s.className = "slab dyn";
+      s.style.left = sx(cur.life.mean) + "%";
+      s.innerHTML = esc(cur.name) + '<em>' + cur.life.mean.toFixed(1) + 'y</em>';
+      el.appendChild(s);
+    }
+  });
 }
 
-/* ---------- lifespan strip ---------- */
-function labPos(x){
-  if (x < 10) return "left:0;";
-  if (x > 90) return "right:0;";
-  return "left:" + x + "%;transform:translateX(-50%);";
-}
-function buildStrip(){
-  const L = cur.life, max = cur.axisMax;
-  const x = y => pct(y, max);
-  const xm = x(L.mean), xo = x(L.mode), xr = x(REF_MEAN);
-  const showRef = Math.abs(REF_MEAN - L.mean) > 0.4;
-  let h = '<div class="strip-track"></div>'
-        + '<div class="strip-iqr" style="left:' + x(L.p25) + '%;width:' + (x(L.p75) - x(L.p25)) + '%"></div>';
-  if (showRef) h += '<div class="strip-mark ref" style="left:' + xr + '%"></div>';
-  h += '<div class="strip-mark" style="left:' + xm + '%"></div>'
-     + '<span class="strip-lab" style="' + labPos(xm) + '">mean ' + L.mean.toFixed(1) + 'y</span>'
-     + '<div class="strip-mark mode" style="left:' + xo + '%"></div>'
-     + '<span class="strip-lab low" style="' + labPos(xo) + '">mode ' + L.mode + 'y est.</span>'
-     + '<div class="strip-ends"><span>birth</span><span>' + max + 'y</span></div>';
-  $("#strip").innerHTML = h;
-  $("#lifehint").innerHTML =
-    "Shaded box is the interquartile range of age at death, " + L.p25 + "&ndash;" + L.p75
-    + "y &mdash; half of dogs die inside it. Solid line is the mean, dashed line the estimated "
-    + "modal age at death."
-    + (showRef ? " Grey line is the all-breed mean of " + REF_MEAN + "y for comparison." : "");
+/* ================= BURDEN CURVE ================= */
+function buildBurden(){
+  const b = cur, maxM = b.axisMax * 12, W = 1000, H = 200;
+  const all = [], sev = [];
+  for (let t = 0; t <= maxM; t += 1){
+    let a = 0, s = 0;
+    for (const d of b.dz){
+      if (t >= d.on[0] && t <= d.on[1]){ a++; if (d.sev === "serious" || d.sev === "limiting") s++; }
+    }
+    all.push(a); sev.push(s);
+  }
+  const peak = Math.max(1, ...all);
+  const px = t => t / maxM * W;
+  const py = v => H - (v / peak) * (H - 12);
+  const area = arr => {
+    let p = "M0," + H;
+    for (let t = 0; t <= maxM; t++) p += "L" + px(t).toFixed(1) + "," + py(arr[t]).toFixed(1);
+    return p + "L" + W + "," + H + "Z";
+  };
+  const g = b.growthEnd * 12, sn = b.life.mean * 0.75 * 12, mn = b.life.mean * 12;
+  const peakAt = all.indexOf(peak);
+
+  let sv = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none">';
+  sv += '<rect x="0" y="0" width="' + px(g) + '" height="' + H + '" fill="var(--band-puppy)"/>';
+  sv += '<rect x="' + px(sn) + '" y="0" width="' + (px(mn) - px(sn)) + '" height="' + H + '" fill="var(--band-senior)"/>';
+  sv += '<rect x="' + px(mn) + '" y="0" width="' + (W - px(mn)) + '" height="' + H + '" fill="var(--band-geri)"/>';
+  sv += '<path d="' + area(all) + '" fill="var(--ink-4)" opacity=".55"/>';
+  sv += '<path d="' + area(sev) + '" fill="var(--sev-limiting)" opacity=".38"/>';
+  sv += '<line x1="0" y1="' + H + '" x2="' + W + '" y2="' + H + '" stroke="var(--ink)" stroke-width="2" vector-effect="non-scaling-stroke"/>';
+  sv += '</svg>';
+  const el = $(".bwrap");
+  const pkx = px(peakAt) / W * 100;
+  const pkpos = pkx < 9 ? "left:0;" : pkx > 91 ? "right:0;" : "left:" + pkx + "%;transform:translateX(-50%);";
+  el.innerHTML = sv
+    + '<div style="position:absolute;' + pkpos + 'top:-4px;'
+    + 'font-family:\'IBM Plex Mono\',monospace;font-size:10.5px;color:var(--ink-2);white-space:nowrap">'
+    + 'peak ' + peak + ' at ' + fmtAge(peakAt) + '</div>'
+    + '<div style="display:flex;justify-content:space-between;font-family:\'IBM Plex Mono\',monospace;'
+    + 'font-size:10.5px;color:var(--ink-3);margin-top:6px"><span>birth</span><span>'
+    + b.axisMax + 'y</span></div>';
 }
 
-/* ---------- life-stage bands ---------- */
+/* ================= TIMELINE ================= */
 function bandCss(b){
   const max = b.axisMax, p = y => (y / max * 100).toFixed(2) + "%";
   const g = b.growthEnd, s = b.life.mean * 0.75, m = b.life.mean;
@@ -395,8 +507,6 @@ function bandCss(b){
     + "var(--band-senior) " + p(s) + ",var(--band-senior) " + p(m) + ","
     + "var(--band-geri) " + p(m) + ",var(--band-geri) 100%)";
 }
-
-/* ---------- timeline ---------- */
 function isLive(d){ return ageM >= d.on[0] && ageM <= d.on[1]; }
 function visible(d){
   if (sysOff.has(d.sys)) return false;
@@ -408,7 +518,7 @@ function visible(d){
   return true;
 }
 
-function buildTL(){
+function buildTL(animate){
   const b = cur, max = b.axisMax, bg = bandCss(b);
   rows = b.dz.filter(visible);
   if (tableView){ buildTable(); return; }
@@ -416,8 +526,10 @@ function buildTL(){
 
   const step = max > 12 ? 2 : 1;
   let ticks = '<span class="tick" style="left:0;transform:none">birth</span>';
-  for (let y = step; y <= max; y += step) ticks += '<span class="tick" style="left:' + pct(y, max) + '%">' + y + 'y</span>';
-
+  for (let y = step; y <= max; y += step){
+    const p = pct(y, max);
+    ticks += '<span class="tick" style="' + (p > 97 ? 'right:0;transform:none' : 'left:' + p + '%') + '">' + y + 'y</span>';
+  }
   const g = b.growthEnd, s = b.life.mean * 0.75, m = b.life.mean;
   const bl = (lab, a, z) => '<span class="bandlab" style="left:' + pct(a, max) + '%;max-width:'
     + (pct(z, max) - pct(a, max)) + '%">' + lab + '</span>';
@@ -435,12 +547,21 @@ function buildTL(){
        + '<div class="rname"><span>' + esc(d.n) + '</span><span class="sys">' + SYS[d.sys]
        + (lifelong ? " &middot; lifelong" : "") + '</span></div>'
        + '<div class="rtrack" style="background:' + bg + '">'
-       + '<button class="bar ' + d.sev + '" style="left:' + a + '%;width:' + w + '%" data-i="' + i + '"'
+       + '<button class="bar ' + d.sev + '" style="left:' + a + '%;width:' + w + '%;--i:' + Math.min(i, 22) + '" data-i="' + i + '"'
        + ' aria-label="' + esc(d.n) + ': ' + SEVL[d.sev] + ', onset ' + span + '"'
-       + ' title="' + esc(d.n) + ' - ' + SEVL[d.sev] + ' - ' + span + '"></button>'
+       + ' title="' + esc(d.n) + ' — ' + SEVL[d.sev] + ' — ' + span + '"></button>'
        + '</div></div>';
   });
-  $("#tlin").innerHTML = h + '</div>';
+  const box = $("#tlin");
+  box.innerHTML = h + '</div>';
+  const bars = box.querySelectorAll(".bar");
+  box.classList.remove("anim");
+  if (animate && !REDUCED){
+    bars.forEach(el => el.classList.add("pre"));
+    box.classList.add("anim");
+    requestAnimationFrame(() => requestAnimationFrame(() =>
+      bars.forEach(el => el.classList.remove("pre"))));
+  }
 }
 
 function buildTable(){
@@ -478,21 +599,43 @@ function openDetail(i){
   rowEls[i].querySelector(".rtrack").after(div);
 }
 
-/* ---------- header + chips ---------- */
-function buildHead(){
+/* ================= HEAD ================= */
+function countUp(el, to, suffix, dp){
+  if (REDUCED){ el.innerHTML = to.toFixed(dp) + suffix; return; }
+  const t0 = performance.now(), dur = 650;
+  const tick = now => {
+    const k = Math.min(1, (now - t0) / dur);
+    const e = 1 - Math.pow(1 - k, 3);
+    el.innerHTML = (to * e).toFixed(dp) + suffix;
+    if (k < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+function buildHead(animate){
   const b = cur, L = b.life;
+  $("#nowname").textContent = b.name;
   $("#bname").textContent = b.name;
-  $("#bmeta").textContent = b.group + " group · " + b.size + " · " + b.dz.length + " conditions tracked";
-  $("#tiles").innerHTML =
-      '<div class="tile"><span>Mean lifespan</span><b>' + L.mean.toFixed(1) + '<i>y</i></b></div>'
-    + '<div class="tile"><span>Modal lifespan</span><b>' + L.mode + '<i>y est.</i></b></div>'
-    + '<div class="tile"><span>Typical range</span><b>' + L.p25 + '–' + L.p75 + '<i>y</i></b></div>';
+  $("#bgroup").textContent = b.group + " group";
+  $("#bsub").textContent = b.size.charAt(0).toUpperCase() + b.size.slice(1)
+    + " breed. Growth plates close near " + b.growthEnd + " years; on the mean-lifespan model this breed is senior from "
+    + (L.mean * 0.75).toFixed(1) + " years.";
+  if (animate){
+    countUp($("#nmean"), L.mean, "<i>y</i>", 1);
+    countUp($("#nmode"), L.mode, "<i>y est.</i>", 0);
+  } else {
+    $("#nmean").innerHTML = L.mean.toFixed(1) + "<i>y</i>";
+    $("#nmode").innerHTML = L.mode + "<i>y est.</i>";
+  }
+  $("#nrange").innerHTML = L.p25 + "&ndash;" + L.p75 + "<i>y</i>";
+  $("#ncount").textContent = b.dz.length;
+
   const used = [];
   for (const d of b.dz) if (used.indexOf(d.sys) === -1) used.push(d.sys);
   $("#syschips").innerHTML = used.map(s =>
     '<button class="chip" data-s="' + s + '" aria-pressed="' + !sysOff.has(s) + '">' + SYS[s] + '</button>').join("");
-  const maxM = b.axisMax * 12;
-  const el = $("#age");
+
+  const maxM = b.axisMax * 12, el = $("#age");
   el.max = maxM;
   if (ageM > maxM) ageM = maxM;
   el.value = ageM;
@@ -500,75 +643,108 @@ function buildHead(){
   document.documentElement.style.setProperty("--age", (ageM / maxM * 100) + "%");
 }
 
-function render(){ buildRail(); buildHead(); buildStrip(); buildTL(); }
+function buildPicker(){
+  const order = ["Sporting","Hound","Working","Terrier","Toy","Non-Sporting","Herding"];
+  let h = "";
+  for (const g of order){
+    h += '<optgroup label="' + g + '">';
+    for (const b of D) if (b.group === g)
+      h += '<option value="' + esc(b.name) + '"' + (b === cur ? " selected" : "") + '>' + esc(b.name) + '</option>';
+    h += '</optgroup>';
+  }
+  $("#pick").innerHTML = h;
+}
 
-/* ---------- events ---------- */
-$("#rail").addEventListener("click", e => {
-  const btn = e.target.closest(".rail-b"); if (!btn) return;
-  cur = D.find(b => b.name === btn.dataset.b);
+function select(name, scroll){
+  const b = D.find(x => x.name === name);
+  if (!b || b === cur) return;
+  cur = b;
   sysOff.clear();
-  render();
+  $("#pick").value = name;
+  markSpectrum();
+  buildHead(true);
+  buildBurden();
+  buildTL(true);
+  const bb = $(".breedbar");
+  if (scroll && bb && bb.scrollIntoView) bb.scrollIntoView({ block: "start", behavior: REDUCED ? "auto" : "smooth" });
+}
+
+/* ================= EVENTS ================= */
+$("#specrows").addEventListener("click", e => {
+  const r = e.target.closest(".srow"); if (!r) return;
+  select(r.dataset.b, true);
 });
+$("#pick").addEventListener("change", e => select(e.target.value, false));
 $("#q").addEventListener("input", e => {
   query = e.target.value.trim();
   const q = query.toLowerCase();
   if (q){
-    const hit = D.find(b => b.name.toLowerCase().includes(q));
-    if (hit) cur = hit;
+    const hit = D.find(b => b.name.toLowerCase().includes(q))
+             || D.find(b => b.dz.some(d => d.n.toLowerCase().includes(q)));
+    if (hit && hit !== cur){ select(hit.name, false); return; }
   }
-  render();
+  buildTL(false);
 });
 $("#age").addEventListener("input", e => {
   ageM = +e.target.value;
   $("#ageout").textContent = fmtAge(ageM);
   document.documentElement.style.setProperty("--age", (ageM / +e.target.max * 100) + "%");
-  buildTL();
+  buildTL(false);
 });
 $("#onlyactive").addEventListener("click", e => {
   onlyActive = !onlyActive;
   e.currentTarget.setAttribute("aria-pressed", onlyActive);
-  buildTL();
+  buildTL(false);
 });
 $("#viewtoggle").addEventListener("click", e => {
   tableView = !tableView;
   e.currentTarget.setAttribute("aria-pressed", tableView);
   e.currentTarget.textContent = tableView ? "Timeline view" : "Table view";
-  buildTL();
+  buildTL(false);
 });
 $("#syschips").addEventListener("click", e => {
   const c = e.target.closest(".chip"); if (!c) return;
   const s = c.dataset.s;
   if (sysOff.has(s)) sysOff.delete(s); else sysOff.add(s);
   c.setAttribute("aria-pressed", !sysOff.has(s));
-  buildTL();
+  buildTL(false);
 });
 $("#tlin").addEventListener("click", e => {
   const bar = e.target.closest(".bar"); if (!bar) return;
   openDetail(+bar.dataset.i);
 });
 
-render();
+buildSpectrum();
+buildPicker();
+buildHead(true);
+buildBurden();
+buildTL(true);
 """
 
 
 def build():
     breeds = load()
-    nb, nd, mean_all = stats(breeds)
+    nb, nd, mean_all, lo, hi = stats(breeds)
     vpath = os.path.join(ROOT, "VERSION")
-    ver = open(vpath).read().strip() if os.path.exists(vpath) else "0.1.0"
+    ver = "v" + (open(vpath).read().strip() if os.path.exists(vpath) else "0.1.0")
+    fcr = next((b for b in breeds if b["name"] == "Flat-Coated Retriever"), None)
 
-    body = (BODY.replace("__NB__", str(nb)).replace("__ND__", str(nd))
-                .replace("__MA__", str(mean_all)).replace("__VER__", "v" + ver))
+    body = (BODY
+            .replace("__NB__", str(nb)).replace("__ND__", str(nd))
+            .replace("__MA__", str(mean_all)).replace("__VER__", ver)
+            .replace("__LONAME__", lo["name"]).replace("__HINAME__", hi["name"])
+            .replace("__LO__", str(lo["life"]["mean"])).replace("__HI__", str(hi["life"]["mean"]))
+            .replace("__GAP__", str(round(hi["life"]["mean"] - lo["life"]["mean"], 1)))
+            .replace("__FCR__", str(fcr["life"]["mean"]) if fcr else "9.5"))
     js = (JS.replace("__DATA__", json.dumps(breeds, separators=(",", ":"), ensure_ascii=False))
             .replace("__SYS__", json.dumps(SYSTEMS))
-            .replace("__SEVL__", json.dumps(SEV_LABEL))
-            .replace("__MA__", str(mean_all)))
+            .replace("__SEVL__", json.dumps(SEV_LABEL)))
 
     head = ('<title>Canine Onset Atlas</title>\n'
             '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
             '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
             '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
-            'family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@400;500&'
+            'family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@400;500&'
             'family=Source+Sans+3:wght@400;600&display=swap">\n'
             "<style>" + CSS + "</style>\n")
 
@@ -581,8 +757,8 @@ def build():
     os.makedirs(DIST, exist_ok=True)
     open(os.path.join(DIST, "index.html"), "w", encoding="utf-8").write(standalone)
     open(os.path.join(DIST, "artifact.html"), "w", encoding="utf-8").write(fragment)
-    print("built %d breeds / %d conditions / mean %sy -> dist/index.html, dist/artifact.html"
-          % (nb, nd, mean_all))
+    print("built %d breeds / %d conditions | spread %s (%s) - %s (%s)"
+          % (nb, nd, lo["life"]["mean"], lo["name"], hi["life"]["mean"], hi["name"]))
 
 
 if __name__ == "__main__":

@@ -50,6 +50,22 @@ python build.py
 
 No dependencies. Reads `data/*.json`, writes both files in `dist/`.
 
+## Testing
+
+`tests/dom-checks.js` runs the built page in a headless DOM and exercises it:
+breed selection from the spectrum and the dropdown, the age scrubber, filters,
+table view, the detail panel, search, and a sweep that renders all 85 breeds
+checking for NaN geometry and bars that overflow their track.
+
+```bash
+npm i jsdom          # anywhere; point the script at dist/index.html
+node tests/dom-checks.js
+```
+
+For visual checks, render `dist/index.html` with headless Chrome. Pass
+`--force-prefers-reduced-motion`, otherwise screenshots capture the load
+animation mid-flight and the numbers read wrong.
+
 ## Reading it correctly
 
 Three things worth being explicit about, because the display makes them look
