@@ -3,6 +3,41 @@
 All notable changes to this project. Format follows [Keep a Changelog](https://keepachangelog.com/),
 versioning follows [Semantic Versioning](https://semver.org/).
 
+## [0.4.0] — 2026-08-22
+
+Added the breed × age burden matrix — the whole dataset on one screen.
+
+### Added
+- **Burden matrix**: 85 breeds down, 48 four-month bins across (birth to 16 years).
+  Cell darkness encodes how many conditions are inside their onset window at that
+  age, on a sequential single-hue ramp. Every row carries a rule at that breed's
+  mean lifespan, so the matrix shows disease against the life it actually has.
+- **Ordering** by mean lifespan, peak burden, total burden, AKC group, breed name,
+  or **similarity of burden shape** — average-linkage agglomerative clustering
+  (Lance-Williams update) over burden vectors normalised to sum 1, so breeds group
+  by the *shape* of their disease across life rather than by how many conditions
+  they carry. Runs in ~60 ms for all 85 breeds.
+- **Severity weighting** toggle: count of conditions, or weighted mild 1 to
+  life-limiting 4.
+- **Population profile** above the matrix: total burden across all breeds at each
+  age, showing the two-wave structure at population level.
+- Hover any cell for the conditions in play for that breed at that age; click any
+  row to load it into the breed panel below.
+
+### Fixed
+- Population profile bars used percentage heights inside an auto-sized grid track,
+  which collapses to zero. Now computed in pixels.
+- `var(--ink-4)` was referenced but never defined after the v0.3.0 revert, so the
+  profile bars were transparent. Added a CSS-variable audit to catch this class of
+  bug: every `var(--x)` used is now checked against the defined set.
+
+### Notes
+- The matrix includes lifelong constitutional traits (MDR1 sensitivity, sighthound
+  clinicopathological ranges), which is why a few rows read as uniformly loaded
+  across life. That is accurate — they are in play at every age.
+- `tests/dom-checks.js` extended to 40 checks covering the matrix, its orderings,
+  the clustering, and severity weighting.
+
 ## [0.3.0] — 2026-08-22
 
 Reverted the v0.2.0 editorial redesign. The page is a clinical tool again, not a

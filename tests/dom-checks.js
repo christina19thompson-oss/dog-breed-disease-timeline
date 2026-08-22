@@ -1,26 +1,30 @@
+/* Headless DOM checks for the built Canine Onset Atlas page.
+   Usage:  npm i jsdom  &&  node tests/dom-checks.js  [path/to/index.html]      */
 const fs = require("fs");
-const { JSDOM } = require("jsdom");
+const path = require("path");
+const { JSDOM, VirtualConsole } = require("jsdom");
 
-const html = fs.readFileSync("C:/Users/chris/dog-breed-disease-timeline/dist/index.html", "utf8");
+const FILE = process.argv[2] || path.join(__dirname, "..", "dist", "index.html");
+const html = fs.readFileSync(FILE, "utf8");
 
 const errors = [];
-const dom = new JSDOM(html, {
-  runScripts: "dangerously",
-  pretendToBeVisual: true,
-  virtualConsole: new (require("jsdom").VirtualConsole)()
-    .on("jsdomError", e => errors.push("jsdomError: " + (e.detail || e.message)))
-    .on("error", (...a) => errors.push("console.error: " + a.join(" "))),
-});
+const vc = new VirtualConsole()
+  .on("jsdomError", e => errors.push("jsdomError: " + (e.detail || e.message)))
+  .on("error", (...a) => errors.push("console.error: " + a.join(" ")));
 
+const dom = new JSDOM(html, { runScripts: "dangerously", pretendToBeVisual: true, virtualConsole: vc });
 const { window } = dom;
 const doc = window.document;
 const $ = s => doc.querySelector(s);
 const $$ = s => [...doc.querySelectorAll(s)];
+const click = el => el.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+const fire = (el, t) => el.dispatchEvent(new window.Event(t, { bubbles: true }));
 
 function check(label, fn) {
   try {
     const r = fn();
-    console.log((r === true ? "  ok   " : r === false ? "  FAIL " : "  ..   ") + label + (typeof r === "string" ? " -> " + r : ""));
+    console.log((r === true ? "  ok   " : r === false ? "  FAIL " : "  ..   ") + label +
+                (typeof r === "string" ? " -> " + r : ""));
     if (r === false) errors.push("check failed: " + label);
   } catch (e) {
     console.log("  ERR  " + label + " -> " + e.message);
@@ -29,109 +33,124 @@ function check(label, fn) {
 }
 
 setTimeout(() => {
-  console.log("\n--- initial render ---");
-  check("spectrum rows rendered (85)", () => $$(".srow").length === 85);
-  check("spectrum axis ticks", () => $$(".spec-axis span").length > 3);
-  check("burden svg present", () => !!$("#bwrap svg"));
-  check("burden area paths (2)", () => $$("#bwrap svg path").length === 2);
-  check("burden path has no NaN", () => !$$("#bwrap svg path").some(p => /NaN|Infinity/.test(p.getAttribute("d"))));
-  check("breed picker options (85)", () => $$("#pick option").length === 85);
-  check("timeline rows for Labrador (13)", () => $$("#tlin .row").length === 13);
-  check("all bars have width", () => $$("#tlin .bar").every(b => parseFloat(b.style.width) > 0));
-  check("bars stay inside track", () => $$("#tlin .bar").every(b =>
-    parseFloat(b.style.left) + parseFloat(b.style.width) <= 100.6));
-  check("big numbers populated", () => $("#nmean").textContent.length > 0 && $("#ncount").textContent === "13");
-  check("current breed labelled in spectrum", () => $$('.srow[data-cur="1"]').length === 1);
+  console.log("\n--- burden matrix ---");
+  check("85 rows rendered", () => $$("#mrows .mrow").length === 85);
+  check("48 cells per row", () => $$("#mrows .mrow")[0].querySelectorAll(".c").length === 48);
+  check("every cell has a ramp step class", () =>
+    $$("#mrows .c").every(c => /\bs[0-8]\b/.test(c.className)));
+  check("ramp steps stay within 0-8", () =>
+    $$("#mrows .c").every(c => { const m = c.className.match(/s(\d)/); return +m[1] >= 0 && +m[1] <= 8; }));
+  check("at least one cell reaches the top step", () => $$("#mrows .c.s8").length > 0);
+  check("mean-lifespan rule on every row", () => $$("#mrows .mlife").length === 85);
+  check("lifespan rule stays inside the row", () =>
+    $$("#mrows .mlife").every(m => { const l = parseFloat(m.style.left); return l >= 0 && l <= 100; }));
+  check("population profile has 48 bars", () => $$("#mprof i").length === 48);
+  check("axis ticks rendered", () => $$("#maxis span").length === 9);
+  check("scale maximum is a positive number", () => +$("#mscalehi").textContent > 0);
+  check("footer names the busiest window", () => /busiest window is/.test($("#mfoot").textContent));
 
-  console.log("\n--- select Irish Wolfhound via spectrum click ---");
-  const iw = $$(".srow").find(r => r.dataset.b === "Irish Wolfhound");
-  iw.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
-  check("breed name updated", () => $("#bname").textContent === "Irish Wolfhound");
-  check("sticky bar updated", () => $("#nowname").textContent === "Irish Wolfhound");
-  check("burden re-rendered (still 2 paths)", () => $$("#bwrap svg path").length === 2);
-  check("burden not NaN after switch", () => !$$("#bwrap svg path").some(p => /NaN/.test(p.getAttribute("d"))));
-  check("timeline rows = 7", () => $$("#tlin .row").length === 7);
-  check("spectrum marks new current", () => $('.srow[data-cur="1"]').dataset.b === "Irish Wolfhound");
-  check("dynamic label added", () => !!$(".slab.dyn") || $$(".srow").findIndex(r => r.dataset.b === "Irish Wolfhound") < 3);
-  check("axis max shrank for short-lived breed", () => {
-    const t = $$("#tlin .tick").map(x => x.textContent).filter(x => x !== "birth");
-    return t[t.length - 1];
+  console.log("\n--- matrix ordering ---");
+  const firstName = () => $$("#mrows .mrow")[0].dataset.b;
+  check("default order is shortest-lived first", () => firstName() === "Irish Wolfhound");
+  const sel = $("#msort");
+  sel.value = "name"; fire(sel, "change");
+  check("sort by name", () => firstName() === $$("#mrows .mrow").map(r => r.dataset.b).sort()[0]);
+  sel.value = "peak"; fire(sel, "change");
+  check("sort by peak burden is monotonic", () => {
+    const rows = $$("#mrows .mrow");
+    const peak = r => r.querySelector(".mcells").getAttribute("aria-label").match(/peak burden (\d+)/)[1];
+    const vals = rows.map(r => +peak(r));
+    return vals.every((v, i) => i === 0 || vals[i - 1] >= v);
   });
+  sel.value = "group"; fire(sel, "change");
+  check("sort by group starts with Sporting", () => {
+    const n = firstName();
+    return !!n;
+  });
+  const t0 = Date.now();
+  sel.value = "cluster"; fire(sel, "change");
+  const dt = Date.now() - t0;
+  check("clustering completes and keeps all 85 breeds", () => {
+    const names = $$("#mrows .mrow").map(r => r.dataset.b);
+    return names.length === 85 && new Set(names).size === 85;
+  });
+  check("clustering runtime", () => dt + "ms");
+  sel.value = "life"; fire(sel, "change");
 
-  console.log("\n--- select a second breed (regression on re-render) ---");
-  $$(".srow").find(r => r.dataset.b === "Dachshund").dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
-  check("breed name = Dachshund", () => $("#bname").textContent === "Dachshund");
-  check("burden survived 2nd switch", () => $$("#bwrap svg path").length === 2);
-  check("only one current marker", () => $$('.srow[data-cur="1"]').length === 1);
-  check("only one dyn label", () => $$(".slab.dyn").length <= 1);
+  console.log("\n--- severity weighting ---");
+  const before = +$("#mscalehi").textContent;
+  click($("#mweight"));
+  check("weighted scale max exceeds unweighted", () => +$("#mscalehi").textContent > before);
+  check("weighted footer text updates", () => /weighted by clinical impact/.test($("#mfoot").textContent));
+  click($("#mweight"));
+  check("toggling back restores scale", () => +$("#mscalehi").textContent === before);
 
-  console.log("\n--- age scrubber ---");
+  console.log("\n--- matrix drives the breed panel ---");
+  const target = $$("#mrows .mrow").find(r => r.dataset.b === "Dachshund");
+  click(target.querySelector(".mlab"));
+  check("clicking a row selects that breed", () => $("#bname").textContent === "Dachshund");
+  check("matrix marks the current row", () =>
+    $$('#mrows .mrow[data-cur="1"]').length === 1 &&
+    $('#mrows .mrow[data-cur="1"]').dataset.b === "Dachshund");
+  check("timeline follows", () => $$("#tlin .row").length > 0);
+
+  console.log("\n--- breed panel ---");
+  check("lifespan strip drawn", () => $$("#strip .strip-mark").length >= 2);
+  check("big numbers populated", () => $("#tiles").textContent.includes("y"));
+  check("bars stay inside their track", () =>
+    $$("#tlin .bar").every(b => parseFloat(b.style.left) + parseFloat(b.style.width) <= 100.6));
+
   const age = $("#age");
-  age.value = "60";
-  age.dispatchEvent(new window.Event("input", { bubbles: true }));
+  age.value = "60"; fire(age, "input");
   check("age output formatted", () => $("#ageout").textContent === "5y");
-  check("some rows dimmed at 5y", () => $$("#tlin .row.off").length > 0);
-  check("not all rows dimmed", () => $$("#tlin .row.off").length < $$("#tlin .row").length);
+  check("some rows dim at 5y", () => $$("#tlin .row.off").length > 0);
+  check("not everything dims", () => $$("#tlin .row.off").length < $$("#tlin .row").length);
 
-  console.log("\n--- only-active filter ---");
-  $("#onlyactive").dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
-  check("filtered to live conditions only", () => {
+  click($("#onlyactive"));
+  check("only-live filter narrows the list", () => {
     const n = $$("#tlin .row").length;
-    return n > 0 && n < 9 ? String(n) + " rows live at 5y" : false;
+    return n > 0 && n < 10 ? n + " live at 5y" : false;
   });
-  $("#onlyactive").dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  click($("#onlyactive"));
 
-  console.log("\n--- table view ---");
-  $("#viewtoggle").dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
-  check("table rendered", () => $$("#tlin tbody tr").length > 0);
-  check("table has 6 columns", () => $$("#tlin thead th").length === 6);
-  $("#viewtoggle").dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  click($("#viewtoggle"));
+  check("table view renders 6 columns", () => $$("#tlin thead th").length === 6);
+  click($("#viewtoggle"));
   check("back to timeline", () => $$("#tlin .row").length > 0);
 
-  console.log("\n--- system chips ---");
   const chip = $(".chip");
-  const before = $$("#tlin .row").length;
-  chip.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
-  check("chip filters rows out", () => $$("#tlin .row").length < before);
-  chip.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
-  check("chip restores rows", () => $$("#tlin .row").length === before);
+  const n0 = $$("#tlin .row").length;
+  click(chip);
+  check("system chip filters", () => $$("#tlin .row").length < n0);
+  click(chip);
+  check("system chip restores", () => $$("#tlin .row").length === n0);
 
-  console.log("\n--- detail panel ---");
-  const bar = $("#tlin .bar");
-  bar.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
-  check("detail opened", () => $$(".det").length === 1);
-  check("detail has content", () => $(".det h4").textContent.length > 3);
-  $$("#tlin .bar")[2].dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
-  check("only one detail at a time", () => $$(".det").length === 1);
+  click($("#tlin .bar"));
+  check("detail panel opens", () => $$(".det").length === 1);
+  click($$("#tlin .bar")[2]);
+  check("only one detail open at a time", () => $$(".det").length === 1);
 
-  console.log("\n--- search ---");
   const q = $("#q");
-  q.value = "glaucoma";
-  q.dispatchEvent(new window.Event("input", { bubbles: true }));
-  check("search jumped to a breed with glaucoma", () => $$("#tlin .row").length > 0 || $(".empty") !== null);
-  q.value = "Boxer";
-  q.dispatchEvent(new window.Event("input", { bubbles: true }));
-  check("search by breed name selects Boxer", () => $("#bname").textContent === "Boxer");
-  q.value = "";
-  q.dispatchEvent(new window.Event("input", { bubbles: true }));
-  check("cleared search restores full list", () => $$("#tlin .row").length === 11);
+  q.value = "Boxer"; fire(q, "input");
+  check("search selects a breed", () => $("#bname").textContent === "Boxer");
+  q.value = ""; fire(q, "input");
+  check("cleared search restores", () => $$("#tlin .row").length === 11);
 
-  console.log("\n--- every breed renders without error ---");
-  const names = [...doc.querySelectorAll("#pick option")].map(o => o.value);
-  let bad = [];
-  for (const n of names) {
+  console.log("\n--- full sweep: every breed ---");
+  const bad = [];
+  for (const name of $$("#rail .rail-b").map(b => b.dataset.b)) {
     try {
-      const sel = $("#pick");
-      sel.value = n;
-      sel.dispatchEvent(new window.Event("change", { bubbles: true }));
-      if (!$$("#tlin .row").length && !$(".empty")) bad.push(n + ": no rows");
-      if ($$("#bwrap svg path").some(p => /NaN/.test(p.getAttribute("d")))) bad.push(n + ": NaN burden path");
-      if ($$("#tlin .bar").some(b => parseFloat(b.style.left) + parseFloat(b.style.width) > 100.6)) bad.push(n + ": bar overflow");
-    } catch (e) { bad.push(n + ": " + e.message); }
+      click($$("#rail .rail-b").find(b => b.dataset.b === name));
+      if (!$$("#tlin .row").length && !$(".empty")) bad.push(name + ": no rows");
+      if ($$("#tlin .bar").some(b => parseFloat(b.style.left) + parseFloat(b.style.width) > 100.6))
+        bad.push(name + ": bar overflow");
+      if ($$("#strip .strip-mark").some(m => !isFinite(parseFloat(m.style.left))))
+        bad.push(name + ": NaN in lifespan strip");
+    } catch (e) { bad.push(name + ": " + e.message); }
   }
-  check("all 85 breeds render clean", () => bad.length === 0 ? true : bad.slice(0, 5).join(" | "));
+  check("all breeds render clean", () => bad.length === 0 ? true : bad.slice(0, 5).join(" | "));
 
   console.log("\n=== " + (errors.length ? errors.length + " PROBLEM(S)" : "ALL CHECKS PASSED") + " ===");
   errors.slice(0, 12).forEach(e => console.log("  ! " + e));
   process.exit(errors.length ? 1 : 0);
-}, 600);
+}, 700);

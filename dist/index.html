@@ -113,6 +113,77 @@ a{color:var(--accent)}
 .strip-lab.low{top:auto;bottom:0;color:var(--ink-2);font-weight:400}
 .strip-ends{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3)}
 
+/* ---------- burden matrix ---------- */
+/* sequential single-hue ramp: step 0 is "nothing in play" and recedes to the surface */
+:root{
+  --s0:#f1f4f7; --s1:#dce9fa; --s2:#bdd6f5; --s3:#98bdef;
+  --s4:#6fa2e8; --s5:#4885db; --s6:#2d68b5; --s7:#1c4a87; --s8:#103261;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --s0:#151b21; --s1:#17293e; --s2:#1c3757; --s3:#234873;
+    --s4:#2c5b93; --s5:#3a73b4; --s6:#4f93d4; --s7:#78b0e8; --s8:#a9cbf6;
+  }
+}
+:root[data-theme="dark"]{
+  --s0:#151b21; --s1:#17293e; --s2:#1c3757; --s3:#234873;
+  --s4:#2c5b93; --s5:#3a73b4; --s6:#4f93d4; --s7:#78b0e8; --s8:#a9cbf6;
+}
+
+.msec{border-bottom:1px solid var(--line);background:var(--surface)}
+.msec-in{max-width:1400px;margin:0 auto;padding:clamp(18px,2.6vw,28px) clamp(16px,3vw,32px) clamp(22px,3vw,30px)}
+.mhead{display:flex;flex-wrap:wrap;gap:12px 26px;align-items:flex-end;justify-content:space-between;margin-bottom:6px}
+.mhead h2{margin:0;font-size:17px;font-weight:600;letter-spacing:-.01em}
+.mhead p{margin:5px 0 0;font-size:12.5px;color:var(--ink-3);max-width:84ch}
+.mctl{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:14px 0 4px}
+.mctl label{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-3);font-weight:600}
+.mctl select{font:inherit;font-size:12.5px;padding:4px 8px;background:var(--surface);color:var(--ink);border:1px solid var(--line-strong);border-radius:5px}
+.mscale{display:flex;align-items:center;gap:7px;margin-left:auto;font-size:11px;color:var(--ink-3);font-family:"IBM Plex Mono",monospace}
+.mscale i{display:block;width:17px;height:10px}
+
+.mscroll{overflow-x:auto;margin-top:12px}
+.mgrid{min-width:760px}
+.mrow{display:grid;grid-template-columns:186px minmax(0,1fr);align-items:center;height:13px}
+.mrow + .mrow{margin-top:1px}
+.mlab{
+  display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+  font-size:11px;line-height:1;padding:0 9px 0 0;white-space:nowrap;overflow:hidden;
+  cursor:pointer;border:0;background:transparent;color:var(--ink-2);font-family:inherit;
+}
+.mlab span{overflow:hidden;text-overflow:ellipsis}
+.mlab em{font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--ink-3);flex:none}
+.mlab:hover{color:var(--ink)}
+.mrow[data-cur="1"] .mlab{color:var(--accent);font-weight:600}
+.mrow[data-cur="1"] .mlab em{color:var(--accent)}
+.mcells{position:relative;display:grid;grid-template-columns:repeat(48,1fr);gap:1px;height:13px}
+.mcells i{display:block;height:100%;border-radius:1px}
+.mrow[data-cur="1"] .mcells{outline:1.5px solid var(--accent);outline-offset:1.5px;border-radius:2px}
+.mlife{position:absolute;top:-1px;bottom:-1px;width:0;border-left:1.5px solid var(--ink);opacity:.45;pointer-events:none}
+.c.s0{background:var(--s0)} .c.s1{background:var(--s1)} .c.s2{background:var(--s2)}
+.c.s3{background:var(--s3)} .c.s4{background:var(--s4)} .c.s5{background:var(--s5)}
+.c.s6{background:var(--s6)} .c.s7{background:var(--s7)} .c.s8{background:var(--s8)}
+
+.maxis{display:grid;grid-template-columns:186px minmax(0,1fr);margin-top:7px}
+.maxis-t{position:relative;height:15px}
+.maxis-t span{position:absolute;top:1px;transform:translateX(-50%);font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.mprof{display:grid;grid-template-columns:186px minmax(0,1fr);align-items:end;margin-bottom:8px}
+.mprof-l{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-3);font-weight:600;padding-right:9px;text-align:right}
+.mprof-b{display:grid;grid-template-columns:repeat(48,1fr);grid-template-rows:30px;gap:1px;align-items:end}
+.mprof-b i{display:block;background:var(--ink-3);border-radius:1px 1px 0 0}
+.mfoot{margin-top:12px;font-size:12px;color:var(--ink-3);max-width:88ch}
+
+#mtip{
+  position:fixed;z-index:60;pointer-events:none;max-width:320px;
+  background:var(--surface);border:1px solid var(--line-strong);border-radius:7px;
+  padding:9px 11px;font-size:12.5px;box-shadow:0 6px 22px -8px rgba(0,0,0,.45);
+  opacity:0;transition:opacity .1s;
+}
+#mtip b{display:block;font-size:13px;margin-bottom:1px}
+#mtip .age{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);margin-bottom:6px;display:block}
+#mtip ul{margin:0;padding-left:15px}
+#mtip li{margin:1px 0}
+#mtip .none{color:var(--ink-3)}
+
 /* ---------- controls ---------- */
 .controls{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;margin-bottom:14px}
 .scrub{display:flex;align-items:center;gap:11px;flex:1 1 300px;min-width:250px}
@@ -193,6 +264,48 @@ footer b{color:var(--ink-2);font-weight:600}
   </div>
 </div></header>
 
+<section class="msec"><div class="msec-in">
+  <div class="mhead">
+    <div>
+      <h2>Disease burden across every breed and every age</h2>
+      <p>One row per breed, one column per four months of life. Cell darkness is how many
+         conditions are inside their onset window at that age &mdash; the whole set on one
+         screen. The vertical rule on each row is that breed&rsquo;s mean lifespan.</p>
+    </div>
+  </div>
+  <div class="mctl">
+    <label for="msort">Order</label>
+    <select id="msort">
+      <option value="life">Mean lifespan, shortest first</option>
+      <option value="cluster">Similarity of burden shape</option>
+      <option value="peak">Peak burden</option>
+      <option value="total">Total burden</option>
+      <option value="group">AKC group</option>
+      <option value="name">Breed name</option>
+    </select>
+    <button class="btn" id="mweight" aria-pressed="false">Weight by severity</button>
+    <div class="mscale">
+      <span id="mscalelo">0</span>
+      <i style="background:var(--s1)"></i><i style="background:var(--s2)"></i>
+      <i style="background:var(--s3)"></i><i style="background:var(--s4)"></i>
+      <i style="background:var(--s5)"></i><i style="background:var(--s6)"></i>
+      <i style="background:var(--s7)"></i><i style="background:var(--s8)"></i>
+      <span id="mscalehi"></span>
+    </div>
+  </div>
+
+  <div class="mscroll"><div class="mgrid">
+    <div class="mprof">
+      <div class="mprof-l">All breeds</div>
+      <div class="mprof-b" id="mprof"></div>
+    </div>
+    <div id="mrows"></div>
+    <div class="maxis"><div></div><div class="maxis-t" id="maxis"></div></div>
+  </div></div>
+
+  <p class="mfoot" id="mfoot"></p>
+</div></section>
+
 <div class="shell">
   <aside class="rail">
     <div class="rail-search">
@@ -253,7 +366,7 @@ footer b{color:var(--ink-2);font-weight:600}
   <p>Onset windows are clinical consensus ranges drawn from Gough, Thomas &amp; O&rsquo;Neill,
      <i>Breed Predispositions to Disease in Dogs and Cats</i> (3rd&nbsp;ed.), the OFA/CHIC
      screening schedules, OMIA, the ACVO Blue Book, and breed-specific primary literature.
-     Full source list and derivation notes in <code>SOURCES.md</code>. Version v0.3.0.</p>
+     Full source list and derivation notes in <code>SOURCES.md</code>. Version v0.4.0.</p>
 </footer>
 
 <script>
@@ -442,6 +555,7 @@ $("#rail").addEventListener("click", e => {
   cur = D.find(b => b.name === btn.dataset.b);
   sysOff.clear();
   render();
+  markMatrix();
 });
 $("#q").addEventListener("input", e => {
   query = e.target.value.trim();
@@ -482,6 +596,189 @@ $("#tlin").addEventListener("click", e => {
 });
 
 render();
+
+/* ================= BURDEN MATRIX ================= */
+const BINS = 48, BIN_M = 4, MAT_MAX_M = BINS * BIN_M;   // 4-month bins across 0-16y
+const SEV_W = { mild: 1, moderate: 2, serious: 3, limiting: 4 };
+let mWeighted = false, mSort = "life", mOrder = null, mClusterOrder = null;
+
+function burdenVec(b, weighted){
+  const v = new Array(BINS).fill(0);
+  for (const d of b.dz){
+    const w = weighted ? SEV_W[d.sev] : 1;
+    const lo = Math.max(0, Math.floor(d.on[0] / BIN_M));
+    const hi = Math.min(BINS - 1, Math.floor(Math.min(d.on[1], MAT_MAX_M - 1) / BIN_M));
+    for (let i = lo; i <= hi; i++) v[i] += w;
+  }
+  return v;
+}
+function conditionsAt(b, bin){
+  const lo = bin * BIN_M, hi = lo + BIN_M - 1;
+  return b.dz.filter(d => d.on[0] <= hi && d.on[1] >= lo);
+}
+
+/* average-linkage agglomerative clustering via Lance-Williams update.
+   Vectors are normalised to sum 1 first, so breeds cluster on the SHAPE of their
+   burden across life rather than on how many conditions they happen to have. */
+function clusterOrder(){
+  if (mClusterOrder) return mClusterOrder;
+  const n = D.length;
+  const norm = D.map(b => {
+    const v = burdenVec(b, true), s = v.reduce((a, x) => a + x, 0) || 1;
+    return v.map(x => x / s);
+  });
+  const CD = [];
+  for (let i = 0; i < n; i++){
+    CD[i] = [];
+    for (let j = 0; j < n; j++){
+      let t = 0;
+      for (let k = 0; k < BINS; k++){ const d = norm[i][k] - norm[j][k]; t += d * d; }
+      CD[i][j] = Math.sqrt(t);
+    }
+  }
+  const alive = D.map((_, i) => i);
+  const members = D.map((_, i) => [i]);
+  while (alive.length > 1){
+    let bi = 0, bj = 1, best = Infinity;
+    for (let a = 0; a < alive.length; a++)
+      for (let c = a + 1; c < alive.length; c++){
+        const v = CD[alive[a]][alive[c]];
+        if (v < best){ best = v; bi = a; bj = c; }
+      }
+    const I = alive[bi], J = alive[bj];
+    const nI = members[I].length, nJ = members[J].length;
+    for (const k of alive){
+      if (k === I || k === J) continue;
+      const d = (nI * CD[I][k] + nJ * CD[J][k]) / (nI + nJ);
+      CD[I][k] = d; CD[k][I] = d;
+    }
+    members[I] = members[I].concat(members[J]);
+    alive.splice(bj, 1);
+  }
+  mClusterOrder = members[alive[0]].map(i => D[i].name);
+  return mClusterOrder;
+}
+
+function matrixOrder(){
+  const withV = D.map(b => {
+    const v = burdenVec(b, mWeighted);
+    return { b: b, peak: Math.max.apply(null, v), total: v.reduce((a, x) => a + x, 0) };
+  });
+  if (mSort === "cluster"){
+    const ord = clusterOrder();
+    return ord.map(n => D.find(b => b.name === n));
+  }
+  const GRP = ["Sporting","Hound","Working","Terrier","Toy","Non-Sporting","Herding"];
+  const cmp = {
+    life:  (x, y) => x.b.life.mean - y.b.life.mean || x.b.name.localeCompare(y.b.name),
+    peak:  (x, y) => y.peak - x.peak || x.b.name.localeCompare(y.b.name),
+    total: (x, y) => y.total - x.total || x.b.name.localeCompare(y.b.name),
+    name:  (x, y) => x.b.name.localeCompare(y.b.name),
+    group: (x, y) => GRP.indexOf(x.b.group) - GRP.indexOf(y.b.group) || x.b.name.localeCompare(y.b.name),
+  }[mSort];
+  return withV.sort(cmp).map(x => x.b);
+}
+
+function buildMatrix(){
+  const order = matrixOrder();
+  const vecs = new Map();
+  let gmax = 0;
+  for (const b of D){ const v = burdenVec(b, mWeighted); vecs.set(b.name, v); for (const x of v) if (x > gmax) gmax = x; }
+  const step = v => v <= 0 ? 0 : Math.max(1, Math.min(8, Math.ceil(v / gmax * 8)));
+
+  let h = "";
+  for (const b of order){
+    const v = vecs.get(b.name);
+    let cells = "";
+    for (let i = 0; i < BINS; i++) cells += '<i class="c s' + step(v[i]) + '" data-i="' + i + '"></i>';
+    const lifeX = Math.min(100, b.life.mean / (MAT_MAX_M / 12) * 100);
+    const pk = Math.max.apply(null, v);
+    h += '<div class="mrow" data-b="' + esc(b.name) + '" data-cur="' + (b === cur ? 1 : 0) + '">'
+       + '<button class="mlab" type="button"><span>' + esc(b.name) + '</span><em>'
+       + b.life.mean.toFixed(1) + '</em></button>'
+       + '<div class="mcells" aria-label="' + esc(b.name) + ': peak burden ' + pk
+       + ' conditions, mean lifespan ' + b.life.mean.toFixed(1) + ' years">' + cells
+       + '<span class="mlife" style="left:' + lifeX + '%"></span></div></div>';
+  }
+  $("#mrows").innerHTML = h;
+
+  // population profile: total burden across all breeds at each age
+  const prof = new Array(BINS).fill(0);
+  for (const b of D){ const v = vecs.get(b.name); for (let i = 0; i < BINS; i++) prof[i] += v[i]; }
+  const pmax = Math.max.apply(null, prof) || 1;
+  let ph = "";
+  for (let i = 0; i < BINS; i++) ph += '<i style="height:' + Math.max(2, Math.round(prof[i] / pmax * 30)) + 'px"></i>';
+  $("#mprof").innerHTML = ph;
+
+  let ax = '<span style="left:0;transform:none">birth</span>';
+  for (let y = 2; y <= 16; y += 2) ax += '<span style="left:' + (y / 16 * 100) + '%">' + y + 'y</span>';
+  $("#maxis").innerHTML = ax;
+
+  $("#mscalehi").textContent = gmax;
+  const peakBin = prof.indexOf(Math.max.apply(null, prof));
+  $("#mfoot").innerHTML =
+    "Two waves are visible in almost every row: developmental and congenital disease in the "
+    + "first two years, then a second rise as neoplastic and degenerative disease take over. "
+    + "Across all " + D.length + " breeds the busiest window is "
+    + fmtAge(peakBin * BIN_M) + "&ndash;" + fmtAge(peakBin * BIN_M + BIN_M) + ". "
+    + (mWeighted ? "Cells are weighted by clinical impact (mild 1 to life-limiting 4)."
+                 : "Cells count conditions, unweighted.")
+    + " Ordering by similarity of burden shape groups breeds with comparable disease "
+    + "architecture, regardless of how many conditions each carries.";
+}
+
+function markMatrix(){
+  const rows = $("#mrows").querySelectorAll(".mrow");
+  rows.forEach(r => r.dataset.cur = (r.dataset.b === cur.name) ? "1" : "0");
+}
+
+/* tooltip */
+const mtip = document.createElement("div");
+mtip.id = "mtip";
+document.body.appendChild(mtip);
+function hideTip(){ mtip.style.opacity = "0"; }
+$("#mrows").addEventListener("mousemove", e => {
+  const cell = e.target.closest(".c");
+  if (!cell){ hideTip(); return; }
+  const row = cell.closest(".mrow");
+  const b = D.find(x => x.name === row.dataset.b);
+  const bin = +cell.dataset.i;
+  const list = conditionsAt(b, bin);
+  mtip.innerHTML = "<b>" + esc(b.name) + "</b><span class='age'>"
+    + fmtAge(bin * BIN_M) + " to " + fmtAge(bin * BIN_M + BIN_M) + "</span>"
+    + (list.length
+        ? "<ul>" + list.slice(0, 8).map(d => "<li>" + esc(d.n) + " <span style='color:var(--ink-3)'>"
+            + SEVL[d.sev].toLowerCase() + "</span></li>").join("")
+          + (list.length > 8 ? "<li class='none'>and " + (list.length - 8) + " more</li>" : "")
+          + "</ul>"
+        : "<span class='none'>Nothing in its onset window</span>");
+  mtip.style.opacity = "1";
+  const pad = 14;
+  let x = e.clientX + pad, y = e.clientY + pad;
+  const r = mtip.getBoundingClientRect();
+  if (x + r.width > window.innerWidth - 8) x = e.clientX - r.width - pad;
+  if (y + r.height > window.innerHeight - 8) y = e.clientY - r.height - pad;
+  mtip.style.left = x + "px"; mtip.style.top = Math.max(8, y) + "px";
+});
+$("#mrows").addEventListener("mouseleave", hideTip);
+$("#mrows").addEventListener("click", e => {
+  const row = e.target.closest(".mrow"); if (!row) return;
+  const b = D.find(x => x.name === row.dataset.b);
+  if (!b || b === cur) return;
+  cur = b; sysOff.clear();
+  render();
+  markMatrix();
+  const sh = document.querySelector(".shell");
+  if (sh && sh.scrollIntoView) sh.scrollIntoView({ block: "start", behavior: "smooth" });
+});
+$("#msort").addEventListener("change", e => { mSort = e.target.value; buildMatrix(); });
+$("#mweight").addEventListener("click", e => {
+  mWeighted = !mWeighted;
+  e.currentTarget.setAttribute("aria-pressed", mWeighted);
+  buildMatrix();
+});
+
+buildMatrix();
 
 </script>
 </body>

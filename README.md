@@ -13,6 +13,14 @@ breed, this age — what should be on my list?*
 
 ## What it does
 
+- **Burden matrix.** All 85 breeds and their whole life course on one screen:
+  one row per breed, one column per four months, cell darkness = how many
+  conditions are inside their onset window at that age. Each row carries a rule
+  at that breed's mean lifespan. Order it by lifespan, peak or total burden,
+  group, name, or by **similarity of burden shape** — agglomerative clustering on
+  shape-normalised burden vectors, which groups breeds with comparable disease
+  architecture regardless of how many conditions they carry. Hover a cell for the
+  conditions in play; click a row to open that breed.
 - **Onset timeline.** Every condition is a bar spanning the window in which
   clinical signs typically first appear, on an age axis scaled to that breed's
   own lifespan. Bars are coloured by clinical impact, not by body system, so
