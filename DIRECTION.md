@@ -123,8 +123,7 @@ how. A figure without that is not enterable.
 | 2. Genotype frequency | OMIA, Embark, UC Davis VGL | next |
 | 3. **True prevalence** | VetCompass, Agria | highest scientific value |
 | 4. Survival / outcome | Oncology + cardiology literature | manual |
-| 5. Local validation | Shepherd PIMS caseload | needs permission |
-| 6. Coverage | ~120 more breeds, crosses, cats | mechanical |
+| 5. Coverage | ~120 more breeds, crosses, cats | mechanical |
 
 Phase 3 is the one that fills the column OFA structurally cannot — OFA never
 sees the pet population.
@@ -135,8 +134,7 @@ sees the pet population.
 Every condition already carries a `test` field. Invert it: breed in, age-ordered
 checklist of what to screen and when. That is a wellness protocol generated from
 data already entered, and it is the version that changes what happens in an exam
-room rather than merely informing it. It is also the only feature with an
-obvious commercial shape.
+room rather than merely informing it.
 
 **Condition-first transpose.** Pick a disease, see every predisposed breed's
 onset window ranked. Answers "which breeds should have had this on my radar",
@@ -176,9 +174,6 @@ conditions or fields, major for a schema change. Tag every release.
 
 - **Publication.** The dataset is publishable as it stands. RVC VetCompass
   group, veterinary informatics, or simply a public tool. Undecided.
-- **Shepherd data.** Phase 5 is the most differentiating work available and the
-  only source nobody else can replicate, but it is practice data. Permission and
-  aggregation approach need settling before any extraction.
 - **Scope of crosses.** Whether to model F1 only, or attempt multigenerational
   doodles where parentage is genuinely unknown.
 - **Cats.** Same engine, entirely new dataset. Worth it only if the canine

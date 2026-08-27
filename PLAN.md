@@ -101,22 +101,7 @@ the ~90 entries marked `limiting`.
 
 ---
 
-## Phase 5 — Local validation against real caseload
-
-The one source nobody else can replicate: Shepherd PIMS records — breed, age at
-presentation, diagnosis — to check the onset windows against an actual
-population. Does hip dysplasia really present at 5–24 months, or later because
-owners wait?
-
-This is what would move the project from a literature compilation to something
-with primary data behind it.
-
-**Constraints:** aggregate only, no identifiable records, and the data belongs
-to the practice. Worth being deliberate about permission before starting.
-
----
-
-## Phase 6 — Coverage
+## Phase 5 — Coverage
 
 - Remaining ~120 AKC breeds (the current 85 cover the high-volume ones).
 - **Designer crosses.** An F1 cross inherits the union of both parents'
