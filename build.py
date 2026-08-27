@@ -5,7 +5,7 @@ Emits two files:
   dist/index.html    standalone page (doctype + head + body) for local use
   dist/artifact.html content-only fragment for publishing as a Claude Artifact
 """
-import json, glob, os, math
+import json, glob, os, math, re
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(ROOT, "data")
@@ -252,6 +252,34 @@ a{color:var(--accent)}
 #mtip li{margin:1px 0}
 #mtip .none{color:var(--ink-3)}
 
+/* ---------- OFA screening panel ---------- */
+.ofa-wrap{overflow-x:auto}
+.ofa-grp{margin-top:14px}
+.ofa-grp:first-child{margin-top:2px}
+.ofa-grp h4{
+  margin:0 0 6px;font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--ink-3);font-weight:600;
+}
+table.ofa{width:100%;border-collapse:collapse;font-size:13px;min-width:420px}
+table.ofa th{
+  text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--ink-3);font-weight:600;padding:0 10px 4px 0;border-bottom:1px solid var(--line);
+}
+table.ofa td{padding:5px 10px 5px 0;border-bottom:1px solid var(--line);vertical-align:baseline}
+table.ofa td.v,table.ofa th.v{text-align:right;font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.ofa td.name{color:var(--ink)}
+table.ofa td.metric{color:var(--ink-3);font-size:12px}
+table.ofa tr.thin td{color:var(--ink-3)}
+.ofa-n{color:var(--ink-3)}
+.ofa-note{margin:12px 0 0;font-size:12px;color:var(--ink-3);max-width:80ch}
+
+/* inline OFA figure on a timeline row */
+.rname .ofa{
+  color:var(--accent);font-weight:600;font-family:"IBM Plex Mono",monospace;
+  font-size:10px;letter-spacing:.02em;
+}
+.rname .ofa::before{content:"\00b7\00a0"; color:var(--ink-3); font-weight:400}
+
 /* ---------- controls ---------- */
 .controls{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;margin-bottom:14px}
 .scrub{display:flex;align-items:center;gap:11px;flex:1 1 300px;min-width:250px}
@@ -397,6 +425,17 @@ BODY = r"""
       <div class="strip" id="strip"></div>
     </section>
 
+
+    <section class="card" id="ofacard">
+      <h3>OFA screening <span id="ofacount" style="color:var(--ink-3);font-weight:400"></span></h3>
+      <p class="hint">What the Orthopedic Foundation for Animals holds for this breed. These are
+         results from dogs whose owners chose to submit them &mdash; overwhelmingly breeding
+         candidates &mdash; so they are <b>not breed prevalence</b>. Phenotypic screens read low
+         because affected animals often go unsubmitted, and genetic results describe a population
+         being selected against the mutation. Read every figure with its sample size.</p>
+      <div class="ofa-wrap" id="ofapanel"></div>
+    </section>
+
     <div class="controls">
       <div class="scrub">
         <label for="age">Age marker</label>
@@ -440,7 +479,7 @@ BODY = r"""
 
 
 JS = r"""
-const D = __DATA__, SYS = __SYS__, SEVL = __SEVL__;
+const D = __DATA__, SYS = __SYS__, SEVL = __SEVL__, OFA_NAMES = __OFANAMES__;
 const REF_MEAN = __MA__;
 const $ = s => document.querySelector(s);
 
@@ -549,7 +588,10 @@ function buildTL(){
     const span = lifelong ? "present lifelong" : fmtAge(d.on[0]) + " to " + fmtAge(d.on[1]);
     h += '<div class="row' + dim + '">'
        + '<div class="rname"><span>' + esc(d.n) + '</span><span class="sys">' + SYS[d.sys]
-       + (lifelong ? " &middot; lifelong" : "") + '</span></div>'
+       + (lifelong ? " &middot; lifelong" : "")
+       + (d.ofa ? '<span class="ofa" title="OFA ' + metricWord(d.ofa.metric) + ', n='
+                  + fmtN(d.ofa.n) + '">OFA ' + d.ofa.pct + '%</span>' : "")
+       + '</span></div>'
        + '<div class="rtrack" style="background:' + bg + '">'
        + '<button class="bar ' + d.sev + '" style="left:' + a + '%;width:' + w + '%" data-i="' + i + '"'
        + ' aria-label="' + esc(d.n) + ': ' + SEVL[d.sev] + ', onset ' + span + '"'
@@ -562,7 +604,7 @@ function buildTL(){
 function buildTable(){
   if (!rows.length){ $("#tlin").innerHTML = '<div class="empty">Nothing matches the current filters.</div>'; return; }
   let h = '<table><thead><tr><th>Condition</th><th>System</th><th>Onset</th><th>Impact</th>'
-        + '<th>Inheritance</th><th>Test</th></tr></thead><tbody>';
+        + '<th>OFA</th><th>Inheritance</th><th>Test</th></tr></thead><tbody>';
   for (const d of rows){
     const ll = d.on[1] >= 200;
     h += '<tr><td>' + esc(d.n)
@@ -570,6 +612,8 @@ function buildTable(){
        + '</td><td>' + SYS[d.sys] + '</td>'
        + '<td class="num">' + (ll ? "lifelong" : fmtAge(d.on[0]) + " &ndash; " + fmtAge(d.on[1])) + '</td>'
        + '<td><span class="pill ' + d.sev + '">' + SEVL[d.sev] + '</span></td>'
+       + '<td class="num">' + (d.ofa ? d.ofa.pct + '%<br><span style="color:var(--ink-3);font-size:11px">n='
+            + fmtN(d.ofa.n) + '</span>' : '<span style="color:var(--ink-3)">&mdash;</span>') + '</td>'
        + '<td>' + esc(d.inh) + '</td><td>' + esc(d.test) + '</td></tr>';
   }
   $("#tlin").innerHTML = h + '</tbody></table>';
@@ -634,7 +678,56 @@ function buildHead(){
   document.documentElement.style.setProperty("--age", (ageM / maxM * 100) + "%");
 }
 
-function render(){ buildRail(); buildHead(); buildStrip(); buildTL(); }
+/* ================= OFA SCREENING PANEL ================= */
+function ofaLabel(code){ return OFA_NAMES[code] || code; }
+function fmtN(n){ return n.toLocaleString(); }
+function metricWord(m){ return m.replace(/\s*%\s*$/, "").toLowerCase(); }
+
+function buildOfaPanel(){
+  const block = cur.ofa;
+  const card = $("#ofacard");
+  if (!block || !Object.keys(block).length){ card.style.display = "none"; return; }
+  card.style.display = "";
+
+  // a genetic test is exactly the set that reports a carrier rate
+  const rows = Object.keys(block).map(k => Object.assign({ code: k }, block[k]));
+  const dna = rows.filter(r => r.carrier !== undefined).sort((a, b) => b.n - a.n);
+  const phe = rows.filter(r => r.carrier === undefined).sort((a, b) => b.n - a.n);
+
+  const cell = r => '<td class="name">' + esc(ofaLabel(r.code))
+    + (r.pooled ? ' <span class="ofa-n" title="OFA pools this breed\'s varieties into one row">pooled</span>' : "")
+    + '</td>';
+
+  let h = "";
+  if (phe.length){
+    h += '<div class="ofa-grp"><h4>Phenotypic screens &mdash; radiograph or examination</h4>'
+       + '<table class="ofa"><thead><tr><th>Test</th><th class="v">Abnormal</th>'
+       + '<th>Measure</th><th class="v">Evaluated</th></tr></thead><tbody>';
+    for (const r of phe)
+      h += '<tr>' + cell(r) + '<td class="v">' + r.pct + '%</td>'
+         + '<td class="metric">' + esc(metricWord(r.metric)) + '</td>'
+         + '<td class="v ofa-n">' + fmtN(r.n) + '</td></tr>';
+    h += '</tbody></table></div>';
+  }
+  if (dna.length){
+    h += '<div class="ofa-grp"><h4>Genetic tests &mdash; genotype in the tested population</h4>'
+       + '<table class="ofa"><thead><tr><th>Test</th><th class="v">Affected</th>'
+       + '<th class="v">Carrier</th><th class="v">Evaluated</th></tr></thead><tbody>';
+    for (const r of dna)
+      h += '<tr' + (r.n < 100 ? ' class="thin"' : '') + '>' + cell(r)
+         + '<td class="v">' + r.pct + '%</td>'
+         + '<td class="v">' + r.carrier + '%</td>'
+         + '<td class="v ofa-n">' + fmtN(r.n) + '</td></tr>';
+    h += '</tbody></table></div>';
+  }
+  h += '<p class="ofa-note">Rows in grey have fewer than 100 dogs evaluated and should be '
+     + 'treated as indicative only. OFA requires 100 evaluations before a breed appears in its '
+     + 'own published tables.</p>';
+  $("#ofapanel").innerHTML = h;
+  $("#ofacount").textContent = "· " + rows.length + " tests held";
+}
+
+function render(){ buildRail(); buildHead(); buildStrip(); buildOfaPanel(); buildTL(); }
 
 /* ---------- events ---------- */
 $("#rail").addEventListener("click", e => {
@@ -869,6 +962,34 @@ buildMatrix();
 """
 
 
+# Acronyms that must survive title-casing of the OFA test names.
+ACRONYMS = {
+    "DNA","BAER","CNS","OSD","DTR","RFGS","XI","X","II","III","IV","VI","VII",
+    "CDDY","IVDD","CDPA","MDR1","SOD1","GM1","GM2","NCL","PRA","EIC","CMO","PFK",
+    "VWD","CEA","DM","SAS","PLL","HD","EL","PA","CU","CL","CMR","PK","PKD","AM",
+    "MCADD","SSADHD","DEPOH","LPP","HPN","CDMC","TT","DPCA","LP","SH","TH","DE",
+    "ACA","BCA","CA","EYE","KD","PN","SD","NE","MS","HS","RF","TP","MC","MD","SA",
+}
+
+_TOKEN = re.compile(r"[A-Za-z0-9]+")
+
+
+def _titlecase(name):
+    def repl(m):
+        w = m.group(0)
+        return w.upper() if w.upper() in ACRONYMS else w[:1].upper() + w[1:].lower()
+    return _TOKEN.sub(repl, name)
+
+
+def ofa_names():
+    """OFA test code -> readable label, taken from the parsed snapshot."""
+    path = os.path.join(DATA, "ofa_stats.json")
+    if not os.path.exists(path):
+        return {}
+    raw = json.load(open(path, encoding="utf-8"))
+    return {code: _titlecase((t.get("test") or code).strip()) for code, t in raw.items()}
+
+
 def build():
     breeds = load()
     nb, nd, mean_all = stats(breeds)
@@ -880,6 +1001,7 @@ def build():
     js = (JS.replace("__DATA__", json.dumps(breeds, separators=(",", ":"), ensure_ascii=False))
             .replace("__SYS__", json.dumps(SYSTEMS))
             .replace("__SEVL__", json.dumps(SEV_LABEL))
+            .replace("__OFANAMES__", json.dumps(ofa_names(), ensure_ascii=False))
             .replace("__MA__", str(mean_all)))
 
     head = ('<title>Canine Onset Atlas</title>\n'

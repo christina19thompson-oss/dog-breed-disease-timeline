@@ -114,7 +114,7 @@ setTimeout(() => {
   click($("#onlyactive"));
 
   click($("#viewtoggle"));
-  check("table view renders 6 columns", () => $$("#tlin thead th").length === 6);
+  check("table view renders 7 columns", () => $$("#tlin thead th").length === 7);
   click($("#viewtoggle"));
   check("back to timeline", () => $$("#tlin .row").length > 0);
 
@@ -135,6 +135,37 @@ setTimeout(() => {
   check("search selects a breed", () => $("#bname").textContent === "Boxer");
   q.value = ""; fire(q, "input");
   check("cleared search restores", () => $$("#tlin .row").length === 11);
+
+  console.log("\n--- OFA surfacing ---");
+  check("OFA panel renders for the default breed", () => $$("#ofapanel table.ofa").length >= 1);
+  check("panel splits phenotypic and genetic", () => $$("#ofapanel .ofa-grp h4").length === 2);
+  check("test count shown", () => /\d+ tests held/.test($("#ofacount").textContent));
+  check("every panel row has a sample size", () =>
+    $$("#ofapanel tbody tr").every(r => /[\d,]+/.test(r.lastElementChild.textContent)));
+  check("codes resolved to readable names", () =>
+    $$("#ofapanel td.name").every(td => td.textContent.trim().length > 2));
+  check("inline OFA figure on timeline rows", () => $$("#tlin .rname .ofa").length > 0);
+  check("inline figure is a real percent", () =>
+    $$("#tlin .rname .ofa").every(e => /^OFA [\d.]+%$/.test(e.textContent.trim())));
+  check("table view has an OFA column", () => {
+    click($("#viewtoggle"));
+    const ok = $$("#tlin thead th").some(th => th.textContent.trim() === "OFA");
+    click($("#viewtoggle"));
+    return ok;
+  });
+  check("panel follows the selected breed", () => {
+    click($$("#rail .rail-b").find(b => b.dataset.b === "Bulldog"));
+    return $("#bname").textContent === "Bulldog" && $$("#ofapanel tbody tr").length > 0;
+  });
+  check("no breed left with an empty panel", () => {
+    const bad = [];
+    for (const n of $$("#rail .rail-b").map(b => b.dataset.b)) {
+      click($$("#rail .rail-b").find(b => b.dataset.b === n));
+      if (!$$("#ofapanel tbody tr").length) bad.push(n);
+    }
+    return bad.length === 0 ? true : bad.slice(0, 4).join(" | ");
+  });
+
 
   console.log("\n--- full sweep: every breed ---");
   const bad = [];

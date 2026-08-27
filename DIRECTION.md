@@ -17,7 +17,7 @@ appears**, and against **how long that breed actually lives**.
 The question it exists to answer is the one asked in an exam room: *this breed,
 this age — what belongs on my list?*
 
-**Current state — v0.5.0**
+**Current state — v0.6.0**
 
 | | |
 |---|---|
@@ -37,7 +37,7 @@ age at death, size class, and the full block of OFA tests held for that breed.
 
 ---
 
-## 2. The three views
+## 2. The views
 
 1. **Burden matrix** — all 85 breeds and their whole life course on one screen.
    One row per breed, one column per four months, cell darkness = conditions
@@ -50,7 +50,9 @@ age at death, size class, and the full block of OFA tests held for that breed.
    the all-breed mean.
 3. **Onset timeline** — every condition as a bar spanning its onset window, over
    per-breed life-stage bands, with an age marker that dims everything not
-   currently in play.
+   currently in play. Rows carrying an OFA figure show it inline.
+4. **OFA screening panel** — every test OFA holds for the selected breed, split
+   into phenotypic screens and genetic tests, sorted by sample size.
 
 ---
 
