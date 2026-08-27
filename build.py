@@ -47,7 +47,10 @@ LIFELONG_MONTHS = 200  # onset windows reaching this far are "lifelong / from bi
 def load():
     groups = []
     for path in glob.glob(os.path.join(DATA, "*.json")):
-        groups.append(json.load(open(path, encoding="utf-8")))
+        d = json.load(open(path, encoding="utf-8"))
+        if "group" not in d or "breeds" not in d:
+            continue          # reference data (ofa_stats.json etc), not a breed file
+        groups.append(d)
     groups.sort(key=lambda g: GROUP_ORDER.index(g["group"]))
 
     breeds = []
@@ -572,6 +575,23 @@ function buildTable(){
   $("#tlin").innerHTML = h + '</tbody></table>';
 }
 
+/* OFA figures are screening results from voluntarily submitted breeding stock,
+   not breed prevalence, so the metric and the caveat always travel with them. */
+function ofaRow(o){
+  const carrier = (o.carrier !== undefined)
+    ? ' &middot; ' + o.carrier + '% carrier' : "";
+  const pooled = o.pooled
+    ? ' OFA does not separate this breed&rsquo;s varieties, so the figure is pooled across them.' : "";
+  return '<dt>OFA</dt><dd><b class="mono">' + o.pct + '%</b> '
+    + esc(o.metric.toLowerCase().replace(/ %$/, "")) + carrier
+    + ' <span class="mono" style="color:var(--ink-3)">n=' + o.n.toLocaleString() + '</span>'
+    + '<div style="color:var(--ink-3);font-size:12px;margin-top:3px">'
+    + 'Screened dogs submitted to OFA, overwhelmingly breeding candidates &mdash; not breed '
+    + 'prevalence. Phenotypic screens read low because affected animals often go unsubmitted; '
+    + 'DNA results describe a population actively selected against the mutation.' + pooled
+    + '</div></dd>';
+}
+
 function openDetail(i){
   const d = rows[i];
   document.querySelectorAll(".det").forEach(e => e.remove());
@@ -587,6 +607,7 @@ function openDetail(i){
     + '<dt>Inheritance</dt><dd>' + esc(d.inh) + '</dd>'
     + (d.test ? '<dt>Test</dt><dd>' + esc(d.test) + '</dd>' : "")
     + (d.note ? '<dt>Note</dt><dd>' + esc(d.note) + '</dd>' : "")
+    + (d.ofa ? ofaRow(d.ofa) : "")
     + '</dl>';
   rowEls[i].querySelector(".rtrack").after(div);
 }

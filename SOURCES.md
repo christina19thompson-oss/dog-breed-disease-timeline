@@ -18,6 +18,7 @@ it clinically.
 | `vc2018` | O'Neill DG et al. **Labrador Retrievers under primary veterinary care in the UK: demography, mortality and disorders.** *Canine Genetics and Epidemiology* 2018;5:8. |
 | `vc2021` | O'Neill DG et al. **Health of Pug dogs / English Bulldogs / French Bulldogs under primary veterinary care in the UK** (VetCompass series). *Canine Medicine and Genetics* 2021–2022. |
 | `vc2022` | O'Neill DG et al. **Health of Pug dogs in the UK: disorder predispositions and protections.** *Canine Medicine and Genetics* 2022;9:4. |
+| `ofa2026` | **Orthopedic Foundation for Animals**, breed statistics, retrieved 26 Aug 2026 from `api.ofa.org/api/ds.php`. 186 tests. See the warning below — these are screening results, not prevalence. |
 | `glt2015` | **Golden Retriever Lifetime Study**, Morris Animal Foundation — prospective cohort of >3,000 Golden Retrievers, ongoing since 2012. |
 | `bmd2016` | Bernese Mountain Dog histiocytic sarcoma cohort and heritability studies (Abadie, Shearin, Dobson series). |
 | `ckcs2019` | Cavalier King Charles Spaniel mitral valve disease cohort studies and the MVD breeding-scheme literature. |
@@ -42,6 +43,40 @@ it clinically.
 **What this means in practice:** the mean is a defensible number to give a
 client. The mode is a useful shape-of-the-distribution intuition — "the most
 common age to lose this breed" — and should be presented as an estimate.
+
+---
+
+## 1b. OFA screening statistics (`ofa` field)
+
+**These are not prevalence figures, and must never be presented as such.**
+
+OFA statistics describe dogs whose owners chose to submit them — overwhelmingly
+breeding candidates, in breeds where health screening is a cultural norm.
+
+- **Phenotypic screens** (hips, elbows, patella, eyes, cardiac, thyroid) are
+  biased **low**. Obviously dysplastic or affected animals are frequently never
+  submitted, so the reported abnormal rate is a floor, not an estimate.
+- **DNA test results** describe the tested breeding population, which is being
+  actively selected against the mutation. Two illustrations from the current
+  snapshot: the Chihuahua merle locus reads 100% carrier (n=75) because only
+  merle-looking dogs are tested at all; Cavalier degenerative myelopathy reads
+  23.3% "abnormal" genotype, which is genotype frequency in breeding stock and
+  not a clinical disease rate.
+- **Sample sizes vary enormously** — Labrador hips carry n=324,731; some breeds
+  have fewer than 100 evaluations. The `n` is stored alongside every figure and
+  should always be read with it.
+- **Composite screens** (eyes, congenital cardiac, basic and advanced cardiac,
+  dentition) are stored only at breed level, because "abnormal on a congenital
+  cardiac exam" does not belong to any one condition.
+- **Breed varieties are pooled** where OFA pools them. OFA lists a single
+  `POODLE` row, so Standard and Miniature Poodle share it and the figure is
+  flagged `pooled: true`.
+
+The interface always shows the metric label and sample size next to the number,
+and repeats the caveat, precisely so the figure cannot be quoted out of context.
+
+The field is named `ofa`. The field name `prev` is deliberately reserved and
+unused until genuine population prevalence (VetCompass, Agria) is entered.
 
 ---
 
