@@ -17,20 +17,22 @@ appears**, and against **how long that breed actually lives**.
 The question it exists to answer is the one asked in an exam room: *this breed,
 this age — what belongs on my list?*
 
-**Current state — v0.6.0**
+**Current state — v0.7.0**
 
 | | |
 |---|---|
 | Breeds | 85, across all 7 AKC groups |
 | Breed–disease pairs | 636 |
 | OFA screening figures | 173 condition-level, 85 breed-level blocks |
+| OMIA gene assignments | 43 breed-confirmed, from 271 phene records |
 | Repo | `~/dog-breed-disease-timeline`, private on GitHub |
 | Published | Claude Artifact, private, republished from `dist/artifact.html` |
 
 **What it contains per condition:** onset window in months, body system, clinical
-impact, inheritance mode and gene where identified, the screening or diagnostic
-test, a clinical note, and — where OFA runs a specific test — a screening figure
-with its metric and sample size.
+impact, inheritance mode, the screening or diagnostic test, a clinical note, and
+— where OFA runs a specific test — a screening figure with its metric and sample
+size. Where OMIA ties a mutation to this breed specifically, the causal gene and
+the OMIA record it came from.
 
 **Per breed:** mean lifespan, estimated modal lifespan, interquartile range of
 age at death, size class, and the full block of OFA tests held for that breed.
@@ -50,7 +52,7 @@ age at death, size class, and the full block of OFA tests held for that breed.
    the all-breed mean.
 3. **Onset timeline** — every condition as a bar spanning its onset window, over
    per-breed life-stage bands, with an age marker that dims everything not
-   currently in play. Rows carrying an OFA figure show it inline.
+   currently in play. Rows carrying an OFA figure or an OMIA gene show it inline.
 4. **OFA screening panel** — every test OFA holds for the selected breed, split
    into phenotypic screens and genetic tests, sorted by sample size.
 
@@ -113,6 +115,15 @@ exam" belongs to no single condition.
 **Every new number arrives with its population.** Whose dogs, how many, measured
 how. A figure without that is not enterable.
 
+**A gene is written only on breed-level evidence.** One clinical entity maps to
+many OMIA phenes — progressive retinal atrophy is 36 gene-specific records — so
+a name match cannot say which gene this breed's version involves. Only the breed
+column of OMIA's variant table can. Where our condition name carries a locus
+qualifier (`PRA (prcd)`, `(rcd1)`), that qualifier decides the record and
+overrides the breed search. Where the evidence falls short, nothing is written:
+an empty `gene` is usually correct, because roughly half these pairs are not
+Mendelian traits at all. Full detail in `SOURCES.md` §1c.
+
 ---
 
 ## 5. Where it goes next
@@ -122,7 +133,8 @@ how. A figure without that is not enterable.
 | Phase | Source | Status |
 |---|---|---|
 | 1. OFA screening | `api.ofa.org` | **done, v0.5.0** |
-| 2. Genotype frequency | OMIA, Embark, UC Davis VGL | next |
+| 2. Gene assignment | OMIA (`omia.org`) | **done, v0.7.0** |
+| 2b. Genotype frequency | Embark, UC Davis VGL | open |
 | 3. **True prevalence** | VetCompass, Agria | highest scientific value |
 | 4. Survival / outcome | Oncology + cardiology literature | manual |
 | 5. Coverage | ~120 more breeds, crosses, cats | mechanical |
@@ -156,8 +168,9 @@ burden — probability × timing — instead of a count. Same chart, better numb
 
 ```bash
 python build.py                  # data/*.json -> dist/index.html + dist/artifact.html
-node tests/dom-checks.js         # 40 headless checks (needs jsdom)
+node tests/dom-checks.js         # 55 headless checks (needs jsdom)
 bash tools/fetch_ofa.sh          # refresh the OFA snapshot, then parse + merge
+bash tools/fetch_omia.sh         # refresh the OMIA snapshot, then merge_omia.py
 ```
 
 Visual checks: render `dist/index.html` with headless Chrome and pass

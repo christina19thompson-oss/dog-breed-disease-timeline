@@ -280,6 +280,14 @@ table.ofa tr.thin td{color:var(--ink-3)}
 }
 .rname .ofa::before{content:"\00b7\00a0"; color:var(--ink-3); font-weight:400}
 
+/* inline gene symbol on a timeline row. Deliberately quieter than the OFA
+   figure: a gene symbol is context, a screening rate is a number you act on. */
+.rname .gene{
+  color:var(--ink-3);font-weight:500;font-family:"IBM Plex Mono",monospace;
+  font-size:10px;letter-spacing:.02em;
+}
+.rname .gene::before{content:"\00b7\00a0"; color:var(--ink-3); font-weight:400}
+
 /* ---------- controls ---------- */
 .controls{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;margin-bottom:14px}
 .scrub{display:flex;align-items:center;gap:11px;flex:1 1 300px;min-width:250px}
@@ -591,6 +599,8 @@ function buildTL(){
        + (lifelong ? " &middot; lifelong" : "")
        + (d.ofa ? '<span class="ofa" title="OFA ' + metricWord(d.ofa.metric) + ', n='
                   + fmtN(d.ofa.n) + '">OFA ' + d.ofa.pct + '%</span>' : "")
+       + (d.gene ? '<span class="gene" title="' + esc(d.gene.phene)
+                  + ' - OMIA:' + esc(d.gene.omia) + '">' + esc(d.gene.sym) + '</span>' : "")
        + '</span></div>'
        + '<div class="rtrack" style="background:' + bg + '">'
        + '<button class="bar ' + d.sev + '" style="left:' + a + '%;width:' + w + '%" data-i="' + i + '"'
@@ -614,7 +624,10 @@ function buildTable(){
        + '<td><span class="pill ' + d.sev + '">' + SEVL[d.sev] + '</span></td>'
        + '<td class="num">' + (d.ofa ? d.ofa.pct + '%<br><span style="color:var(--ink-3);font-size:11px">n='
             + fmtN(d.ofa.n) + '</span>' : '<span style="color:var(--ink-3)">&mdash;</span>') + '</td>'
-       + '<td>' + esc(d.inh) + '</td><td>' + esc(d.test) + '</td></tr>';
+       + '<td>' + esc(d.inh)
+       + (d.gene ? '<br><span class="mono" style="color:var(--ink-3);font-size:11.5px">'
+                   + esc(d.gene.sym) + '</span>' : "")
+       + '</td><td>' + esc(d.test) + '</td></tr>';
   }
   $("#tlin").innerHTML = h + '</tbody></table>';
 }
@@ -636,6 +649,19 @@ function ofaRow(o){
     + '</div></dd>';
 }
 
+/* A gene is written only where OMIA links that mutation to THIS breed, so the
+   record it came from travels with it and stays checkable. The mode shown is
+   OMIA's for the phene, which can be narrower than the breed's clinical
+   picture -- hence it is labelled as theirs, not merged into ours. */
+function geneRow(g){
+  return '<dt>Gene</dt><dd><b class="mono">' + esc(g.sym) + '</b>'
+    + (g.var ? ' <span class="mono" style="color:var(--ink-3)">' + esc(g.var) + '</span>' : "")
+    + '<div style="color:var(--ink-3);font-size:12px;margin-top:3px">'
+    + esc(g.phene) + ' &middot; OMIA:' + esc(g.omia)
+    + (g.inh ? ' &middot; ' + esc(g.inh) + ' (OMIA)' : "")
+    + '</div></dd>';
+}
+
 function openDetail(i){
   const d = rows[i];
   document.querySelectorAll(".det").forEach(e => e.remove());
@@ -651,6 +677,7 @@ function openDetail(i){
     + '<dt>Inheritance</dt><dd>' + esc(d.inh) + '</dd>'
     + (d.test ? '<dt>Test</dt><dd>' + esc(d.test) + '</dd>' : "")
     + (d.note ? '<dt>Note</dt><dd>' + esc(d.note) + '</dd>' : "")
+    + (d.gene ? geneRow(d.gene) : "")
     + (d.ofa ? ofaRow(d.ofa) : "")
     + '</dl>';
   rowEls[i].querySelector(".rtrack").after(div);

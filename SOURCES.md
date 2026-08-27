@@ -80,6 +80,48 @@ unused until genuine population prevalence (VetCompass, Agria) is entered.
 
 ---
 
+## 1c. Gene assignments (`gene` field)
+
+| Key | Source |
+|---|---|
+| `omia2026` | **Online Mendelian Inheritance in Animals (OMIA)**, University of Sydney. Nicholas FW, Tammen I, & Sydney Informatics Hub (1995). <https://omia.org/>, doi:10.25910/2AMR-PV70. Dog records (taxon 9615) retrieved 27 Aug 2026. Data made available by software support from the Sydney Informatics Hub, funded from the Ronald Bruce Anstee bequest to the Sydney School of Veterinary Science for the Anstee Hub for Inherited Diseases in Animals (AHIDA). |
+
+**A gene symbol is a claim about a specific mutation in a specific breed, and
+it is recorded only where OMIA supports exactly that.**
+
+- **One disease, many genes.** OMIA files by causal mutation, not by clinical
+  entity. Progressive retinal atrophy is 36 separate dog records; cerebellar
+  ataxia is 8; ichthyosis is a family of gene-specific entries. Matching our
+  condition *name* to an OMIA phene therefore cannot establish which gene a
+  given breed's version involves. What can is the breed column of OMIA's
+  variant table, and that is the only evidence accepted here.
+- **A locus qualifier wins.** Where the condition name carries one — PRA
+  `(prcd)`, `(rcd1)`, `(rcd2)`, `(cord1)` — it names the exact record and
+  overrides the breed search. Without this rule a Labrador's *prcd* picks up
+  whichever retinal gene happens to list Labradors first, which is how a
+  plausible and entirely wrong gene gets onto a breed page.
+- **Silence is a valid answer.** Where the evidence does not reach that bar,
+  nothing is written. Roughly half of the 636 pairs are polygenic,
+  conformational or acquired — hip dysplasia, atopy, GDV, brachycephalic airway
+  disease — and have no OMIA record because they are not Mendelian traits. An
+  empty `gene` is usually correct, not a gap waiting to be filled.
+- **A gene is not a diagnosis, and not a risk.** It says a mutation has been
+  reported in this breed for this condition. It does not say this dog carries
+  it, and it encodes nothing about how common it is. Carrier frequencies, where
+  they exist at all, live in `ofa.carrier` and come with the §1b caveat.
+- **Their inheritance is kept separate from ours.** `gene.inh` is OMIA's mode
+  for the phene. Our `inh` is curated clinical text and often says more. The two
+  are stored side by side and disagreements are reported by
+  `tools/merge_omia.py` for a human to resolve; neither overwrites the other.
+
+**Vocabulary note.** OMIA and the clinical literature name the same modes
+differently — *Multifactorial* against *Polygenic*, *Autosomal incomplete
+dominant* against *Autosomal semi-dominant*. These are treated as equivalent
+when auditing, so the disagreement report shows substantive conflicts rather
+than 100-odd differences of wording.
+
+---
+
 ## 2. Disease onset windows (`on`)
 
 These are **clinical consensus ranges**, not extracts from a single dataset,

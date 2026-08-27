@@ -4,3 +4,4 @@ __pycache__/
 node_modules/
 domtest/
 data/ofa_raw.html
+data/omia_raw/

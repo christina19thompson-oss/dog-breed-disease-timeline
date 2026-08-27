@@ -47,21 +47,75 @@ arteriosus would be actively misleading.
 
 ---
 
-## Phase 2 — Genotype frequencies beyond OFA
+## Phase 2 — Gene assignment from OMIA ✅ DONE (v0.7.0)
 
-OFA already delivered carrier rates for the tests it hosts. This phase fills the
-gaps for mutations OFA does not run.
+**Status: complete for OMIA.** 271 phene records parsed, 43 breed-confirmed gene
+assignments written, 231 inheritance modes independently corroborated.
 
-- **OMIA** (`omia.org`, University of Sydney) — free, structured, downloadable:
-  gene, phene, species, breed, inheritance mode. Use it to verify and complete
-  the `inh` field across all 636 entries rather than to add new numbers.
-- **Embark / UC Davis VGL** breed pages — allele frequencies for mutations
-  outside the OFA panel.
+**Source:** OMIA (Online Mendelian Inheritance in Animals), University of
+Sydney. The dog subset is reachable without the 198–262 MB full dumps:
 
-Target field: `gene` (symbol), and `freq` where a defensible population figure
-exists. Same honesty rule as Phase 1 — record the tested population.
+| endpoint | what it gives |
+|---|---|
+| `results/?search_type=advanced&gb_species_id=9615` | 1,015 dog phenes: id, name, gene, year |
+| `download/csv/genes/` | gene symbol → NCBI id |
+| `download/causal_mutations/?format=X1` | traits with a known causal mutation |
+| `OMIA<id>/9615/` | inheritance mode, gene table, **breed-level variant table** |
+| `api/search/phenes/?q=` | synonym-aware name resolution |
 
-**Effort:** moderate. OMIA is structured; the commercial labs are page-by-page.
+**Pipeline** (all re-runnable; the phene fetch resumes where it stopped):
+
+```bash
+bash tools/fetch_omia.sh         # index + supporting tables + matched phenes
+python tools/parse_omia.py       # -> data/omia_index.json, omia_phenes.json
+python tools/map_omia.py         # coverage report; ALIASES for the residue
+python tools/merge_omia.py       # write `gene`, audit `inh`
+python build.py
+```
+
+**What we learned that changes how it must be handled:**
+
+- **OMIA is Mendelian, so half this dataset is out of scope by construction.**
+  Of 290 distinct condition names, 71 have no OMIA record and correctly never
+  will — hip dysplasia, atopy, GDV, brachycephalic airway disease. Unmatched is
+  usually right, so the coverage report separates "no record expected" from a
+  genuine gap.
+- **One clinical entity, many phenes.** PRA alone is 36 gene-specific dog
+  records; cerebellar ataxia is 8. A name match therefore cannot establish which
+  gene a breed's version involves. Only the breed column of the variant table
+  can, and it is the sole evidence accepted. This is not a threshold that can be
+  loosened: the first draft, matching on breed alone, gave Labrador *prcd* the
+  GTPBP2 locus and Portuguese Water Dog *prcd* CCDC66. Both wrong, both entirely
+  plausible-looking on the page.
+- **A locus qualifier overrides everything.** `PRA (prcd)`, `(rcd1)`, `(rcd2)`
+  name the exact record. Where the qualifier matches no fetched phene, nothing
+  is written — 7 cases, and silence beats confidently wrong.
+- **Clinical names are not database names.** "Collie eye anomaly" is filed as
+  *Choroidal hypoplasia, NHEJ1-related*, "Musladin-Lueke syndrome" as
+  *Geleophysic dysplasia, ADMATSL2-related*. Guessing those from keywords is how
+  a wrong gene reaches a breed page, so the residue goes through OMIA's own
+  synonym API, cached in `data/omia_raw/api_cache.json`.
+- **The two vocabularies differ without disagreeing.** Raw string comparison
+  reported 109 inheritance conflicts, nearly all *Polygenic* vs *Multifactorial*
+  or *semi-dominant* vs *incomplete dominant*. Canonicalising leaves **9 real
+  disagreements**, which are worth a look.
+- **`inh` is audited, never overwritten.** Ours is curated clinical text and
+  usually says more than OMIA's bare mode. `--apply-inh` exists for the 3 cases
+  where ours is vague and theirs is specific, but it is opt-in and should not be
+  run as things stand: all 3 are urolithiasis entries where OMIA's record is a
+  narrower entity (cystinuria, hyperuricosuria), and "Autosomal recessive" would
+  be wrong for struvite and calcium oxalate stones.
+
+**Open, for a human:** the 9 inheritance disagreements from
+`python tools/merge_omia.py --dry`. The most useful is Miniature Schnauzer PRA
+Type A/B, which resolves to an X-linked OMIA phene — probably a wrong match
+rather than a wrong mode.
+
+### Phase 2b — genotype frequency, still open
+
+**Embark / UC Davis VGL** breed pages hold allele frequencies for mutations
+outside the OFA panel. Target field `freq`, still unused, under the Phase 1
+honesty rule: record the tested population. Page-by-page, no bulk endpoint.
 
 ---
 
@@ -117,7 +171,7 @@ the ~90 entries marked `limiting`.
 | field | level | status | meaning |
 |---|---|---|---|
 | `ofa` | breed + condition | **live** | OFA screening result, with metric and n |
-| `gene` | condition | planned | gene symbol (Phase 2) |
-| `freq` | condition | planned | genotype frequency in a stated population (Phase 2) |
+| `gene` | condition | **live** | gene symbol + OMIA record, breed-confirmed |
+| `freq` | condition | planned | genotype frequency in a stated population (Phase 2b) |
 | `prev` | condition | **reserved** | true population prevalence (Phase 3) — deliberately unused |
 | `mst` | condition | planned | median survival, months (Phase 4) |

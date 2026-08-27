@@ -3,6 +3,125 @@
 All notable changes to this project. Format follows [Keep a Changelog](https://keepachangelog.com/),
 versioning follows [Semantic Versioning](https://semver.org/).
 
+## [0.7.0] — 2026-08-27
+
+Gene assignment from OMIA — phase 2 of the data expansion plan. The dataset now
+names the causal gene where one is known *for that breed*, and every symbol
+carries the OMIA record it was read from.
+
+### Added
+- Re-runnable pipeline: `tools/fetch_omia.sh` (dog phene index, gene table,
+  causal-mutation table, then only the phene pages the mapper matched — and it
+  resumes where it stopped), `tools/parse_omia.py` → `data/omia_index.json`
+  (1,015 dog phenes) and `data/omia_phenes.json` (271 records),
+  `tools/map_omia.py` (coverage report and name resolution),
+  `tools/merge_omia.py` (writes `gene`, audits `inh`).
+- `gene` field on conditions: symbol, OMIA phene id and name, OMIA's inheritance
+  mode for that phene, and the variant in HGVS form. 43 breed-confirmed
+  assignments.
+- Gene symbol surfaced inline on timeline rows, in the table view's inheritance
+  column, and as a sourced row in the detail panel.
+- `SOURCES.md` §1c and a fifth data-integrity rule in `DIRECTION.md`.
+- 5 DOM checks covering the gene surfacing, including one asserting that every
+  symbol on the page names the OMIA record behind it. 55 checks total.
+
+### Notes
+- **A gene is written only where OMIA links that mutation to that breed.** One
+  clinical entity maps to many OMIA phenes — progressive retinal atrophy alone
+  is 36 gene-specific records — so a name match cannot establish which gene a
+  breed's version involves. Only the breed column of the variant table can. The
+  first draft matched on breed alone and produced two confident, wrong, entirely
+  plausible-looking results: Labrador *prcd* → GTPBP2, Portuguese Water Dog
+  *prcd* → CCDC66. A locus qualifier in our own name now overrides everything,
+  and where it matches no record, nothing is written.
+- **Half this dataset is out of OMIA's scope by construction.** 71 of 290
+  condition names have no phene and correctly never will — hip dysplasia, atopy,
+  GDV, brachycephalic airway disease are not Mendelian traits. An empty `gene`
+  is usually right, so the coverage report separates "no record expected" from a
+  real gap.
+- **Clinical names are not database names**, and guessing between them from
+  keywords is how a wrong gene reaches a breed page. "Collie eye anomaly" is
+  filed as *Choroidal hypoplasia, NHEJ1-related*. The residue is resolved
+  through OMIA's own synonym API rather than by similarity scoring.
+- **`inh` is audited, not overwritten.** Ours is curated clinical text that
+  usually says more than OMIA's bare mode; 231 modes corroborate, 9 genuinely
+  disagree and are listed for review by `merge_omia.py --dry`. Filling the vague
+  ones is opt-in behind `--apply-inh` and should stay off for now — all 3
+  candidates are urolithiasis entries where OMIA's record is a narrower entity.
+- Comparing inheritance strings raw reported 109 conflicts, almost all
+  *Polygenic* vs *Multifactorial* and *semi-dominant* vs *incomplete dominant*.
+  The two vocabularies are canonicalised before comparison so the report shows
+  substance rather than wording.
+- OMIA's full MySQL and XML dumps are 198–262 MB and cover every species; the
+  dog subset used here is ~1.6 MB, so the dumps are deliberately not fetched.
+  `data/omia_raw/` is gitignored, matching how `data/ofa_raw.html` is handled.
+
+### Fixed
+- Backfilled the changelog for 0.5.0 through 0.6.0, which shipped and were
+  tagged without entries.
+
+## [0.6.0] — 2026-08-26
+
+Surfaced the OFA data in the interface. 1,045 figures across 140 tests were
+stored but displayed nowhere; only the 173 condition-level ones were reachable,
+and only by clicking a bar.
+
+### Added
+- **Breed-level OFA screening panel**: every test held for the selected breed,
+  split into phenotypic screens and genetic tests, each sorted by sample size.
+  The split is derived from the data — a test is genetic exactly when it reports
+  a carrier rate — rather than from a hardcoded list.
+- Inline OFA percentage on timeline rows, which doubles as the marker for which
+  conditions have a hard number behind them (173 of 636).
+- OFA column in table view, with sample size.
+- Test codes resolved to readable names, acronyms preserved (CDDY/IVDD, CDPA,
+  BAER, MCADD).
+
+### Notes
+- Rows under 100 evaluations are greyed and footnoted; OFA itself requires 100
+  evaluations before publishing a breed figure.
+- The panel repeats the caveat in full: voluntarily submitted breeding
+  candidates, not breed prevalence.
+- `tests/dom-checks.js` extended to 50 checks, including a sweep confirming no
+  breed is left with an empty panel.
+
+## [0.5.2] — 2026-08-26
+
+### Removed
+- The local-caseload validation phase, from both `PLAN.md` and `DIRECTION.md`,
+  along with its open question and the wellness-tier framing on the screening
+  generator. The data source is not available, so the phase is deleted rather
+  than left in as blocked. Coverage renumbered 6 → 5.
+
+## [0.5.1] — 2026-08-26
+
+### Added
+- `DIRECTION.md` — the standing project reference: what this is, the decisions
+  already made and why, the data integrity rules, and where it goes next.
+  Written so the settled calls (severity carries colour, life stages computed
+  per breed, no hero sections, OFA is not prevalence, content never depends on
+  JS to be visible) do not get re-litigated.
+
+## [0.5.0] — 2026-08-26
+
+OFA screening statistics — phase 1 of the data expansion plan.
+
+### Added
+- Re-runnable pipeline: `tools/fetch_ofa.sh` → `data/ofa_raw.html` (~5 MB, one
+  request, every test), `tools/parse_ofa.py` → `data/ofa_stats.json` (186 tests,
+  2,189 breed-rows), `tools/map_ofa.py` (coverage report and breed-name
+  aliases), `tools/merge_ofa.py` (writes `ofa` onto `data/*.json`).
+- 83 of 85 breeds matched: 173 condition-level figures, 85 breed-level blocks.
+
+### Notes
+- **These are not prevalence figures and the code refuses to call them that.**
+  OFA data comes from voluntarily submitted breeding candidates: phenotypic
+  screens read low because affected animals go unsubmitted, and DNA results
+  describe a population selected against the mutation. The field is `ofa`, it
+  carries its metric label and sample size everywhere, and the detail panel
+  repeats the caveat. `prev` stays reserved and deliberately unused until real
+  population prevalence is entered.
+
 ## [0.4.0] — 2026-08-22
 
 Added the breed × age burden matrix — the whole dataset on one screen.

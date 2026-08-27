@@ -166,6 +166,40 @@ setTimeout(() => {
     return bad.length === 0 ? true : bad.slice(0, 4).join(" | ");
   });
 
+  console.log("\n--- OMIA gene assignments ---");
+  const geneBreeds = ["Border Collie", "Beagle", "Basenji", "Shiba Inu"];
+  check("gene symbol appears inline on timeline rows", () => {
+    let seen = 0;
+    for (const n of geneBreeds) {
+      click($$("#rail .rail-b").find(b => b.dataset.b === n));
+      seen += $$("#tlin .rname .gene").length;
+    }
+    return seen > 0 ? true : "no .gene chip on any of " + geneBreeds.join(", ");
+  });
+  check("gene chip is a plausible symbol", () =>
+    $$("#tlin .rname .gene").every(e => /^[A-Z][A-Z0-9-]{1,11}$/.test(e.textContent.trim())));
+  check("gene chip carries its OMIA record in the tooltip", () =>
+    $$("#tlin .rname .gene").every(e => /OMIA:\d{6}/.test(e.title)));
+  check("detail panel shows the gene row", () => {
+    click($$("#rail .rail-b").find(b => b.dataset.b === "Basenji"));
+    const row = $$("#tlin .row").find(r => r.querySelector(".rname .gene"));
+    if (!row) return "no Basenji condition carries a gene";
+    click(row.querySelector(".bar"));
+    const dts = $$(".det dt").map(d => d.textContent.trim());
+    return dts.includes("Gene");
+  });
+  /* A gene must never outrun its evidence: every symbol on the page has to
+     come with the OMIA phene it was read from. */
+  check("every gene assignment names its source record", () => {
+    const bad = [];
+    for (const n of $$("#rail .rail-b").map(b => b.dataset.b)) {
+      click($$("#rail .rail-b").find(b => b.dataset.b === n));
+      for (const g of $$("#tlin .rname .gene"))
+        if (!/OMIA:\d{6}/.test(g.title)) bad.push(n + "/" + g.textContent);
+    }
+    return bad.length === 0 ? true : bad.slice(0, 4).join(" | ");
+  });
+
 
   console.log("\n--- full sweep: every breed ---");
   const bad = [];

@@ -56,8 +56,34 @@ Present at two levels, written by `tools/merge_ofa.py`.
 
 **This is not prevalence.** See SOURCES.md §1b before using these numbers.
 
+## Gene assignment (`gene`)
+
+Condition level only, written by `tools/merge_omia.py` from OMIA.
+
+| key | meaning |
+|---|---|
+| `sym` | gene symbol (`SOD1`, `ABCB1`, `RPGRIP1`) |
+| `omia` | OMIA phene id, so the claim stays checkable — `omia.org/OMIA000263/9615/` |
+| `phene` | OMIA's name for the phene, which often differs from the clinical one |
+| `inh` | OMIA's mode of inheritance **for that phene** — not merged into `inh` |
+| `var` | the variant, in HGVS c. or p. form, where OMIA gives one |
+| `src` | source key, `omia2026` |
+
+**A gene is written only where OMIA links that mutation to that breed.** One
+clinical entity often maps to many OMIA phenes — progressive retinal atrophy
+splits into 36 gene-specific records — so a name match alone cannot say which
+gene a given breed's version is. The breed column of OMIA's variant table can,
+and nothing else is accepted as evidence. Where a locus qualifier appears in our
+condition name (`PRA (prcd)`, `(rcd1)`), that qualifier decides the record and
+overrides everything else.
+
+`gene.inh` sits beside our `inh` rather than replacing it. Ours is curated
+clinical text and frequently carries more ("Autosomal recessive, immune-mediated
+acinar atrophy"); OMIA's is the bare mode for a phene that may be narrower than
+the breed's clinical picture. See SOURCES.md §1c.
+
 ## Reserved fields
 
-`prev` (true population prevalence), `gene`, `freq`, `mst` are reserved for
-later phases — see PLAN.md. `prev` is deliberately left unused so it cannot be
+`prev` (true population prevalence), `freq` and `mst` are reserved for later
+phases — see PLAN.md. `prev` is deliberately left unused so it cannot be
 confused with an OFA screening result.
